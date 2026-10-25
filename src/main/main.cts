@@ -1,0 +1,39 @@
+import { app, BrowserWindow, session } from 'electron';
+import path from 'node:path';
+import fs from 'node:fs';
+
+// Testing and portable runs can use an isolated data directory. No owner data is used by tests.
+const profileIndex = process.argv.indexOf('--profile-dir');
+const requestedProfile=profileIndex>=0?process.argv[profileIndex+1]:undefined;
+if (requestedProfile || app.isPackaged) {
+  // This ZIP candidate keeps its data beside the executable, without an installer/profile prompt.
+  const profile=requestedProfile?path.resolve(requestedProfile):path.join(path.dirname(app.getPath('exe')),'data');
+  fs.mkdirSync(path.join(profile,'downloads'),{recursive:true});
+  app.setPath('userData', profile);
+  app.setPath('downloads',path.join(profile,'downloads'));
+}
+if (!app.requestSingleInstanceLock()) app.quit();
+let mainWindow: BrowserWindow | undefined;
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    title: 'DMZ Raid Board', width: 1320, height: 920, minWidth: 760, minHeight: 600,
+    backgroundColor: '#121813', autoHideMenuBar: true,
+    webPreferences: { nodeIntegration: false, contextIsolation: true, sandbox: true, webSecurity: true }
+  });
+  mainWindow.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  mainWindow.webContents.on('will-navigate', event => event.preventDefault());
+  mainWindow.webContents.on('will-attach-webview', event => event.preventDefault());
+  // No remote resources, external links, permissions or IPC are needed.
+  mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
+}
+app.whenReady().then(() => {
+  session.defaultSession.setPermissionRequestHandler((_wc, _permission, callback) => callback(false));
+  session.defaultSession.setPermissionCheckHandler(() => false);
+  session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
+    callback({ cancel: !/^(file:|blob:|devtools:)/.test(details.url) });
+  });
+  createWindow();
+  app.on('activate', () => { if (BrowserWindow.getAllWindows().length === 0) createWindow(); });
+});
+app.on('second-instance', () => { mainWindow?.show(); mainWindow?.focus(); });
+app.on('window-all-closed', () => app.quit());

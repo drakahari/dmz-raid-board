@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+ <title>DMZ Raid Board</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="extras.css">
+</head>
+<body>
+ <header><span class="brand"><span class="mark" aria-hidden="true">◈</span> DMZ <span class="brandlight">RAID BOARD</span></span><span class="prototype">PRIVATE WINDOWS PROTOTYPE / 01</span></header>
+ <main>
+  <section class="intro"><div><div class="eyebrow">LESS MENU TIME. MORE RAID TIME.</div><h1>Know what to bring back.</h1><p>Pick an upgrade. Set your targets. Keep the pictures in sight.</p></div><div class="saved" id="saved" role="status"><span></span> Saved on this device</div></section>
+  <div id="notice" class="notice" role="status" hidden></div>
+  <section id="recovery" class="warning" hidden><strong>Saved board could not be read.</strong><p id="recoveryReason"></p><p>The original saved text is kept. Changes are session-only until you import a valid backup or start fresh.</p><button id="exportRecovery" class="secondary">Export saved text</button> <button id="freshBoard" class="secondary">Start fresh…</button></section>
+  <nav aria-label="View"><button id="planTab" class="active" aria-current="page">01 &nbsp; Plan your raid</button><button id="raidTab">02 &nbsp; Raid checklist <b id="navCount">5</b></button></nav>
+  <section id="plan">
+   <div class="sectionhead"><div><h2>What are you working toward?</h2><p>Select your goals. Shared ingredients are added together.</p></div><span class="micro">MANUAL PLANNING</span></div>
+   <div class="upgrades" id="upgrades"></div>
+   <details id="browse" class="browse"><summary>Browse all categories <span class="coverage" id="coverage"></span></summary>
+    <p>Catalog checked <time datetime="2026-10-25">25 Oct 2026</time>. Costs are community reported. Unconfirmed recipes cannot be selected. Image coverage is separate; missing images are labeled.</p>
+    <div class="filters"><label>Category <select id="category" aria-label="Category"></select></label><label class="search">Find a recipe or ingredient <input id="search" type="search" placeholder="Search this category" aria-label="Find a recipe or ingredient"></label></div>
+    <p id="catalogStatus" class="micro"></p><div id="catalogList" class="catalogList"></div>
+   </details>
+   <div class="sectionhead itemshead"><div><h2>Your shopping list</h2><p>These are this raid’s targets, not your stash. Adjust any quantity.</p></div><button class="primary" id="startRaid">Open raid checklist →</button></div>
+   <details class="direct"><summary>Add a direct target or restore recipe totals</summary><p>Targets replace the recipe total for this raid. Recipe selections stay unchanged.</p><div class="filters"><label>Ingredient <select id="directItem"></select></label><label>Raid target <input id="directCount" type="number" min="0" max="100000000" step="1" value="1"></label><button id="addTarget" class="secondary">Set target</button><button id="restoreTotals" class="secondary">Use recipe totals…</button></div></details>
+  </section>
+  <section id="raidIntro" hidden>
+   <div class="sectionhead"><div><div class="eyebrow">DEPLOYMENT CHECKLIST</div><h2>Find it. Tap it. Keep moving.</h2><p>Tap + when you pick one up. Check a target to mark it done for this raid.</p></div><button id="newRaid" class="secondary">↻ New raid</button></div>
+   <div class="progressline"><strong id="progressText"></strong><progress id="progress" value="0" max="1" aria-label="Raid collection progress"></progress><label><input id="hideDone" type="checkbox"> Hide completed</label></div>
+   <p class="raidNote">Picked up ≠ extracted. This board does not track stash, confirm extraction or purchase upgrades. A check does not change picked-up counts.</p>
+  </section>
+  <div class="grid" id="items"></div>
+  <div class="empty" id="empty" hidden>No items here. Select a goal, add a direct target, or show completed items.</div>
+  <aside class="cash"><span class="cashicon">$</span><div><strong id="cash"></strong><p>Cash is a separate FOB budget; it is never counted as picked-up ingredients.</p></div><span class="micro">FOB BUDGET</span></aside>
+  <footer><span>Manual tracking · Offline · No connection to your game</span><div class="footerActions"><button id="backup">Export backup</button><button id="import">Import backup…</button><button id="sourcesBtn">Data & image credits ↗</button></div></footer>
+  <input id="importFile" type="file" accept=".json,application/json" hidden>
+  <dialog id="sources" aria-labelledby="sourcesHeading"><button id="closeSources" class="secondary">Close ×</button><h2 id="sourcesHeading">About this prototype</h2><p>The original two-upgrade picture-first sample is preserved. The catalog is a bounded sample, not a complete game database. Requirements were compared on 25 Oct 2026; check your current in-game card before spending anything.</p><p id="sourceCoverage"></p><p>Later upgrade tiers and several recipe costs remain unconfirmed. Radiation Blockers has conflicting source costs and is disabled. Permanent tiers count once; selecting a Bank tier replaces any other Bank tier. Earlier tiers must already be owned in game. Ingredient printing is not expanded into recursive costs.</p><p>Artwork is optional and is never downloaded by the app. The private starter supplied CPU, Detonators, Nylon Cloth, Power Regulator and Reactive Metals images via DMZ Codex. Game art belongs to Activision/respective rights holders; no public redistribution license is asserted. The public source includes no game images. Missing pictures use neutral labeled placeholders.</p><div class="sourceRefs"><strong>Source references (copy into your browser)</strong><p>https://dmzcodex.com/upgrades/<br>https://codcentral.net/blog/mw4-dmz-3d-printer-recipes/</p></div><p>DMZHub and DMZTracker were compared for category scope only; their collections were not copied. See CATALOG.md in the source project for provenance. Builds containing private game art must remain private.</p></dialog>
+  <dialog id="confirmDialog" aria-labelledby="confirmHeading"><h2 id="confirmHeading"></h2><p id="confirmBody"></p><div class="dialogActions"><button id="cancelAction" class="secondary" autofocus>Cancel</button><button id="confirmAction" class="primary">Confirm</button></div></dialog>
+ </main>
+ <script type="module" src="app.mjs"></script>
+</body></html>

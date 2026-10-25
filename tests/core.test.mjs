@@ -1,0 +1,50 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {emptyState,sampleState,chooseRecipe,recipeTotals,raidTargets,newRaid,isComplete,serialize,parseBackup,count} from '../dist/renderer/core.mjs';
+test('approved starter sample retains shared power regulator and five pictured targets',()=>{
+ const s=sampleState();assert.equal(raidTargets(s)['Power Regulator'],10);
+ assert.equal(Object.keys(raidTargets(s)).length,5);assert.equal(recipeTotals(s)['DMZ Cash'],100000);
+ assert.equal(raidTargets(chooseRecipe(s,'stash',0))['Power Regulator'],5);
+ assert.equal(raidTargets(chooseRecipe(s,'stash',0)).Detonators,undefined);
+});
+test('permanent tiers are single goals; bank tiers replace each other',()=>{
+ const s=emptyState();assert.throws(()=>chooseRecipe(s,'gunsmith',2));
+ const selected=chooseRecipe(chooseRecipe(s,'bank-1',1),'bank-3',1);
+ assert.deepEqual(selected.selected,{'bank-3':1});assert.equal(recipeTotals(selected)['DMZ Cash'],100000);
+ assert.throws(()=>parseBackup(JSON.stringify({...s,selected:{'bank-1':1,'bank-2':1}})));
+});
+test('shared ingredients are summed once across recipes and quantities',()=>{
+ const s=emptyState(); s.selected={'bandage':2,'smoke':3,'medkit':1};
+ assert.deepEqual(recipeTotals(s),{'Synthetics':60,'Chemicals':90,'Binding Catalyst':1,'Biomaterials':5});
+ assert.equal(Object.keys(recipeTotals(s)).filter(k=>k==='Chemicals').length,1);
+});
+test('target overrides replace aggregate without changing recipe quantities',()=>{
+ const s=emptyState();s.selected.bandage=2;s.targets.Chemicals=7;
+ assert.equal(raidTargets(s).Chemicals,7);assert.equal(recipeTotals(s).Chemicals,30);
+});
+test('new raid clears only per-raid counts/completion',()=>{
+ const s=emptyState();s.selected.bandage=2;s.targets.Chemicals=7;s.picked.Chemicals=5;s.completed=['Synthetics'];s.hideCompleted=true;
+ const result=newRaid(s);assert.deepEqual(result.picked,{});assert.deepEqual(result.completed,[]);
+ assert.deepEqual(result.selected,s.selected);assert.deepEqual(result.targets,s.targets);assert.equal(result.hideCompleted,true);
+ assert.equal(s.picked.Chemicals,5);
+});
+test('completion can be picked quantity or explicit raid check',()=>{
+ const s=emptyState();s.picked.Chemicals=5;assert.equal(isComplete(s,'Chemicals',10),false);
+ s.completed=['Chemicals'];assert.equal(isComplete(s,'Chemicals',10),true);
+ s.completed=[];assert.equal(isComplete(s,'Chemicals',5),true);
+});
+test('backup round trip retains selected recipes, overrides, pickup counts and settings',()=>{
+ const s=emptyState();s.selected['bank-3']=1;s.targets['DMZ Cash']=2000;s.picked['DMZ Cash']=100;s.completed=['DMZ Cash'];
+ assert.deepEqual(parseBackup(serialize(s)),s);
+});
+test('corrupt, oversized, unknown and hostile backups are rejected',()=>{
+ assert.throws(()=>parseBackup('{oops'),/valid JSON/);
+ assert.throws(()=>parseBackup(' '.repeat(1_000_001)),/too large/);
+ for(const patch of [{version:2},{picked:{Chemicals:-1}},{targets:{Chemicals:1.5}},{selected:{'not-real':1}},{selected:{'radiation-blockers':1}},{completed:['Chemicals','Chemicals']},{hideCompleted:'yes'},{picked:[]},{unexpected:true}]) assert.throws(()=>parseBackup(JSON.stringify({...emptyState(),...patch})));
+ assert.throws(()=>parseBackup('{"version":1,"selected":{},"targets":{"__proto__":3},"picked":{},"completed":[],"hideCompleted":false}'));
+ assert.equal({}.polluted,undefined);
+});
+test('whole-number count boundaries reject NaN, Infinity and unsafe numbers',()=>{
+ for(const n of [-1,NaN,Infinity,0.5,100000001,'3',null])assert.throws(()=>count(n));
+ assert.equal(count(0),0);assert.equal(count(100000000),100000000);
+});
