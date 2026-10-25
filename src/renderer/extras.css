@@ -17,3 +17,9 @@ progress{height:7px;border:0;flex:1;background:#30372a;min-width:70px;border-rad
 .symbol img{max-width:46px;max-height:46px;object-fit:contain}.catalogThumb{width:58px;height:58px;object-fit:contain;flex-shrink:0}.catalogText{flex:1;min-width:0}
 .unknown .rarity,.resource .rarity{background:#87907f}.legendary .rarity{background:#e9bf72}
 @media(max-width:900px){.progressline{flex-wrap:wrap}.progressline label{width:100%}.catalogEntry{flex-wrap:wrap}.catalogControl{flex-direction:row;align-items:center}.catalogControl label{flex-direction:row;align-items:center}.catalogControl input{width:65px}.catalogControl .micro{display:none}.coverage{display:block;margin-left:0}.prototype{font-size:8px}.brand{font-size:22px}}
+
+/* Owner screenshot stays unchanged. Present only the notebook, not its inventory stack label.
+   Source crop: x145,y125,width120,height80 from a 394x317 image, displayed at 1.3x. */
+.art .source-crop{position:relative;display:block;overflow:hidden;width:156px;height:104px;border-radius:4px;flex-shrink:0}
+.art .regional-notes-screenshot img{position:absolute;display:block;width:512.2px;height:412.1px;max-width:none;max-height:none;left:-188.5px;top:-162.5px;object-fit:fill;filter:none}
+.art .source-crop[hidden]{display:none}

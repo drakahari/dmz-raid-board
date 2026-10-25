@@ -1,5 +1,10 @@
 // Optional file mappings only; copyrighted pixels are private and excluded from public Git.
 export const materialArt = {
+  "Regional Combat Notes": {
+    "file": "owner-regional-combat-notes.png",
+    "rarity": "unknown",
+    "presentation": "regional-notes-screenshot" as const
+  },
   "Synthetics": {
     "file": "item-synthetics.webp",
     "rarity": "resource"

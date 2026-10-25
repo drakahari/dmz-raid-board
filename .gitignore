@@ -30,3 +30,6 @@ assets/*
 !/tests/core.test.mjs
 !/tests/electron.test.mjs
 !/tests/packaged.test.mjs
+
+.builder-cache/
+.electron-cache/

@@ -1,6 +1,6 @@
 {
   "name": "dmz-raid-board",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Private offline DMZ raid planning prototype",
   "private": true,
   "license": "MIT",
@@ -22,9 +22,20 @@
   "build": {
     "appId": "private.dmz.raidboard",
     "productName": "DMZ Raid Board",
-    "directories": { "output": "release/0.1.1" },
-    "files": ["dist/**/*", "package.json", "CATALOG.md", "README.md"],
+    "directories": {
+      "output": "release/0.1.2"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json",
+      "CATALOG.md",
+      "README.md"
+    ],
     "asar": true,
-    "win": { "target": "zip", "signExecutable": false, "artifactName": "DMZ-Raid-Board-${version}-win-x64-portable-candidate.zip" }
+    "win": {
+      "target": "zip",
+      "signExecutable": false,
+      "artifactName": "DMZ-Raid-Board-${version}-win-x64-portable-candidate.zip"
+    }
   }
 }
