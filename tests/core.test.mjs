@@ -6,7 +6,7 @@ import {sortedNames,compareNames} from '../dist/renderer/ordering.mjs';
 test('all 95 published crafting recipes and 25 evidenced upgrade tiers have dated sources',()=>{
  assert.equal(recipes.filter(r=>r.category!=='Upgrades').length,95);assert.equal(recipes.filter(r=>r.category==='Upgrades').length,25);
  assert.equal(recipes.length,new Set(recipes.map(r=>r.id)).size);
- assert.equal(recipes.filter(r=>r.costs).length,111);assert.equal(recipes.filter(r=>!r.costs).length,9);
+ assert.equal(recipes.filter(r=>r.costs).length,112);assert.equal(recipes.filter(r=>!r.costs).length,8);
  for(const category of categories)assert(recipes.some(r=>r.category===category&&r.costs),category);
  const allowed=new Set(materials);
  for(const recipe of recipes){assert.equal(recipe.checked,'2026-10-25');assert(recipe.sources?.length);assert(recipe.sources.every(s=>s.url.startsWith('https://')&&s.checked));
@@ -28,7 +28,7 @@ test('14 ingredient prints are explicit plans; no automatic recipe expansion or 
 test('all upgrade families enforce one selected tier and partial/conflicting costs stay disabled',()=>{
  let s=chooseRecipe(sampleState(),'gunsmith-2',1);assert.equal(s.selected.gunsmith,undefined);assert.equal(s.selected['gunsmith-2'],1);
  s=chooseRecipe(s,'stash-1',1);assert.equal(s.selected.stash,undefined);
- for(const id of ['stash-4','stash-weapon-3','mia-2','mia-3','mia-4','vendor-1','vendor-2','radiation-blockers','ddos'])assert.throws(()=>chooseRecipe(s,id,1));
+ for(const id of ['stash-4','stash-weapon-3','mia-3','mia-4','vendor-1','vendor-2','radiation-blockers','ddos'])assert.throws(()=>chooseRecipe(s,id,1));
  assert.throws(()=>parseBackup(JSON.stringify({...emptyState(),selected:{gunsmith:1,'gunsmith-2':1}})));
 });
 test('natural case-insensitive A–Z ordering has stable ties and does not mutate counts or IDs',()=>{
@@ -83,4 +83,18 @@ test('corrupt, oversized, unknown and hostile backups are rejected',()=>{
 test('whole-number count boundaries reject NaN, Infinity and unsafe numbers',()=>{
  for(const n of [-1,NaN,Infinity,0.5,100000001,'3',null])assert.throws(()=>count(n));
  assert.equal(count(0),0);assert.equal(count(100000000),100000000);
+});
+
+test('owner-verified MIA II uses required quantities, explicitly zero cash, and retains tier rules',()=>{
+ const recipe=recipes.find(r=>r.id==='mia-2');
+ const expected={'Nuclear Program Files':5,'Degraded Execution Footage':5,'Binding Catalyst':10,'Nitro Compounds':10};
+ assert.deepEqual(recipe.costs,expected);assert.deepEqual(recipe.reportedCosts,expected);
+ assert.equal(recipe.ownerVerification.date,'2026-10-25');assert.equal(recipe.ownerVerification.cashRequired,0);
+ assert.equal(recipe.effect,'5% recovery cost reduction');assert.match(recipe.status,/Owner-verified/);
+ const old=chooseRecipe(emptyState(),'mia-1',1);old.picked['Binding Catalyst']=20;old.picked['Nitro Compounds']=4;
+ const state=chooseRecipe(old,'mia-2',1);assert.deepEqual(state.selected,{'mia-2':1});
+ assert.deepEqual(recipeTotals(state),expected);assert.deepEqual(raidTargets(state),expected);
+ assert.equal(recipeTotals(state)['DMZ Cash'],undefined);assert.equal(state.picked['Binding Catalyst'],20);
+ assert.equal(state.picked['Nitro Compounds'],4);assert.deepEqual(parseBackup(serialize(state)),state);
+ for(const id of ['mia-3','mia-4','stash-4','stash-weapon-3','vendor-1','vendor-2','ddos','radiation-blockers'])assert.throws(()=>chooseRecipe(state,id,1));
 });

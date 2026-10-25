@@ -2,11 +2,11 @@
 
 Checked: 2026-10-25. Costs are community reports and must be checked against the current game before spending resources. No claim of a complete in-game catalog or image collection is made.
 
-The catalog contains 120 entries: all 95 non-upgrade crafting recipes in the two compared references and 25 explicitly reported upgrade tiers across nine upgrade families. There are 111 selectable entries and nine disabled entries. This is completeness against the compared published lists, not verification that every in-game tier is known. Every record retains checked date, source links, cost status and prerequisites/uncertainty.
+The catalog contains 120 entries: all 95 non-upgrade crafting recipes in the two compared references and 25 explicitly reported upgrade tiers across nine upgrade families. There are 112 selectable entries and eight disabled entries. This is completeness against the compared published lists, not verification that every in-game tier is known. Every record retains checked date, source links, cost status and prerequisites/uncertainty.
 
 | Category | Entries | Selectable | Disabled |
 |---|---:|---:|---:|
-| Upgrades | 25 | 18 | 7 |
+| Upgrades | 25 | 19 | 6 |
 | Consumables | 9 | 8 | 1 |
 | Plate Carriers | 8 | 8 | 0 |
 | Backpacks | 10 | 10 | 0 |
@@ -34,8 +34,8 @@ The 14 ingredient-printing recipes require the corresponding Uncommon/Epic print
 
 ## Images
 
-The public source contains no game images. Private artwork is excluded from Git and from public release artifacts. The build detects optional local artwork and otherwise uses explicit placeholders; it never fetches art at runtime. File mappings do not grant rights. See [artwork setup](assets/README.md).
+The source omits the individual game-image collection, while its documentation preview may show third-party game artwork. The artwork-inclusive prerelease bundles that artwork with attribution and an explicit rights notice; no affirmative artwork license is asserted. The build detects optional local artwork and otherwise uses explicit placeholders; it never fetches art at runtime. File mappings do not grant rights. See [artwork setup](assets/README.md).
 
 The private reference set was inspected as source pixels and includes collection-target images, recipe output images and upgrade-family menu icons. Regional Combat Notes now uses an owner-supplied game screenshot, presented with a notebook-only CSS crop. Its inventory stack label does not change recipe quantities. Foreign Intelligence Targets remains explicitly pending at the owner's request; no verified item picture has been established from the reviewed references. Some variants share a source icon, and family menu icons are not tier-card screenshots. Catalog and image coverage are separate.
 
-DMZ Codex's robots file explicitly welcomes crawling/citation, but that is not an artwork redistribution license. Its About page attributes game art to Activision. No broader public grant for these game-item images was established. Activision's brand-asset terms apply to assets provided through its brand materials; Xbox rules are publisher-scoped and were not silently extended to unrelated assets. Private game images remain outside the MIT code license. No restricted site's image collection or generated lookalike art is used.
+DMZ Codex's robots file explicitly welcomes crawling/citation, but that is not an artwork redistribution license. Its About page attributes game art to Activision. No broader public grant for these game-item images was established. Activision's brand-asset terms apply to assets provided through its brand materials; Xbox rules are publisher-scoped and were not silently extended to unrelated assets. Game images and documentation screenshots containing them remain outside the MIT code license. See THIRD-PARTY-ARTWORK.md. No restricted site's image collection or generated lookalike art is used.

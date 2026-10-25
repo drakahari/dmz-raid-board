@@ -582,7 +582,12 @@ export const catalogData = [
     "category": "Upgrades",
     "family": "mia",
     "tier": 2,
-    "costs": null,
+    "costs": {
+      "Nuclear Program Files": 5,
+      "Degraded Execution Footage": 5,
+      "Binding Catalyst": 10,
+      "Nitro Compounds": 10
+    },
     "reportedCosts": {
       "Nuclear Program Files": 5,
       "Degraded Execution Footage": 5,
@@ -590,8 +595,8 @@ export const catalogData = [
       "Nitro Compounds": 10
     },
     "source": "https://dmzcodex.com/upgrades/mia-recovery-discount/",
-    "status": "Incomplete tier costs",
-    "note": "Cash is undocumented and published Binding Catalyst counts differ (5 versus 10). Needs current game card.",
+    "status": "Owner-verified current game requirements",
+    "note": "Owner-verified 2026-10-25: four material requirements and no cash. Tier effect: 5% recovery cost reduction; cumulative stacking is not inferred. Inventory-owned counts are not recipe requirements.",
     "checked": "2026-10-25",
     "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
     "sources": [
@@ -601,7 +606,13 @@ export const catalogData = [
         "checked": "2026-10-25"
       }
     ],
-    "image": "upgrade-mia.png"
+    "image": "upgrade-mia.png",
+    "effect": "5% recovery cost reduction",
+    "ownerVerification": {
+      "date": "2026-10-25",
+      "evidence": "Current in-game requirement rows plus explicit owner confirmation of no cash requirement",
+      "cashRequired": 0
+    }
   },
   {
     "id": "mia-3",

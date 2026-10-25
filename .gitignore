@@ -33,3 +33,9 @@ assets/*
 
 .builder-cache/
 .electron-cache/
+
+# Only the reviewed actual public app preview may be published.
+!docs/app-artwork.png
+!/tests/release.test.mjs
+
+!/THIRD-PARTY-ARTWORK.md

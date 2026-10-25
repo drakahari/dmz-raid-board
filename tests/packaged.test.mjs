@@ -1,6 +1,6 @@
 import {_electron as electron} from '@playwright/test';
 import assert from 'node:assert/strict';
-import {mkdtemp,mkdir,writeFile} from 'node:fs/promises';
+import {mkdtemp,mkdir,writeFile,readFile} from 'node:fs/promises';
 import path from 'node:path';
 const root=process.cwd(),qa=path.join(root,'.qa');await mkdir(qa,{recursive:true});
 const extraction=process.argv[2];if(!extraction)throw new Error('Pass the verified ZIP extraction directory.');
@@ -10,7 +10,7 @@ try {
  app=await electron.launch({executablePath:exe,args:['--profile-dir',profile],cwd:extraction,timeout:60000});
  const page=await app.firstWindow();await page.locator('[data-card="CPU"]').waitFor();
  const info=await app.evaluate(({app})=>({name:app.getName(),version:app.getVersion(),profile:app.getPath('userData'),packaged:app.isPackaged}));
- assert.equal(info.version,'0.1.1');assert.equal(info.packaged,true);assert.equal(info.profile,profile);
+ assert.equal(info.version,JSON.parse(await readFile('package.json','utf8')).version);assert.equal(info.packaged,true);assert.equal(info.profile,profile);
  assert.equal(await page.locator('.item').count(),5);assert.equal(await page.getByLabel('Power Regulator target',{exact:true}).inputValue(),'10');
  assert(await page.locator('#items img').evaluateAll(imgs=>imgs.every(i=>i.complete&&i.naturalWidth>0)));
  await page.locator('.direct summary').click();
