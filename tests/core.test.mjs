@@ -1,6 +1,42 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {emptyState,sampleState,chooseRecipe,recipeTotals,raidTargets,newRaid,isComplete,serialize,parseBackup,count} from '../dist/renderer/core.mjs';
+import {emptyState,sampleState,chooseRecipe,recipeTotals,raidTargets,plannedProduction,newRaid,isComplete,serialize,parseBackup,count} from '../dist/renderer/core.mjs';
+import {recipes,materials,categories} from '../dist/renderer/catalog.mjs';
+import {sortedNames,compareNames} from '../dist/renderer/ordering.mjs';
+test('all 95 published crafting recipes and 25 evidenced upgrade tiers have dated sources',()=>{
+ assert.equal(recipes.filter(r=>r.category!=='Upgrades').length,95);assert.equal(recipes.filter(r=>r.category==='Upgrades').length,25);
+ assert.equal(recipes.length,new Set(recipes.map(r=>r.id)).size);
+ assert.equal(recipes.filter(r=>r.costs).length,111);assert.equal(recipes.filter(r=>!r.costs).length,9);
+ for(const category of categories)assert(recipes.some(r=>r.category===category&&r.costs),category);
+ const allowed=new Set(materials);
+ for(const recipe of recipes){assert.equal(recipe.checked,'2026-10-25');assert(recipe.sources?.length);assert(recipe.sources.every(s=>s.url.startsWith('https://')&&s.checked));
+  for(const [name,n] of Object.entries(recipe.reportedCosts||recipe.costs||{})){assert(allowed.has(name),name);assert(Number.isSafeInteger(n)&&n>0);}
+  if(recipe.category!=='Upgrades')assert.equal(recipe.sources.length,2);
+ }
+});
+test('14 ingredient prints are explicit plans; no automatic recipe expansion or double-counted output',()=>{
+ assert.equal(recipes.filter(r=>r.category==='Ingredients').length,14);
+ let s=chooseRecipe(emptyState(),'medkit',1);
+ assert.equal(recipeTotals(s).Biomaterials,5);assert.equal(recipeTotals(s).Synthetics,undefined);
+ s=chooseRecipe(s,'print-biomaterials',5);
+ assert.deepEqual(plannedProduction(s),{Biomaterials:5});assert.equal(recipeTotals(s).Biomaterials,undefined);
+ assert.equal(recipeTotals(s).Chemicals,130);assert.equal(recipeTotals(s).Synthetics,100);
+ assert.equal(s.selected['uncommon-printing'],undefined);
+ s.targets.Biomaterials=2;assert.equal(raidTargets(s).Biomaterials,2);
+ const solo=chooseRecipe(emptyState(),'print-comms',2);assert.equal(recipeTotals(solo).Electronics,200);assert.equal(recipeTotals(solo).CPU,6);assert.equal(recipeTotals(solo)['Comms Module'],undefined);
+});
+test('all upgrade families enforce one selected tier and partial/conflicting costs stay disabled',()=>{
+ let s=chooseRecipe(sampleState(),'gunsmith-2',1);assert.equal(s.selected.gunsmith,undefined);assert.equal(s.selected['gunsmith-2'],1);
+ s=chooseRecipe(s,'stash-1',1);assert.equal(s.selected.stash,undefined);
+ for(const id of ['stash-4','stash-weapon-3','mia-2','mia-3','mia-4','vendor-1','vendor-2','radiation-blockers','ddos'])assert.throws(()=>chooseRecipe(s,id,1));
+ assert.throws(()=>parseBackup(JSON.stringify({...emptyState(),selected:{gunsmith:1,'gunsmith-2':1}})));
+});
+test('natural case-insensitive A–Z ordering has stable ties and does not mutate counts or IDs',()=>{
+ const values=['Power Regulator','CPU','comms Module','Biomaterials','Item 10','Item 2','cpu'];const copy=[...values];
+ assert.deepEqual(sortedNames(values),['Biomaterials','comms Module','CPU','cpu','Item 2','Item 10','Power Regulator']);assert.deepEqual(values,copy);
+ assert.deepEqual(materials,sortedNames(materials));assert(compareNames('Item 2','Item 10')<0);
+ const s=sampleState();s.picked.CPU=3;s.targets.CPU=7;s.hideCompleted=true;const before=serialize(s);sortedNames(Object.keys(raidTargets(s)));assert.equal(serialize(s),before);
+});
 test('approved starter sample retains shared power regulator and five pictured targets',()=>{
  const s=sampleState();assert.equal(raidTargets(s)['Power Regulator'],10);
  assert.equal(Object.keys(raidTargets(s)).length,5);assert.equal(recipeTotals(s)['DMZ Cash'],100000);

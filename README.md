@@ -29,7 +29,9 @@ Picking up is not extracting. The app does not track stash or actual extracted l
 
 ## Catalog status
 
-The initial source catalog is partial: 38 provisional entries, 25 with community-reported costs and 13 disabled pending verification. Ingredient printing and remaining equipment/tier coverage are being completed. Category structure alone does not mean complete recipe coverage. See [catalog evidence](CATALOG.md).
+The catalog includes all 95 crafting recipes in the two compared public references, plus 25 explicitly reported upgrade tiers: 120 entries, 111 selectable and nine disabled for concrete cost conflicts or missing cash requirements. All ten categories have working recipes, including 14 ingredient-printing recipes. This covers the compared published lists, not a claim that every current/future in-game tier is known. See [catalog evidence](CATALOG.md).
+
+Ingredients sort A–Z in planning, raid cards and selectors. Printing is explicit: selected ingredient crafts offset their matching required output once; no other recipe expands automatically and no unlock/production is credited. Print only with recipes/upgrades already unlocked in your game. Direct manual targets still override computed totals.
 
 ## Checks and packaging
 

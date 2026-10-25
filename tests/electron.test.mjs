@@ -10,9 +10,10 @@ async function launch(){app=await electron.launch({args:['.', '--profile-dir',pr
 try {
  await launch();
  assert.equal(await page.locator('.item').count(),5);
+ assert.deepEqual(await page.locator('#items h3').allTextContents(),['CPU','Detonators','Nylon Cloth','Power Regulator','Reactive Metals']);
  assert.equal(await page.getByLabel('Power Regulator target',{exact:true}).inputValue(),'10');
  assert.equal(await page.locator('#cash').innerText(),'$100,000 total selected-goal cost');
- const images=await page.locator('img').evaluateAll(imgs=>imgs.map(i=>({loaded:i.complete&&i.naturalWidth>0,source:i.getAttribute('src')})));
+ const images=await page.locator('#items img').evaluateAll(imgs=>imgs.map(i=>({loaded:i.complete&&i.naturalWidth>0,source:i.getAttribute('src')})));
  const files=await readdir('assets');const expectedImages=['cpu.png','detonators.png','nylon-cloth.png','power-regulator.png','reactive-metals.png'].filter(n=>files.includes(n)).length;
  assert.equal(images.length,expectedImages);assert(images.every(i=>i.loaded));
  if(!expectedImages)assert.equal(await page.getByText('No verified image yet',{exact:true}).count(),5);
@@ -53,7 +54,9 @@ try {
  assert.equal(await page.getByRole('button',{name:'Add Bank Upgrade · Tier 1',exact:true}).count(),1);
  assert.equal(await page.getByRole('button',{name:'Remove Bank Upgrade · Tier 3',exact:true}).count(),1);
  assert.equal(await page.getByLabel('Infantry Invasion Plans target',{exact:true}).inputValue(),'5');
- assert.match(await page.locator('[data-card="Infantry Invasion Plans"]').innerText(),/No verified image yet/);check('ten categories, search, repeat quantities, single permanent tier and missing-art disclosure');
+ const infantryImage=page.locator('[data-card="Infantry Invasion Plans"] img');
+ if(await infantryImage.count())assert(await infantryImage.evaluate(i=>i.complete&&i.naturalWidth>0));else assert.match(await page.locator('[data-card="Infantry Invasion Plans"]').innerText(),/No verified image yet/);
+ check('ten categories, search, repeat quantities, single permanent tier and accurate image/fallback display');
  const backup=path.join(profile,'export.json');
  await app.evaluate(({session},destination)=>{globalThis.testDownload=new Promise(resolve=>session.defaultSession.once('will-download',(_event,item)=>{item.setSavePath(destination);item.once('done',(_event,result)=>resolve(result));}));return true;},backup);
  await page.getByRole('button',{name:'Export backup',exact:true}).click();assert.equal(await app.evaluate(async()=>await globalThis.testDownload),'completed');

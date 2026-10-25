@@ -14,4 +14,6 @@ select,.filters input,.catalogControl input{background:#11170f;border:1px solid 
 progress{height:7px;border:0;flex:1;background:#30372a;min-width:70px;border-radius:4px}progress::-webkit-progress-bar{background:#30372a;border-radius:4px}progress::-webkit-progress-value{background:var(--lime);border-radius:4px}
 .raidNote{font-size:11px;margin:0 0 20px}.footerActions{display:flex;gap:10px;flex-wrap:wrap}dialog{max-height:85vh;overflow:auto}dialog button{float:none}#closeSources{float:right}.dialogActions{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}
 .sourceRefs strong{font-size:12px}.sourceRefs p{font-size:11px}input:invalid{border-color:#d3bb7f}.target input{width:76px}
+.symbol img{max-width:46px;max-height:46px;object-fit:contain}.catalogThumb{width:58px;height:58px;object-fit:contain;flex-shrink:0}.catalogText{flex:1;min-width:0}
+.unknown .rarity,.resource .rarity{background:#87907f}.legendary .rarity{background:#e9bf72}
 @media(max-width:900px){.progressline{flex-wrap:wrap}.progressline label{width:100%}.catalogEntry{flex-wrap:wrap}.catalogControl{flex-direction:row;align-items:center}.catalogControl label{flex-direction:row;align-items:center}.catalogControl input{width:65px}.catalogControl .micro{display:none}.coverage{display:block;margin-left:0}.prototype{font-size:8px}.brand{font-size:22px}}

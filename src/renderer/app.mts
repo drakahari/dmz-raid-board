@@ -1,6 +1,7 @@
 import {recipes,categories,materials,art as knownArt,checked,type Recipe,type Category} from './catalog.mjs';
 import {installedImageFiles} from './asset-status.mjs';
-import {type BoardState,sampleState,emptyState,parseBackup,serialize,count,recipeTotals,raidTargets,chooseRecipe,isComplete,newRaid,maxCount} from './core.mjs';
+import {compareNames,sortedNames} from './ordering.mjs';
+import {type BoardState,sampleState,emptyState,parseBackup,serialize,count,recipeTotals,raidTargets,chooseRecipe,isComplete,plannedProduction,newRaid,maxCount} from './core.mjs';
 const $ = <T extends HTMLElement = HTMLElement>(id:string) => document.getElementById(id) as T;
 const key='dmz-raid-board-state-v1';
 const escape=(value:string)=>value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
@@ -35,19 +36,21 @@ function fileDownload(text:string,name:string){
 }
 function setMode(value:'plan'|'raid'){mode=value;notice('');render();$('planTab').focus();}
 function costText(recipe:Recipe){if(!recipe.costs)return 'Cost unconfirmed';const cash=recipe.costs['DMZ Cash'];const itemCount=Object.keys(recipe.costs).filter(k=>k!=='DMZ Cash').length;return (cash?'$'+fmt(cash)+' + ':'')+itemCount+' ingredient'+(itemCount===1?'':'s');}
+const installedRecipeImage=(recipe:Recipe)=>recipe.image&&installedImageFiles.includes(recipe.image)?recipe.image:undefined;
 function renderGoals(){
  const goals=recipes.filter(r=>['gunsmith','stash'].includes(r.id)||(state.selected[r.id]||0)>0);
- $('upgrades').innerHTML=goals.map(r=>`<button class="upgrade ${state.selected[r.id]?'on':''}" data-recipe="${escape(r.id)}" aria-pressed="${!!state.selected[r.id]}" aria-label="${escape(r.name)}"><span class="symbol" aria-hidden="true">${r.category==='Upgrades'?'◈':'+'}</span><div><h3>${escape(r.name)}</h3><p>${r.id==='gunsmith'?'5% off Gunsmith purchases':r.id==='stash'?'Expand your item stash':escape(r.category)}</p><p>${escape(costText(r))}${r.category!=='Upgrades'?' · Quantity '+(state.selected[r.id]||0):''}</p></div><span class="selection" aria-hidden="true">${state.selected[r.id]?'✓':'+'}</span></button>`).join('');
+ $('upgrades').innerHTML=goals.map(r=>`<button class="upgrade ${state.selected[r.id]?'on':''}" data-recipe="${escape(r.id)}" aria-pressed="${!!state.selected[r.id]}" aria-label="${escape(r.name)}"><span class="symbol" aria-hidden="true">${installedRecipeImage(r)?`<img src="assets/${escape(installedRecipeImage(r)!)}" alt="">`:r.category==='Upgrades'?'◈':'+'}</span><div><h3>${escape(r.name)}</h3><p>${r.id==='gunsmith'?'5% off Gunsmith purchases':r.id==='stash'?'Expand your item stash':escape(r.category)}</p><p>${escape(costText(r))}${r.category!=='Upgrades'?' · Quantity '+(state.selected[r.id]||0):''}</p></div><span class="selection" aria-hidden="true">${state.selected[r.id]?'✓':'+'}</span></button>`).join('');
 }
 function renderCatalog(){
  const category=$<HTMLSelectElement>('category').value;
  const term=$<HTMLInputElement>('search').value.trim().toLowerCase();
- const shown=recipes.filter(r=>(category==='All'||r.category===category)&&[r.name,...Object.keys(r.costs||{})].join(' ').toLowerCase().includes(term));
+ const shown=recipes.filter(r=>(category==='All'||r.category===category)&&[r.name,...Object.keys(r.reportedCosts||r.costs||{})].join(' ').toLowerCase().includes(term)).sort((a,b)=>compareNames(a.name,b.name)||compareNames(a.id,b.id));
  $('catalogStatus').textContent=shown.length+' entries shown · '+checked;
  $('catalogList').innerHTML=shown.length?shown.map(r=>{
   const selected=state.selected[r.id]||0;
-  const costs=r.costs?Object.entries(r.costs).map(([name,n])=>name==='DMZ Cash'?'$'+fmt(n):fmt(n)+' × '+escape(name)).join(' · '):'Cost not confirmed — selection unavailable';
-  return `<article class="catalogEntry"><div><h3>${escape(r.name)}</h3><p>${costs}</p><p class="status">${escape(r.status)} · ${checked}</p><p>${escape(r.note)}</p><details><summary>Source</summary><p class="sourceUrl">${escape(r.source)}</p></details></div>${r.costs?`<div class="catalogControl"><button class="secondary" data-recipe="${escape(r.id)}" aria-label="${selected?'Remove':'Add'} ${escape(r.name)}" aria-pressed="${!!selected}">${selected?'✓ Selected':'+ Select'}</button>${r.category!=='Upgrades'?`<label>Quantity <input type="number" min="0" max="99" step="1" value="${selected}" data-quantity="${escape(r.id)}" aria-label="${escape(r.name)} quantity"></label>`:'<span class="micro">FIXED PERMANENT TIER</span>'}</div>`:'<span class="unconfirmed">Unconfirmed</span>'}</article>`;
+  const listed=r.costs||r.reportedCosts;
+  const costs=(listed?Object.entries(listed).map(([name,n])=>name==='DMZ Cash'?'$'+fmt(n):fmt(n)+' × '+escape(name)).join(' · '):'No confirmed cost')+(!r.costs?' · Incomplete/conflicting: selection unavailable':'');
+  return `<article class="catalogEntry">${installedRecipeImage(r)?`<img class="catalogThumb" src="assets/${escape(installedRecipeImage(r)!)}" alt="${escape(r.name)}">`:''}<div class="catalogText"><h3>${escape(r.name)}</h3><p>${costs}</p><p class="status">${escape(r.status)} · ${escape(r.checked||checked)}</p><p>${escape(r.note)}</p>${r.requires?`<p>Requires: ${escape(r.requires)}</p>`:''}<details><summary>Source</summary><p class="sourceUrl">${(r.sources||[{url:r.source,checked}]).map(s=>escape(s.url)+' · checked '+escape(s.checked)).join('<br>')}</p></details></div>${r.costs?`<div class="catalogControl"><button class="secondary" data-recipe="${escape(r.id)}" aria-label="${selected?'Remove':'Add'} ${escape(r.name)}" aria-pressed="${!!selected}">${selected?'✓ Selected':'+ Select'}</button>${r.category!=='Upgrades'?`<label>${r.category==='Ingredients'?'Planned prints':'Quantity'} <input type="number" min="0" max="99" step="1" value="${selected}" data-quantity="${escape(r.id)}" aria-label="${escape(r.name)} quantity"></label>`:'<span class="micro">FIXED PERMANENT TIER</span>'}</div>`:'<span class="unconfirmed">Unconfirmed</span>'}</article>`;
  }).join(''):'<p>No matching recipes in this category.</p>';
 }
 function render(){
@@ -56,7 +59,8 @@ function render(){
  $<HTMLInputElement>('hideDone').checked=state.hideCompleted;
  renderGoals();renderCatalog();
  const totals=recipeTotals(state),targets=raidTargets(state);
- const active=Object.keys(targets);const wanted=active.filter(name=>targets[name]>0);
+ const active=sortedNames(Object.keys(targets));const wanted=active.filter(name=>targets[name]>0);
+ const printing=plannedProduction(state);$('printingNote').hidden=!Object.keys(printing).length;$('printingNote').textContent='Planned printing: '+sortedNames(Object.keys(printing)).map(name=>fmt(printing[name])+' '+name).join(', ')+'. These planned outputs offset matching required ingredients once. Print only with already-unlocked recipes; no other recipe is expanded automatically and no real production is credited.';
  $('navCount').textContent=String(wanted.length);
  let collected=0,total=0;
  for(const name of wanted){total+=targets[name];collected+=Math.min(targets[name],state.picked[name]||0);}
@@ -109,6 +113,6 @@ $('sourcesBtn').addEventListener('click',()=>$<HTMLDialogElement>('sources').sho
 $('closeSources').addEventListener('click',()=>$<HTMLDialogElement>('sources').close());
 $<HTMLSelectElement>('category').innerHTML='<option>All</option>'+categories.map(c=>`<option ${c==='Upgrades'?'selected':''}>${c}</option>`).join('');
 $<HTMLSelectElement>('directItem').innerHTML=materials.filter(m=>m!=='DMZ Cash').map(m=>`<option>${escape(m)}</option>`).join('');
-const coverage=`${recipes.length} entries · ${recipes.filter(r=>r.costs).length} costed · ${Object.keys(art).length} pictures`;
+const coverage=`${recipes.length} entries · ${recipes.filter(r=>r.costs).length} costed · ${Object.keys(art).length} target images`;
 $('coverage').textContent=coverage;$('sourceCoverage').textContent=coverage+'. '+recipes.filter(r=>!r.costs).length+' entries have unknown/conflicting costs and are disabled. Category coverage does not mean complete recipe coverage.';
 render();

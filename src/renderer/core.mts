@@ -37,7 +37,8 @@ export function validateState(value: unknown): BoardState {
   if(n && !recipe?.costs) throw new Error('Cannot select an unconfirmed recipe.');
   if(recipe?.category==='Upgrades' && n>1) throw new Error('Permanent upgrade tiers can only be selected once.');
  }
- if(Object.keys(selected).filter(id=>id.startsWith('bank-')&&selected[id]>0).length>1) throw new Error('Select one Bank tier at a time; earlier tiers must already be owned.');
+ const families=new Set<string>();
+ for(const [id,n] of Object.entries(selected))if(n){const family=recipes.find(r=>r.id===id)?.family;if(family){if(families.has(family))throw new Error('Select one tier per upgrade family; earlier tiers must already be owned.');families.add(family);}}
  return {version:1,selected,targets:readCounts(value.targets,knownMaterials),picked:readCounts(value.picked,knownMaterials),completed:[...value.completed] as string[],hideCompleted:value.hideCompleted};
 }
 export function parseBackup(text: string): BoardState {
@@ -52,7 +53,17 @@ export function recipeTotals(state: BoardState): Costs {
   if(!recipe.costs || !n) continue;
   for(const [name,amount] of Object.entries(recipe.costs)) totals[name]=(totals[name]||0)+amount*n;
  }
+ // Only explicitly selected ingredient crafts offset matching required outputs.
+ // No recipes are expanded automatically, and planning never credits real production/stash.
+ for(const [name,amount] of Object.entries(plannedProduction(state))){
+  if(name in totals){totals[name]=Math.max(0,totals[name]-amount);if(totals[name]===0)delete totals[name];}
+ }
  return totals;
+}
+export function plannedProduction(state:BoardState):Costs {
+ const outputs:Costs={};
+ for(const recipe of recipes)if(recipe.category==='Ingredients'&&recipe.costs&&(state.selected[recipe.id]||0)>0)outputs[recipe.name]=(outputs[recipe.name]||0)+(state.selected[recipe.id]||0)*(recipe.outputPerCraft||1);
+ return outputs;
 }
 export function raidTargets(state: BoardState): Costs {
  const result={...recipeTotals(state),...state.targets};delete result['DMZ Cash'];return result;
@@ -62,7 +73,7 @@ export function chooseRecipe(state: BoardState, id: string, n: number): BoardSta
  if(!recipe?.costs) throw new Error('This recipe has unconfirmed costs.');
  count(n,recipe.category==='Upgrades'?1:99);
  const selected={...state.selected};
- if(n && id.startsWith('bank-')) for(const other of Object.keys(selected)) if(other.startsWith('bank-'))delete selected[other];
+ if(n && recipe.family) for(const other of Object.keys(selected)) if(recipes.find(r=>r.id===other)?.family===recipe.family)delete selected[other];
  if(n)selected[id]=n;else delete selected[id];
  return {...state,selected};
 }
