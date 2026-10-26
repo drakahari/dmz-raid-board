@@ -8,7 +8,7 @@ export interface Recipe {
  id:string;name:string;category:Category;costs:Costs|null;reportedCosts?:Costs|null;
  source:string;status:string;note:string;checked:string;requires?:string;
  family?:string;tier?:number;outputPerCraft?:number;image?:string;effect?:string;
- ownerVerification?:{date:string;evidence:string;cashRequired:number};
+ ownerVerification?:{date:string;evidence:string;cashRequired?:number;scope?:string};
  sources?:Array<{url:string;checked:string;sourceUpdated?:string}>;
 }
 export const checked='2026-10-25';

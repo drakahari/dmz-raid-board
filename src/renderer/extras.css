@@ -23,3 +23,7 @@ progress{height:7px;border:0;flex:1;background:#30372a;min-width:70px;border-rad
 .art .source-crop{position:relative;display:block;overflow:hidden;width:156px;height:104px;border-radius:4px;flex-shrink:0}
 .art .regional-notes-screenshot img{position:absolute;display:block;width:512.2px;height:412.1px;max-width:none;max-height:none;left:-188.5px;top:-162.5px;object-fit:fill;filter:none}
 .art .source-crop[hidden]{display:none}
+
+.targetActions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.targetAction{padding:8px;font-size:11px;min-height:36px}#omittedTargets p{font-size:12px;line-height:1.6}#omittedTargets button{margin:5px}#migrationNotice{margin-bottom:20px}
+
+.itemRemove{margin-top:10px;width:100%}

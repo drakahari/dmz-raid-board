@@ -1,3 +1,4 @@
+import {sampleState,serialize} from '../dist/renderer/core.mjs';
 import {_electron as electron} from '@playwright/test';
 import assert from 'node:assert/strict';
 import {mkdtemp,mkdir,writeFile,readFile} from 'node:fs/promises';
@@ -9,7 +10,7 @@ const publicBuild=process.argv.includes('--public');const artworkBuild=process.a
 const version=JSON.parse(await readFile('package.json','utf8')).version;
 const profile=await mkdtemp(path.join(qa,publicBuild?'public-release-':'private-release-'));
 let app;const checks=[];const pass=s=>{checks.push(s);console.log('PASS: '+s);};
-async function launch(){app=await electron.launch({executablePath:path.join(extraction,'DMZ Raid Board.exe'),args:['--profile-dir',profile],cwd:extraction,timeout:60000});const page=await app.firstWindow();await page.locator('#items .item').first().waitFor();return page;}
+async function launch(){app=await electron.launch({executablePath:path.join(extraction,'DMZ Raid Board.exe'),args:['--profile-dir',profile],cwd:extraction,timeout:60000});const page=await app.firstWindow();await page.locator('#settingsBtn').waitFor();if(!await page.evaluate(()=>localStorage.getItem('qa-fixture-ready'))){await page.evaluate(raw=>{localStorage.setItem('dmz-raid-board-state-v2',raw);localStorage.setItem('qa-fixture-ready','1');},serialize(sampleState()));await page.reload();}await page.locator('#items .item').first().waitFor();return page;}
 try{
  let page=await launch();assert.equal(await app.evaluate(({app})=>app.getVersion()),version);
  assert.equal(await app.evaluate(({app})=>app.isPackaged),true);

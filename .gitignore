@@ -60,3 +60,6 @@ candidate-output/
 !branding/dmz-icon.png
 !/tests/loot-view.test.mjs
 !/tests/version.test.mjs
+
+!/tests/targets.test.mjs
+!/tests/target-core.test.mjs

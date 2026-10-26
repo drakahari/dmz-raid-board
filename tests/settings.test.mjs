@@ -1,3 +1,4 @@
+import {sampleState,serialize} from '../dist/renderer/core.mjs';
 import {_electron as electron} from '@playwright/test';
 import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir,mkdtemp} from 'node:fs/promises';
@@ -8,9 +9,9 @@ const root=process.cwd(),qa=path.join(root,'.qa');await mkdir(qa,{recursive:true
 const profile=await mkdtemp(path.join(qa,'settings-'));const extraction=process.argv[2];const packaged=!!extraction;
 const screenshots=path.join(qa,packaged?'settings-packaged':'settings-source');await mkdir(screenshots,{recursive:true});
 let app,page;const checks=[];const pass=name=>{checks.push(name);console.log('PASS: '+name);};
-async function launch(){app=await electron.launch(packaged?{executablePath:path.join(extraction,'DMZ Raid Board.exe'),args:['--profile-dir',profile],cwd:extraction}:{args:['.','--profile-dir',profile],cwd:root});page=await app.firstWindow();await page.locator('#items .item').first().waitFor();}
+async function launch(){app=await electron.launch(packaged?{executablePath:path.join(extraction,'DMZ Raid Board.exe'),args:['--profile-dir',profile],cwd:extraction}:{args:['.','--profile-dir',profile],cwd:root});page=await app.firstWindow();await page.locator('#settingsBtn').waitFor();if(!await page.evaluate(()=>localStorage.getItem('qa-fixture-ready'))){await page.evaluate(raw=>{localStorage.setItem('dmz-raid-board-state-v2',raw);localStorage.setItem('qa-fixture-ready','1');},serialize(sampleState()));await page.reload();}await page.locator('#items .item').first().waitFor();}
 async function open(){await page.locator('#settingsBtn').click();await page.locator('#settings').waitFor();}
-const state=()=>page.evaluate(()=>localStorage.getItem('dmz-raid-board-state-v1'));
+const state=()=>page.evaluate(()=>localStorage.getItem('dmz-raid-board-state-v2'));
 async function chooseFile(file){const chooserPromise=page.waitForEvent('filechooser');await page.locator('#settingsImport').click();const chooser=await chooserPromise;await chooser.setFiles(file);}
 const hex=rgb=>'#'+rgb.match(/[\d.]+/g).slice(0,3).map(v=>Math.round(Number(v)).toString(16).padStart(2,'0')).join('');
 async function colorCheck(selectors,minimum=4.5){
@@ -53,7 +54,7 @@ try{
  await page.locator('#closeSettings').click();await page.getByLabel('CPU target',{exact:true}).fill('9');await page.getByLabel('CPU target',{exact:true}).press('Tab');
  const edited=await state();await open();await chooseFile(backup);await page.locator('#cancelAction').click();assert.equal(await state(),edited);assert(await page.locator('#settings').isVisible());assert(await page.locator('#settingsImport').evaluate(el=>el===document.activeElement));
  await chooseFile(backup);await page.locator('#confirmAction').click();await page.locator('#settings').waitFor({state:'hidden'});assert.equal(await state(),originalState);assert.equal(await page.locator('html').getAttribute('data-theme'),'purple-gold');assert(await page.locator('#settingsBtn').evaluate(el=>el===document.activeElement));
- pass('Settings native export/file chooser, corrupt backup rejection, import cancel/confirm and unchanged v1 backup format');
+ pass('Settings native export/file chooser, corrupt backup rejection, import cancel/confirm and v2 backup export/import');
  await app.close();await launch();assert.equal(await page.locator('html').getAttribute('data-theme'),'purple-gold');assert.equal(await state(),originalState);pass('actual process close/relaunch preserves theme separately from all board data');
  await page.evaluate(key=>localStorage.setItem(key,'<invalid-theme>'),themeKey);await page.reload();await page.locator('#items .item').first().waitFor();assert.equal(await page.locator('html').getAttribute('data-theme'),'original');assert.equal(await state(),originalState);pass('invalid saved theme safely falls back to original without changing board data');
  await app.evaluate(({BrowserWindow})=>{const window=BrowserWindow.getAllWindows()[0];window.setSize(800,650);window.webContents.setZoomFactor(1.25);});await page.waitForFunction(()=>innerWidth<800);

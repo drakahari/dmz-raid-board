@@ -1,7 +1,7 @@
 name: Native platform candidates
 on:
   push:
-    branches: [platform-candidates, release-0.1.5]
+    branches: [platform-candidates, release-0.1.5, fix/recipe-target-baselines]
   workflow_dispatch:
 permissions:
   contents: read
@@ -37,7 +37,7 @@ jobs:
       - run: npm ci
       - run: node scripts/seed-release-artwork.mjs
       - run: npm run build:artwork
-      - run: node --test tests/core.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs
+      - run: node --test tests/core.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs
       - run: node scripts/package-platform-candidate.mjs
       - if: runner.os == 'macOS'
         run: node tests/platform-candidate.test.mjs

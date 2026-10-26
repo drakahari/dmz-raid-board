@@ -22,7 +22,7 @@ export const catalogData = [
     "status": "Community-reported tier",
     "note": "Approved sample. Reported costs; capacity benefit and full unlock conditions are unconfirmed. Prior tier must already be owned.",
     "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/stash-item-upgrade/",
@@ -294,7 +294,6 @@ export const catalogData = [
     "family": "stash-item",
     "tier": 3,
     "costs": {
-      "DMZ Cash": 100000,
       "Binding Catalyst": 20,
       "Stock Rod": 20,
       "Alloyed Plating": 10
@@ -306,10 +305,10 @@ export const catalogData = [
       "Alloyed Plating": 10
     },
     "source": "https://dmzcodex.com/upgrades/stash-item-upgrade/",
-    "status": "Community-reported tier",
-    "note": "Community-reported costs and benefit; check the current tier card.",
-    "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "status": "Owner-verified item requirements",
+    "note": "Owner screenshot confirms the required items and 18 additional stash slots; owned inventory is not a requirement.",
+    "checked": "2026-10-26",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/stash-item-upgrade/",
@@ -317,7 +316,13 @@ export const catalogData = [
         "checked": "2026-10-25"
       }
     ],
-    "image": "upgrade-stash-item.png"
+    "image": "upgrade-stash-item.png",
+    "ownerVerification": {
+      "date": "2026-10-26",
+      "scope": "Item requirements only; no monetary requirement inferred",
+      "evidence": "Owner-provided gameplay screenshot; required item counts confirmed, independently of owned inventory."
+    },
+    "effect": "Adds 18 stash slots"
   },
   {
     "id": "stash-4",
@@ -336,7 +341,7 @@ export const catalogData = [
     "status": "Incomplete tier costs",
     "note": "Cash is not documented. Materials are reported only; not selectable as a complete cost.",
     "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/stash-item-upgrade/",
@@ -405,7 +410,7 @@ export const catalogData = [
     "status": "Community-reported tier",
     "note": "Community-reported tier; prior tier must already be owned.",
     "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/stash-weapon-upgrade/",
@@ -432,7 +437,7 @@ export const catalogData = [
     "status": "Incomplete tier costs",
     "note": "Cash is not documented. Reported materials do not establish a complete cost.",
     "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/stash-weapon-upgrade/",
@@ -484,7 +489,6 @@ export const catalogData = [
     "family": "dog-tag",
     "tier": 2,
     "costs": {
-      "DMZ Cash": 50000,
       "Detonators": 20,
       "Nylon Cloth": 10,
       "Power Regulator": 5
@@ -496,10 +500,10 @@ export const catalogData = [
       "Power Regulator": 5
     },
     "source": "https://dmzcodex.com/upgrades/dog-tag-case-storage-upgrade/",
-    "status": "Community-reported tier",
-    "note": "Reported +20 tag slots; prior tier must already be owned.",
-    "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "status": "Owner-verified item requirements",
+    "note": "Owner screenshot confirms 20 Detonators, 10 Nylon Cloth, 5 Power Regulator and a 20-slot capacity increase. Item amounts already matched.",
+    "checked": "2026-10-26",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/dog-tag-case-storage-upgrade/",
@@ -507,7 +511,13 @@ export const catalogData = [
         "checked": "2026-10-25"
       }
     ],
-    "image": "upgrade-dog-tag.png"
+    "image": "upgrade-dog-tag.png",
+    "ownerVerification": {
+      "date": "2026-10-26",
+      "scope": "Item requirements only; no monetary requirement inferred",
+      "evidence": "Owner-provided gameplay screenshot; only required item counts used."
+    },
+    "effect": "Dog tag case capacity increase: 20"
   },
   {
     "id": "gunsmith-2",
@@ -531,7 +541,7 @@ export const catalogData = [
     "status": "Community-reported tier",
     "note": "Cash is a secondary community report, not independently verified in game. Discount stacking is unconfirmed.",
     "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/gunsmith-discount/",
@@ -598,7 +608,7 @@ export const catalogData = [
     "status": "Owner-verified current game requirements",
     "note": "Owner-verified 2026-10-25: four material requirements and no cash. Tier effect: 5% recovery cost reduction; cumulative stacking is not inferred. Inventory-owned counts are not recipe requirements.",
     "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/mia-recovery-discount/",
@@ -620,7 +630,12 @@ export const catalogData = [
     "category": "Upgrades",
     "family": "mia",
     "tier": 3,
-    "costs": null,
+    "costs": {
+      "W.M.D. Manifest": 5,
+      "Foreign Intelligence Targets": 5,
+      "Power Regulator": 10,
+      "Comms Module": 10
+    },
     "reportedCosts": {
       "W.M.D. Manifest": 5,
       "Foreign Intelligence Targets": 5,
@@ -628,10 +643,10 @@ export const catalogData = [
       "Comms Module": 10
     },
     "source": "https://dmzcodex.com/upgrades/mia-recovery-discount/",
-    "status": "Incomplete tier costs",
-    "note": "Materials match another reference, but no-cash status is not established; discount stacking is unconfirmed.",
-    "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "status": "Owner-verified item requirements",
+    "note": "Current game item requirements verified by owner screenshot; cumulative discount stacking remains unconfirmed.",
+    "checked": "2026-10-26",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/mia-recovery-discount/",
@@ -644,7 +659,12 @@ export const catalogData = [
         "checked": "2026-10-25"
       }
     ],
-    "image": "upgrade-mia.png"
+    "image": "upgrade-mia.png",
+    "ownerVerification": {
+      "date": "2026-10-26",
+      "scope": "Item requirements only; no monetary requirement inferred",
+      "evidence": "Owner-provided gameplay screenshot; required item counts confirmed, independently of owned inventory."
+    }
   },
   {
     "id": "mia-4",
@@ -663,7 +683,7 @@ export const catalogData = [
     "status": "Incomplete tier costs",
     "note": "Cash is undocumented; materials and benefit are community reports.",
     "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/mia-recovery-discount/",
@@ -722,7 +742,7 @@ export const catalogData = [
     "status": "Incomplete tier costs",
     "note": "Cash and exact offer benefit are undocumented; earlier tier required.",
     "checked": "2026-10-25",
-    "requires": "Requires previous tier already owned in game; only this tier is budgeted.",
+    "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/vendor-item-slots-upgrade/",
@@ -751,9 +771,9 @@ export const catalogData = [
       "Comms Module": 5
     },
     "source": "https://dmzcodex.com/upgrades/ingredient-printing/",
-    "status": "Community-reported tier",
-    "note": "Unlock goal only; selecting it does not grant access to printing recipes.",
-    "checked": "2026-10-25",
+    "status": "Owner-verified item requirements",
+    "note": "Owner screenshot confirms 20 Biomaterials, 10 High-Tenacity Fibers and 5 Comms Module. Unlock goal only; selecting it does not grant access to printing recipes.",
+    "checked": "2026-10-26",
     "requires": "3D Printer (DMZ Level 2).",
     "sources": [
       {
@@ -767,7 +787,12 @@ export const catalogData = [
         "checked": "2026-10-25"
       }
     ],
-    "image": "upgrade-uncommon-printing.png"
+    "image": "upgrade-uncommon-printing.png",
+    "ownerVerification": {
+      "date": "2026-10-26",
+      "scope": "Item requirements only; no monetary requirement inferred",
+      "evidence": "Owner-provided gameplay screenshot; required item counts confirmed, independently of owned inventory."
+    }
   },
   {
     "id": "epic-printing",
@@ -776,7 +801,6 @@ export const catalogData = [
     "family": "epic-printing",
     "tier": 1,
     "costs": {
-      "DMZ Cash": 100000,
       "Binding Catalyst": 10,
       "Printed Circuit Board": 10,
       "Military Composites": 5
@@ -788,9 +812,9 @@ export const catalogData = [
       "Military Composites": 5
     },
     "source": "https://dmzcodex.com/upgrades/epic-ingredient-printing/",
-    "status": "Community-reported tier",
-    "note": "Unlock goal only; selecting it does not grant access to printing recipes.",
-    "checked": "2026-10-25",
+    "status": "Owner-verified item requirements",
+    "note": "Owner screenshot confirms 10 Binding Catalyst, 10 Printed Circuit Board and 5 Military Composites. Item amounts already matched. Selecting this goal does not grant printing unlocks.",
+    "checked": "2026-10-26",
     "requires": "3D Printer (DMZ Level 2).",
     "sources": [
       {
@@ -804,7 +828,12 @@ export const catalogData = [
         "checked": "2026-10-25"
       }
     ],
-    "image": "upgrade-epic-printing.png"
+    "image": "upgrade-epic-printing.png",
+    "ownerVerification": {
+      "date": "2026-10-26",
+      "scope": "Item requirements only; no monetary requirement inferred",
+      "evidence": "Owner-provided gameplay screenshot; only required item counts used."
+    }
   },
   {
     "id": "energy-drink",

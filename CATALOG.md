@@ -2,11 +2,11 @@
 
 Checked: 2026-10-25. Costs are community reports and must be checked against the current game before spending resources. No claim of a complete in-game catalog or image collection is made.
 
-The catalog contains 120 entries: all 95 non-upgrade crafting recipes in the two compared references and 25 explicitly reported upgrade tiers across nine upgrade families. There are 112 selectable entries and eight disabled entries. This is completeness against the compared published lists, not verification that every in-game tier is known. Every record retains checked date, source links, cost status and prerequisites/uncertainty.
+The catalog contains 120 entries: all 95 non-upgrade crafting recipes in the two compared references and 25 explicitly reported upgrade tiers across nine upgrade families. There are 113 selectable entries and seven disabled entries. This is completeness against the compared published lists, not verification that every in-game tier is known. Every record retains checked date, source links, cost status and prerequisites/uncertainty.
 
 | Category | Entries | Selectable | Disabled |
 |---|---:|---:|---:|
-| Upgrades | 25 | 19 | 6 |
+| Upgrades | 25 | 20 | 5 |
 | Consumables | 9 | 8 | 1 |
 | Plate Carriers | 8 | 8 | 0 |
 | Backpacks | 10 | 10 | 0 |
@@ -30,7 +30,7 @@ All 95 non-upgrade costs match after normalizing Control Unit/Units and Concussi
 
 Seven upgrade tiers retain partial material reports but stay disabled: Stash Item IV, Stash Weapon III, MIA Recovery II–IV and Vendor Item I–II. Cash is not documented as zero. MIA II also has a Binding Catalyst discrepancy. These require current game cards showing the full materials, cash and unlock line. Other later tiers are community reports, not independent game verification. Level-reward families such as Active Duty slots, tag bounty payouts and Vendor weapon offers are not presented as printer purchases.
 
-The 14 ingredient-printing recipes require the corresponding Uncommon/Epic printing upgrade already unlocked in game. A selected ingredient craft plans one output unit per craft using the community reference's per-unit examples. Explicit planned outputs offset matching required ingredients once; recipes are not recursively expanded, and no actual crafting, stash or extraction is credited. User raid targets remain independent overrides.
+The 14 ingredient-printing recipes require the corresponding Uncommon/Epic printing upgrade already unlocked in game. A selected ingredient craft plans one output unit per craft using the community reference's per-unit examples. Explicit planned outputs offset matching required ingredients once; recipes are not recursively expanded, and no actual crafting, stash or extraction is credited. Recipe baselines, relative adjustments and explicit extras are separate; see [target planning](docs/target-planning.md).
 
 ## Images
 
@@ -39,3 +39,17 @@ The source omits the individual game-image collection, while its documentation p
 The private reference set was inspected as source pixels and includes collection-target images, recipe output images and upgrade-family menu icons. Regional Combat Notes now uses an owner-supplied game screenshot, presented with a notebook-only CSS crop. Its inventory stack label does not change recipe quantities. Foreign Intelligence Targets remains explicitly pending at the owner's request; no verified item picture has been established from the reviewed references. Some variants share a source icon, and family menu icons are not tier-card screenshots. Catalog and image coverage are separate.
 
 DMZ Codex's robots file explicitly welcomes crawling/citation, but that is not an artwork redistribution license. Its About page attributes game art to Activision. No broader public grant for these game-item images was established. Activision's brand-asset terms apply to assets provided through its brand materials; Xbox rules are publisher-scoped and were not silently extended to unrelated assets. Game images and documentation screenshots containing them remain outside the MIT code license. See THIRD-PARTY-ARTWORK.md. No restricted site's image collection or generated lookalike art is used.
+
+## Owner evidence update — 2026-10-26
+
+Owner gameplay screenshots confirm these **required** quantities. Owned counts are not substituted for requirements. Per-record verification scope is item requirements; no new monetary requirement or zero-money claim is inferred.
+
+| Goal | Required items | Verified benefit |
+|---|---|---|
+| MIA Recovery Discount III | W.M.D. Manifest 5; Foreign Intelligence Targets 5; Power Regulator 10; Comms Module 10 | Cumulative discount effect unconfirmed |
+| Stash Item Upgrade III | Binding Catalyst 20; Stock Rod 20; Alloyed Plating 10 | 18 additional stash slots |
+| Uncommon Ingredient Printing | Biomaterials 20; High-Tenacity Fibers 10; Comms Module 5 | Item quantities already matched |
+| Dog Tag Case Upgrade II | Detonators 20; Nylon Cloth 10; Power Regulator 5 | Capacity increase 20; item quantities already matched |
+| Epic Ingredient Printing | Binding Catalyst 10; Printed Circuit Board 10; Military Composites 5 | Item quantities already matched |
+
+The new evidence makes MIA III selectable. The other four entries already had matching item amounts and are now marked owner-verified. Historical source reports remain in reported fields; money is omitted from the planning UI. Foreign Intelligence Targets image remains pending independently of correct recipe quantities. No new artwork was transferred for this update.

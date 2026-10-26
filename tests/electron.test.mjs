@@ -1,3 +1,4 @@
+import {sampleState,serialize} from '../dist/renderer/core.mjs';
 import { _electron as electron } from '@playwright/test';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, readdir } from 'node:fs/promises';
@@ -6,7 +7,7 @@ const root=process.cwd();const qa=path.join(root,'.qa');await mkdir(qa,{recursiv
 const profile=await mkdtemp(path.join(qa,'automated-'));
 const checks=[];let app,page;
 const check=(name)=>{checks.push(name);console.log('PASS: '+name);};
-async function launch(){app=await electron.launch({args:['.', '--profile-dir',profile],cwd:root,timeout:60000});page=await app.firstWindow();await page.locator('[data-card="CPU"]').waitFor();return page;}
+async function launch(){app=await electron.launch({args:['.', '--profile-dir',profile],cwd:root,timeout:60000});page=await app.firstWindow();await page.locator('#settingsBtn').waitFor();if(!await page.evaluate(()=>localStorage.getItem('qa-fixture-ready'))){await page.evaluate(raw=>{localStorage.setItem('dmz-raid-board-state-v2',raw);localStorage.setItem('qa-fixture-ready','1');},serialize(sampleState()));await page.reload();}await page.locator('[data-card="CPU"]').waitFor();return page;}
 try {
  await launch();
  assert.equal(await page.locator('.item').count(),5);
@@ -60,11 +61,11 @@ try {
  const backup=path.join(profile,'export.json');
  await app.evaluate(({session},destination)=>{globalThis.testDownload=new Promise(resolve=>session.defaultSession.once('will-download',(_event,item)=>{item.setSavePath(destination);item.once('done',(_event,result)=>resolve(result));}));return true;},backup);
  await page.getByRole('button',{name:'Export backup',exact:true}).click();assert.equal(await app.evaluate(async()=>await globalThis.testDownload),'completed');
- const exported=JSON.parse(await readFile(backup,'utf8'));assert.equal(exported.targets.CPU,3);assert.equal(exported.selected['bank-3'],1);check('native Electron download export produces valid versioned JSON');
+ const exported=JSON.parse(await readFile(backup,'utf8'));assert.equal(exported.adjustments.CPU,-7);assert.equal(exported.selected['bank-3'],1);check('native Electron download export produces valid versioned JSON');
  await app.close();await launch();assert.equal(await page.getByLabel('CPU target',{exact:true}).inputValue(),'3');assert.equal(await page.getByLabel('Chemicals target',{exact:true}).inputValue(),'30');check('persistence survives actual process close and relaunch');
  const bad=path.join(profile,'corrupt.json');await writeFile(bad,'{not json');await page.locator('#importFile').setInputFiles(bad);
  await page.getByText('Backup is not valid JSON. Your board has not changed.',{exact:true}).waitFor();assert.equal(await page.locator('#confirmDialog').isVisible(),false);assert.equal(await page.getByLabel('CPU target',{exact:true}).inputValue(),'3');
- const hostile=path.join(profile,'hostile.json');await writeFile(hostile,JSON.stringify({...exported,targets:{'<img src=x onerror=alert(1)>':4}}));await page.locator('#importFile').setInputFiles(hostile);await page.getByText('Backup includes an unknown item:',{exact:false}).waitFor();assert.equal(await page.locator('img[src=x]').count(),0);check('corrupt and hostile backups rejected without state replacement or HTML execution');
+ const hostile=path.join(profile,'hostile.json');await writeFile(hostile,JSON.stringify({...exported,extras:{'<img src=x onerror=alert(1)>':4}}));await page.locator('#importFile').setInputFiles(hostile);await page.getByText('Backup includes an unknown item:',{exact:false}).waitFor();assert.equal(await page.locator('img[src=x]').count(),0);check('corrupt and hostile backups rejected without state replacement or HTML execution');
  await page.getByLabel('CPU target',{exact:true}).fill('7');await page.getByLabel('CPU target',{exact:true}).press('Tab');
  await page.locator('#importFile').setInputFiles(backup);await page.getByRole('button',{name:'Cancel',exact:true}).click();assert.equal(await page.getByLabel('CPU target',{exact:true}).inputValue(),'7');
  await page.locator('#importFile').setInputFiles([]);await page.locator('#importFile').setInputFiles(backup);await page.getByRole('button',{name:'Import backup',exact:true}).click();assert.equal(await page.getByLabel('CPU target',{exact:true}).inputValue(),'3');check('import confirmation/cancel and valid backup round trip');
@@ -76,10 +77,10 @@ try {
  await page.screenshot({path:path.join(qa,'windows-800x650-125percent.png'),fullPage:true});check('keyboard Enter, 800×650 window and 125% app zoom without horizontal overflow');
  await app.evaluate(({BrowserWindow})=>{const w=BrowserWindow.getAllWindows()[0];w.setSize(1320,920);w.webContents.setZoomFactor(1);});
  await page.getByRole('button',{name:/01.*Plan your raid/}).click();await page.screenshot({path:path.join(qa,'windows-plan.png'),fullPage:true});
- await page.evaluate(()=>localStorage.setItem('dmz-raid-board-state-v1','{broken-saved'));
- await page.reload();await page.locator('#recovery').waitFor({state:'visible'});assert.equal(await page.evaluate(()=>localStorage.getItem('dmz-raid-board-state-v1')),'{broken-saved');check('corrupt persisted board is preserved and recovery shown');
+ await page.evaluate(()=>localStorage.setItem('dmz-raid-board-state-v2','{broken-saved'));
+ await page.reload();await page.locator('#recovery').waitFor({state:'visible'});assert.equal(await page.evaluate(()=>localStorage.getItem('dmz-raid-board-state-v2')),'{broken-saved');check('corrupt persisted board is preserved and recovery shown');
  await page.getByRole('button',{name:'Start fresh…',exact:true}).click();await page.getByRole('button',{name:'Cancel',exact:true}).click();assert.equal(await page.locator('#recovery').isVisible(),true);
- await page.getByRole('button',{name:'Start fresh…',exact:true}).click();await page.getByRole('button',{name:'Start fresh',exact:true}).click();assert.equal(await page.locator('#items .item').count(),0);assert.equal(await page.evaluate(()=>localStorage.getItem('dmz-raid-board-state-v1-recovery')),'{broken-saved');check('recovery cancel, confirmed fresh board, retained recovery copy and empty goals');
+ await page.getByRole('button',{name:'Start fresh…',exact:true}).click();await page.getByRole('button',{name:'Start fresh',exact:true}).click();assert.equal(await page.locator('#items .item').count(),0);assert.equal(await page.evaluate(()=>localStorage.getItem('dmz-raid-board-state-v2-recovery')),'{broken-saved');check('recovery cancel, confirmed fresh board, retained recovery copy and empty goals');
  console.log(JSON.stringify({profile,checks:checks.length,result:'PASS'},null,2));
  await writeFile(path.join(qa,'automated-results.json'),JSON.stringify({date:new Date().toISOString(),profile,checks,result:'PASS'},null,2));
 } finally {if(app)await app.close();}

@@ -18,9 +18,9 @@ test('adapted theme tokens meet text and control contrast across every DMZ surfa
   }assert(contrast(c.onAccent,c.accent)>=4.5,theme.id+' button label');
  }
 });
-test('appearance does not extend or invalidate version-1 board backups',()=>{
- const state=sampleState();state.targets.CPU=7;state.picked.CPU=2;state.completed=['Detonators'];
+test('appearance does not mutate version-2 boards or their backups',()=>{
+ const state=sampleState();state.adjustments.CPU=-3;state.picked.CPU=2;state.completed=['Detonators'];
  const before=serialize(state);for(const theme of themes)normalizeTheme(theme.id);
  assert.equal(serialize(state),before);assert.deepEqual(parseBackup(before),state);
- assert.deepEqual(Object.keys(JSON.parse(before)).sort(),['completed','hideCompleted','picked','selected','targets','version']);
+ assert.deepEqual(Object.keys(JSON.parse(before)).sort(),['adjustments','completed','extras','hideCompleted','picked','selected','version']);
 });

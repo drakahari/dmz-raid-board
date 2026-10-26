@@ -8,13 +8,13 @@ This is an unofficial community prototype, not affiliated with Activision. The r
 
 The artwork-inclusive prerelease contains third-party game imagery attributed to Activision/respective rights holders and sourced via DMZ Codex, plus an owner-provided gameplay screenshot. No affirmative reuse or redistribution license was established, and the app grants no downstream artwork rights. An artwork-free build remains available from source with `npm run package:public`. Extract the entire Windows x64 artwork-inclusive ZIP into a writable folder and run DMZ Raid Board.exe. Keep its accompanying files. The build is unsigned; no installation is required. Data is stored in the data folder beside the executable. Export/import a backup to move a board between folders.
 
-The 0.1.5 release targets Windows x64 portable ZIP, macOS Apple Silicon app ZIP/DMG, and Linux x64 AppImage. The app runs as a desktop application; an external browser is not required. No Intel Mac package is produced for this version.
+The desktop builds target Windows x64 portable ZIP, macOS Apple Silicon app ZIP/DMG, and Linux x64 AppImage. The app runs as a desktop application; an external browser is not required. No Intel Mac package is produced for this version.
 
 macOS builds are ad-hoc signed, without Developer ID signing or notarization. Native automated launch checks do not establish Gatekeeper acceptance on every Mac. Linux automated launch uses AppImage extract-and-run under Xvfb; FUSE mounting and desktop/distribution acceptance are separate checks. No system security changes or bypass instructions are included.
 
 ## Artwork-inclusive app preview
 
-![Actual Windows app in its original Raid Board theme, using the synthetic default sample](docs/app-default.png)
+![Actual 0.1.6 app in its original theme, showing a synthetic Uncommon Printing plan](docs/app-default.png)
 
 Captured from the actual artwork-inclusive Windows artifact using a separate test profile. Counts are synthetic examples, not owner inventory. No desktop, account details, local paths or private runtime data are shown. Game artwork in this preview is third-party material; the notice above applies.
 
@@ -33,7 +33,7 @@ The app works with labeled placeholders when artwork is absent. See [optional ar
 
 - Ten printer category views, recipe search and shared-ingredient totals.
 - Repeatable craft quantities and fixed permanent upgrade tiers.
-- Editable raid targets separate from recipe totals and picked-up counts.
+- Automatic recipe baselines, signed adjustments and explicit manual extras, separate from picked-up counts.
 - Raid +/- controls, completion checks, hide completed and confirmed new-raid reset.
 - Local persistence, validated versioned JSON backups and corrupt-data recovery.
 - A sandboxed renderer with context isolation, no Node/IPC bridge and blocked remote content.
@@ -42,9 +42,9 @@ Picking up is not extracting. The app does not track stash or actual extracted l
 
 ## Catalog status
 
-The catalog includes all 95 crafting recipes in the two compared public references, plus 25 explicitly reported upgrade tiers: 120 entries, 112 selectable and eight disabled for unresolved requirements. All ten categories have working recipes, including 14 ingredient-printing recipes. This covers the compared published lists, not a claim that every current/future in-game tier is known. See [catalog evidence](CATALOG.md).
+The catalog includes all 95 crafting recipes in the two compared public references, plus 25 explicitly reported upgrade tiers: 120 entries, 113 selectable and seven disabled for unresolved requirements. All ten categories have working recipes, including 14 ingredient-printing recipes. This covers the compared published lists, not a claim that every current/future in-game tier is known. See [catalog evidence](CATALOG.md).
 
-Ingredients sort A–Z in planning, raid cards and selectors. Printing is explicit: selected ingredient crafts offset their matching required output once; no other recipe expands automatically and no unlock/production is credited. Print only with recipes/upgrades already unlocked in your game. Direct manual targets still override computed totals.
+Ingredients sort A–Z in planning, raid cards and selectors. Printing is explicit: selected ingredient crafts offset their matching required output once; no other recipe expands automatically and no unlock/production is credited. Print only with recipes/upgrades already unlocked in your game. Manual extras add to the plan; edits to recipe items are signed adjustments that follow their baseline.
 
 ## Checks and packaging
 
@@ -66,6 +66,6 @@ MIA Recovery Discount II retains its owner-verified four material requirements f
 
 Use the visible Settings button at the top right for the app version, Export backup, Import backup and Theme. Original Raid Board remains the default. The other 26 choices adapt the confirmed DLMS collection, including Omarchy, with retained MIT notices; see THEMES.md. Layout and item artwork remain unchanged.
 
-Board backups keep the existing version-1 JSON format. Theme preference is saved separately. When moving to a new portable folder, export from the older app, extract the entire candidate into a new writable folder, open Settings in the candidate and import the JSON. Selections, raid targets, picked-up counts and checks transfer; choose your theme again once in the new folder. Keep the older app and its data until the import is verified. Prior releases and their data remain unchanged. Version 0.1.5 imports existing version-1 backups, retaining legacy fields even where those fields no longer appear in the interface.
+Version 0.1.6 imports older version-1 backups and exports version 2 with separate adjustments/extras. Legacy zero overrides are dropped with a visible migration notice; the original board/import is retained. Keep an old backup for older app versions. Theme preference is saved separately. When moving to a new portable folder, export from the older app, extract the entire candidate into a new writable folder, open Settings in the candidate and import the JSON. Selections, raid targets, picked-up counts and checks transfer; choose your theme again once in the new folder. Keep the older app and its data until the import is verified. Prior releases and their data remain unchanged. Version 0.1.6 uses a new storage key and retains the previous board for rollback; see the documented migration rules.
 
 See [native packaging notes](PLATFORM-CANDIDATES.md) for automated checks, per-user storage and signing limitations. The application icon is a separate owner-requested DMZ adaptation of the DLMS badge; see [icon provenance](branding/README.md). All previous release tags and binaries are preserved.
