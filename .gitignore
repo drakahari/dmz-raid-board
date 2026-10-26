@@ -39,3 +39,9 @@ assets/*
 !/tests/release.test.mjs
 
 !/THIRD-PARTY-ARTWORK.md
+
+!/THEMES.md
+!/tests/themes.test.mjs
+!/tests/settings.test.mjs
+
+!docs/app-settings.png

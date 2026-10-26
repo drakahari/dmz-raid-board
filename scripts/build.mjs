@@ -1,3 +1,4 @@
+import {themePaletteCss} from '../dist/renderer/themes.mjs';
 import {copyFile,mkdir,readdir,writeFile,rm,readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
@@ -12,7 +13,7 @@ await mkdir(renderer,{recursive:true});
 // Clear only the resolved generated artwork folder, preventing private art from surviving a public build.
 await rm(artwork,{recursive:true,force:true});
 await mkdir(artwork,{recursive:true});
-for(const name of ['index.html','style.css','extras.css'])await copyFile('src/renderer/'+name,path.join(renderer,name));
+for(const name of ['index.html','style.css','extras.css','themes.css'])await copyFile('src/renderer/'+name,path.join(renderer,name));
 const installed=publicBuild?[]:(await readdir('assets')).filter(name=>/^[a-z0-9-]+\.(png|webp)$/.test(name));
 let manifest;
 try{manifest=JSON.parse(await readFile('assets/private-provenance.json','utf8'));}catch(error){if(artworkRelease)throw Error('Artwork release needs the existing local images and provenance manifest. No images are downloaded.');}
@@ -31,3 +32,8 @@ await writeFile(path.join(renderer,'build-status.mjs'),'export const buildFlavor
 await copyFile('THIRD-PARTY-ARTWORK.md','dist/THIRD-PARTY-ARTWORK.md');
 await writeFile('dist/ARTWORK-SOURCES.json',JSON.stringify({mode:publicBuild?'no game art':artworkRelease?'artwork-inclusive prerelease':'private build',notice:'Attribution is not permission or endorsement. Third-party images are excluded from the MIT code license; no downstream artwork rights are granted.',images:sources},null,2)+'\n');
 console.log(`${publicBuild?'Artwork-free':artworkRelease?'Artwork-inclusive release':'Private'} build: ${installed.length} optional game images; private provenance is never copied.`);
+
+await writeFile(path.join(renderer,'theme-palettes.css'),themePaletteCss+'\n');
+await copyFile('THEMES.md','dist/THEMES.md');
+await mkdir('dist/theme-notices',{recursive:true});
+for(const name of ['LICENSE.DLMS','LICENSE.OMARCHY'])await copyFile('theme-notices/'+name,'dist/theme-notices/'+name);

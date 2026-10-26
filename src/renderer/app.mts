@@ -1,3 +1,4 @@
+import {themes,normalizeTheme,themeKey,defaultTheme} from './themes.mjs';
 import {buildFlavor} from './build-status.mjs';
 import {recipes,categories,materials,art as knownArt,checked,type Recipe,type Category,type ArtAsset} from './catalog.mjs';
 import {installedImageFiles} from './asset-status.mjs';
@@ -5,8 +6,18 @@ import {compareNames,sortedNames} from './ordering.mjs';
 import {type BoardState,sampleState,emptyState,parseBackup,serialize,count,recipeTotals,raidTargets,chooseRecipe,isComplete,plannedProduction,newRaid,maxCount} from './core.mjs';
 const $ = <T extends HTMLElement = HTMLElement>(id:string) => document.getElementById(id) as T;
 $('buildLabel').textContent=buildFlavor==='public'?'PUBLIC PRERELEASE / NO GAME ART':buildFlavor==='artwork'?'UNOFFICIAL PRERELEASE / GAME ART':'PRIVATE WINDOWS PROTOTYPE / 01';
-const key='dmz-raid-board-state-v1';
 const escape=(value:string)=>value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
+const settings=$<HTMLDialogElement>('settings');
+const themePicker=$<HTMLSelectElement>('themePicker');
+themePicker.innerHTML=[...new Set(themes.map(t=>t.group))].map(group=>'<optgroup label="'+escape(group)+'">'+themes.filter(t=>t.group===group).map(t=>'<option value="'+t.id+'">'+escape(t.name)+'</option>').join('')+'</optgroup>').join('');
+let selectedTheme=defaultTheme;try{selectedTheme=normalizeTheme(localStorage.getItem(themeKey));}catch{}
+document.documentElement.dataset.theme=selectedTheme;themePicker.value=selectedTheme;
+function openSettings(){if(!settings.open)settings.showModal();$('settingsMessage').hidden=true;themePicker.focus();}
+function closeSettings(){settings.close();}
+$('settingsBtn').addEventListener('click',openSettings);$('closeSettings').addEventListener('click',closeSettings);
+settings.addEventListener('close',()=>$('settingsBtn').focus());
+themePicker.addEventListener('change',()=>{selectedTheme=normalizeTheme(themePicker.value);document.documentElement.dataset.theme=selectedTheme;try{localStorage.setItem(themeKey,selectedTheme);$('themeFeedback').textContent=themes.find(t=>t.id===selectedTheme)!.name+' applied and saved.';}catch{$('themeFeedback').textContent='Theme applied for this session; device storage is unavailable.';}});
+const key='dmz-raid-board-state-v1';
 const fmt=(n:number)=>n.toLocaleString();
 const art=Object.fromEntries(Object.entries(knownArt).filter(([,asset])=>installedImageFiles.includes(asset.file)));
 let state:BoardState=sampleState();
@@ -18,7 +29,7 @@ catch {storageAvailable=false;}
 let pending:(()=>void)|null=null;
 let lastFocus:HTMLElement|null=null;
 const confirmDialog=$<HTMLDialogElement>('confirmDialog');
-function notice(message:string){$('notice').textContent=message;$('notice').hidden=!message;}
+function notice(message:string){const target=settings.open?$('settingsMessage'):$('notice');const other=settings.open?$('notice'):$('settingsMessage');target.textContent=message;target.hidden=!message;other.textContent='';other.hidden=true;}
 function showError(error:unknown){notice(error instanceof Error?error.message:'This action could not be completed. Your board has not changed.');}
 function save(){
  if(corruptRaw!==null){$('saved').textContent='Session only · saved data needs recovery';return;}
@@ -107,11 +118,13 @@ $('newRaid').addEventListener('click',()=>ask('Start a new raid?','Clear this ra
 $('restoreTotals').addEventListener('click',()=>ask('Use recipe totals?','Replace all custom raid targets with the selected recipes’ totals? Picked-up counts stay unchanged.',()=>{state.targets={};render();},'Use totals'));
 $('addTarget').addEventListener('click',()=>{try{const name=$<HTMLSelectElement>('directItem').value;const input=$<HTMLInputElement>('directCount');if(!input.value.trim())throw new Error('Enter a target.');state.targets[name]=count(Number(input.value));notice(name+' target updated.');render();}catch(e){showError(e);}});
 $('category').addEventListener('change',renderCatalog);$('search').addEventListener('input',renderCatalog);
-$('backup').addEventListener('click',()=>fileDownload(serialize(state),'DMZ-Raid-Board-backup-'+new Date().toISOString().slice(0,10)+'.json'));
-$('import').addEventListener('click',()=>{$<HTMLInputElement>('importFile').value='';$<HTMLInputElement>('importFile').click();});
+function exportBackup(){try{fileDownload(serialize(state),'DMZ-Raid-Board-backup-'+new Date().toISOString().slice(0,10)+'.json');if(settings.open){$('settingsMessage').textContent='Backup export started. Choose where to save the JSON file.';$('settingsMessage').hidden=false;}}catch(e){showError(e);}}
+function importBackup(){openSettings();$('settingsImport').focus();$<HTMLInputElement>('importFile').value='';$<HTMLInputElement>('importFile').click();}
+$('backup').addEventListener('click',exportBackup);$('settingsBackup').addEventListener('click',exportBackup);$('settingsImport').addEventListener('click',importBackup);
+$('import').addEventListener('click',importBackup);
 $('importFile').addEventListener('change',async()=>{
  const file=$<HTMLInputElement>('importFile').files?.[0];if(!file)return;
- try {if(file.size>1_000_000)throw new Error('Backup is too large (maximum 1 MB).');const next=parseBackup(await file.text());ask('Replace your board?','Import this valid backup and replace your current selections, raid targets, picked-up counts and checks? Your current board will be retained as a local recovery copy.',()=>{try{localStorage.setItem(key+'-recovery',corruptRaw??serialize(state));}catch{throw new Error('Could not preserve the current board. Export a backup first; import canceled.');}state=next;corruptRaw=null;storageAvailable=true;$('recovery').hidden=true;notice('Backup imported.');render();},'Import backup');}catch(e){showError(e);}
+ try {if(file.size>1_000_000)throw new Error('Backup is too large (maximum 1 MB).');const next=parseBackup(await file.text());ask('Replace your board?','Import this valid backup and replace your current selections, raid targets, picked-up counts and checks? Your current board will be retained as a local recovery copy.',()=>{try{localStorage.setItem(key+'-recovery',corruptRaw??serialize(state));}catch{throw new Error('Could not preserve the current board. Export a backup first; import canceled.');}state=next;corruptRaw=null;storageAvailable=true;$('recovery').hidden=true;if(settings.open)closeSettings();notice('Backup imported.');render();},'Import backup');}catch(e){showError(e);}
 });
 $('exportRecovery').addEventListener('click',()=>{if(corruptRaw!==null)fileDownload(corruptRaw,'DMZ-Raid-Board-recovery.txt');});
 $('freshBoard').addEventListener('click',()=>ask('Start a fresh board?','Keep the unreadable saved text as a recovery copy and replace the active board with an empty board?',()=>{try{localStorage.setItem(key+'-recovery',corruptRaw||'');}catch{throw new Error('Recovery copy could not be saved. Export the saved text first.');}state=emptyState();corruptRaw=null;storageAvailable=true;$('recovery').hidden=true;render();},'Start fresh'));

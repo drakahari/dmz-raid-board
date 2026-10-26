@@ -1,6 +1,6 @@
 {
   "name": "dmz-raid-board",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Private offline DMZ raid planning prototype",
   "private": true,
   "license": "MIT",
@@ -13,9 +13,10 @@
     "test:ui": "npm run build && node tests/electron.test.mjs",
     "package": "npm run build && electron-builder --win zip --x64",
     "build:public": "tsc -p tsconfig.json && node scripts/build.mjs --public",
-    "package:public": "npm run build:public && electron-builder --win zip --x64 --config.directories.output=release/0.1.3-public --config.win.artifactName=DMZ-Raid-Board-0.1.3-win-x64-portable-public.zip",
+    "package:public": "npm run build:public && electron-builder --win zip --x64 --config.directories.output=release/0.1.4-public --config.win.artifactName=DMZ-Raid-Board-0.1.4-win-x64-portable-public.zip",
     "build:artwork": "tsc -p tsconfig.json && node scripts/build.mjs --with-artwork",
-    "package:artwork": "npm run build:artwork && electron-builder --win zip --x64 --config.directories.output=release/0.1.3-with-artwork --config.win.artifactName=DMZ-Raid-Board-0.1.3-win-x64-portable-with-artwork.zip"
+    "package:artwork": "npm run build:artwork && electron-builder --win zip --x64 --config.directories.output=release/0.1.4-with-artwork --config.win.artifactName=DMZ-Raid-Board-0.1.4-win-x64-portable-with-artwork.zip",
+    "package:candidate": "npm run build:artwork && electron-builder --win zip --x64 --config.directories.output=release/0.1.4-candidate --config.win.artifactName=DMZ-Raid-Board-0.1.4-win-x64-settings-themes-candidate.zip"
   },
   "devDependencies": {
     "electron": "45.0.0",
@@ -27,7 +28,7 @@
     "appId": "private.dmz.raidboard",
     "productName": "DMZ Raid Board",
     "directories": {
-      "output": "release/0.1.3-private"
+      "output": "release/0.1.4-private"
     },
     "files": [
       "dist/**/*",
@@ -53,6 +54,14 @@
       {
         "from": "LICENSE",
         "to": "APP-LICENSE.txt"
+      },
+      {
+        "from": "THEMES.md",
+        "to": "THEMES.md"
+      },
+      {
+        "from": "theme-notices",
+        "to": "theme-notices"
       }
     ]
   }
