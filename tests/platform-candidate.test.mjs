@@ -1,3 +1,4 @@
+import {extractFile} from '@electron/asar';
 import {_electron as electron} from '@playwright/test';import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir,readdir,unlink} from 'node:fs/promises';import {execFileSync,spawnSync} from 'node:child_process';import path from 'node:path';import {createHash} from 'node:crypto';
 const iconHash=createHash('sha256').update(await readFile('branding/dmz-icon.png')).digest('hex');
@@ -16,7 +17,7 @@ try{
  let page=await launch();info=await app.evaluate(({app,BrowserWindow})=>({version:app.getVersion(),packaged:app.isPackaged,userData:app.getPath('userData'),appData:app.getPath('appData'),exe:app.getPath('exe'),platform:process.platform,arch:process.arch,args:process.argv,appPath:app.getAppPath(),sandbox:BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences().sandbox}));
  assert.equal(info.version,expectedVersion);assert.equal(info.packaged,true);assert.equal(info.arch,process.env.CANDIDATE_ARCH);assert.equal(info.sandbox,true);assert(!info.args.includes('--no-sandbox'));
  assert(info.userData.startsWith(info.appData+path.sep));assert(!info.userData.startsWith(path.dirname(info.exe)+path.sep));
- const bundledIconHash=await app.evaluate(({app})=>require('node:crypto').createHash('sha256').update(require('node:fs').readFileSync(require('node:path').join(app.getAppPath(),'dist/app-icon.png'))).digest('hex'));assert.equal(bundledIconHash,iconHash);
+ const bundledIconHash=createHash('sha256').update(extractFile(info.appPath,path.join('dist','app-icon.png'))).digest('hex');assert.equal(bundledIconHash,iconHash);
  if(process.platform==='darwin'){const bundle=path.resolve(path.dirname(executable),'../..');const plist=execFileSync('/usr/libexec/PlistBuddy',['-c','Print :CFBundleIconFile',path.join(bundle,'Contents/Info.plist')],{encoding:'utf8'}).trim();assert.equal((await readFile(path.join(bundle,'Contents/Resources',plist))).subarray(0,4).toString(),'icns');}else{assert((await readFile(path.join(path.dirname(info.exe),'.DirIcon'))).length>1000);}
  pass('packaged master icon matches source and native bundle/launcher icon asset exists');
  await writeFile(path.join(info.userData,'candidate-write-probe'),'ok');await unlink(path.join(info.userData,'candidate-write-probe'));pass('native packaged launch, renderer sandbox and writable per-user data outside app bundle/mount');
