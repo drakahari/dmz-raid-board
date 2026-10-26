@@ -45,3 +45,5 @@ assets/*
 !/tests/settings.test.mjs
 
 !docs/app-settings.png
+
+!docs/app-default.png

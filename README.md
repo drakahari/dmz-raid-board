@@ -10,7 +10,7 @@ The artwork-inclusive prerelease contains third-party game imagery attributed to
 
 ## Artwork-inclusive app preview
 
-![Actual Windows Settings and Purple & Gold theme with synthetic demo counts](docs/app-settings.png)
+![Actual Windows app in its original Raid Board theme, using the synthetic default sample](docs/app-default.png)
 
 Captured from the actual artwork-inclusive Windows artifact using a separate test profile. Counts are synthetic examples, not owner inventory. No desktop, account details, local paths or private runtime data are shown. Game artwork in this preview is third-party material; the notice above applies.
 
