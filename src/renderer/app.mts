@@ -1,5 +1,5 @@
 import {themes,normalizeTheme,themeKey,defaultTheme} from './themes.mjs';
-import {buildFlavor} from './build-status.mjs';
+import {buildFlavor,appVersion} from './build-status.mjs';
 import {recipes,categories,materials,art as knownArt,checked,type Recipe,type Category,type ArtAsset} from './catalog.mjs';
 import {installedImageFiles} from './asset-status.mjs';
 import {compareNames,sortedNames} from './ordering.mjs';
@@ -18,6 +18,7 @@ $('settingsBtn').addEventListener('click',openSettings);$('closeSettings').addEv
 settings.addEventListener('close',()=>$('settingsBtn').focus());
 themePicker.addEventListener('change',()=>{selectedTheme=normalizeTheme(themePicker.value);document.documentElement.dataset.theme=selectedTheme;try{localStorage.setItem(themeKey,selectedTheme);$('themeFeedback').textContent=themes.find(t=>t.id===selectedTheme)!.name+' applied and saved.';}catch{$('themeFeedback').textContent='Theme applied for this session; device storage is unavailable.';}});
 const key='dmz-raid-board-state-v1';
+$('appVersion').textContent='DMZ Raid Board '+appVersion;
 const fmt=(n:number)=>n.toLocaleString();
 const art=Object.fromEntries(Object.entries(knownArt).filter(([,asset])=>installedImageFiles.includes(asset.file)));
 let state:BoardState=sampleState();
@@ -48,7 +49,8 @@ function fileDownload(text:string,name:string){
  const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);
 }
 function setMode(value:'plan'|'raid'){mode=value;notice('');render();$('planTab').focus();}
-function costText(recipe:Recipe){if(!recipe.costs)return 'Cost unconfirmed';const cash=recipe.costs['DMZ Cash'];const itemCount=Object.keys(recipe.costs).filter(k=>k!=='DMZ Cash').length;return (cash?'$'+fmt(cash)+' + ':'')+itemCount+' ingredient'+(itemCount===1?'':'s');}
+function costText(recipe:Recipe){if(!recipe.costs)return 'Requirements unconfirmed';const itemCount=Object.keys(recipe.costs).filter(k=>k!=='DMZ Cash').length;return itemCount?itemCount+' loot ingredient'+(itemCount===1?'':'s'):'No loot ingredients listed';}
+function lootEntries(recipe:Recipe){return Object.entries(recipe.costs||recipe.reportedCosts||{}).filter(([name])=>name!=='DMZ Cash');}
 const installedRecipeImage=(recipe:Recipe)=>recipe.image&&installedImageFiles.includes(recipe.image)?recipe.image:undefined;
 function materialImage(name:string,asset:ArtAsset):string {
  const image='<img src="assets/'+escape(asset.file)+'" alt="'+escape(name)+'" data-game-image="true">';
@@ -56,18 +58,18 @@ function materialImage(name:string,asset:ArtAsset):string {
 }
 function renderGoals(){
  const goals=recipes.filter(r=>['gunsmith','stash'].includes(r.id)||(state.selected[r.id]||0)>0);
- $('upgrades').innerHTML=goals.map(r=>`<button class="upgrade ${state.selected[r.id]?'on':''}" data-recipe="${escape(r.id)}" aria-pressed="${!!state.selected[r.id]}" aria-label="${escape(r.name)}"><span class="symbol" aria-hidden="true">${installedRecipeImage(r)?`<img src="assets/${escape(installedRecipeImage(r)!)}" alt="">`:r.category==='Upgrades'?'◈':'+'}</span><div><h3>${escape(r.name)}</h3><p>${r.id==='gunsmith'?'5% off Gunsmith purchases':r.id==='stash'?'Expand your item stash':escape(r.category)}</p><p>${escape(costText(r))}${r.category!=='Upgrades'?' · Quantity '+(state.selected[r.id]||0):''}</p></div><span class="selection" aria-hidden="true">${state.selected[r.id]?'✓':'+'}</span></button>`).join('');
+ $('upgrades').innerHTML=goals.map(r=>`<button class="upgrade ${state.selected[r.id]?'on':''}" data-recipe="${escape(r.id)}" aria-pressed="${!!state.selected[r.id]}" aria-label="${escape(r.name)}"><span class="symbol" aria-hidden="true">${installedRecipeImage(r)?`<img src="assets/${escape(installedRecipeImage(r)!)}" alt="">`:r.category==='Upgrades'?'◈':'+'}</span><div><h3>${escape(r.name)}</h3><p>${r.id==='gunsmith'?'Gunsmith upgrade goal':r.id==='stash'?'Expand your item stash':escape(r.category)}</p><p>${escape(costText(r))}${r.category!=='Upgrades'?' · Quantity '+(state.selected[r.id]||0):''}</p></div><span class="selection" aria-hidden="true">${state.selected[r.id]?'✓':'+'}</span></button>`).join('');
 }
 function renderCatalog(){
  const category=$<HTMLSelectElement>('category').value;
  const term=$<HTMLInputElement>('search').value.trim().toLowerCase();
- const shown=recipes.filter(r=>(category==='All'||r.category===category)&&[r.name,...Object.keys(r.reportedCosts||r.costs||{})].join(' ').toLowerCase().includes(term)).sort((a,b)=>compareNames(a.name,b.name)||compareNames(a.id,b.id));
+ const shown=recipes.filter(r=>(category==='All'||r.category===category)&&[r.name,...lootEntries(r).map(([name])=>name)].join(' ').toLowerCase().includes(term)).sort((a,b)=>compareNames(a.name,b.name)||compareNames(a.id,b.id));
  $('catalogStatus').textContent=shown.length+' entries shown · '+checked;
  $('catalogList').innerHTML=shown.length?shown.map(r=>{
   const selected=state.selected[r.id]||0;
-  const listed=r.costs||r.reportedCosts;
-  const costs=(listed?Object.entries(listed).map(([name,n])=>name==='DMZ Cash'?'$'+fmt(n):fmt(n)+' × '+escape(name)).join(' · '):'No confirmed cost')+(!r.costs?' · Incomplete/conflicting: selection unavailable':'');
-  return `<article class="catalogEntry">${installedRecipeImage(r)?`<img class="catalogThumb" src="assets/${escape(installedRecipeImage(r)!)}" alt="${escape(r.name)}">`:''}<div class="catalogText"><h3>${escape(r.name)}</h3><p>${costs}</p><p class="status">${escape(r.status)} · ${escape(r.checked||checked)}</p><p>${escape(r.note)}</p>${r.requires?`<p>Requires: ${escape(r.requires)}</p>`:''}<details><summary>Source</summary><p class="sourceUrl">${(r.sources||[{url:r.source,checked}]).map(s=>escape(s.url)+' · checked '+escape(s.checked)).join('<br>')}</p></details></div>${r.costs?`<div class="catalogControl"><button class="secondary" data-recipe="${escape(r.id)}" aria-label="${selected?'Remove':'Add'} ${escape(r.name)}" aria-pressed="${!!selected}">${selected?'✓ Selected':'+ Select'}</button>${r.category!=='Upgrades'?`<label>${r.category==='Ingredients'?'Planned prints':'Quantity'} <input type="number" min="0" max="99" step="1" value="${selected}" data-quantity="${escape(r.id)}" aria-label="${escape(r.name)} quantity"></label>`:'<span class="micro">FIXED PERMANENT TIER</span>'}</div>`:'<span class="unconfirmed">Unconfirmed</span>'}</article>`;
+  const entries=lootEntries(r);
+  const costs=(entries.length?entries.map(([name,n])=>fmt(n)+' x '+escape(name)).join(' · '):r.costs?'No loot ingredients listed':'No confirmed item requirements')+(!r.costs?' · Requirements unresolved: selection unavailable':'');
+  return `<article class="catalogEntry">${installedRecipeImage(r)?`<img class="catalogThumb" src="assets/${escape(installedRecipeImage(r)!)}" alt="${escape(r.name)}">`:''}<div class="catalogText"><h3>${escape(r.name)}</h3><p>${costs}</p><p class="status">${r.ownerVerification?'Owner-verified item requirements':'Community-reported item requirements'} · ${escape(r.checked||checked)}</p><p>${r.costs?'Confirm the current in-game requirements and unlocks before planning.':'This entry remains unavailable until its full requirements are verified.'}</p>${r.requires?`<p>Requires: ${escape(r.requires)}</p>`:''}<details><summary>Source</summary><p class="sourceUrl">${(r.sources||[{url:r.source,checked}]).map(s=>escape(s.url)+' · checked '+escape(s.checked)).join('<br>')}</p></details></div>${r.costs?`<div class="catalogControl"><button class="secondary" data-recipe="${escape(r.id)}" aria-label="${selected?'Remove':'Add'} ${escape(r.name)}" aria-pressed="${!!selected}">${selected?'✓ Selected':'+ Select'}</button>${r.category!=='Upgrades'?`<label>${r.category==='Ingredients'?'Planned prints':'Quantity'} <input type="number" min="0" max="99" step="1" value="${selected}" data-quantity="${escape(r.id)}" aria-label="${escape(r.name)} quantity"></label>`:'<span class="micro">FIXED PERMANENT TIER</span>'}</div>`:'<span class="unconfirmed">Unconfirmed</span>'}</article>`;
  }).join(''):'<p>No matching recipes in this category.</p>';
 }
 function render(){
@@ -92,7 +94,6 @@ function render(){
  }).join('');
  for(const img of document.querySelectorAll<HTMLImageElement>('img[data-game-image]'))img.addEventListener('error',()=>{const view=img.closest<HTMLElement>('.source-crop')||img;view.hidden=true;const fallback=img.closest('.art')?.querySelector<HTMLElement>('.fallback');if(fallback)fallback.hidden=false;});
  $('empty').hidden=shown.length>0;
- $('cash').textContent='$'+fmt(totals['DMZ Cash']||0)+' total selected-goal cost';
  save();
 }
 document.addEventListener('click',event=>{
@@ -132,6 +133,6 @@ $('sourcesBtn').addEventListener('click',()=>$<HTMLDialogElement>('sources').sho
 $('closeSources').addEventListener('click',()=>$<HTMLDialogElement>('sources').close());
 $<HTMLSelectElement>('category').innerHTML='<option>All</option>'+categories.map(c=>`<option ${c==='Upgrades'?'selected':''}>${c}</option>`).join('');
 $<HTMLSelectElement>('directItem').innerHTML=materials.filter(m=>m!=='DMZ Cash').map(m=>`<option>${escape(m)}</option>`).join('');
-const coverage=`${recipes.length} entries · ${recipes.filter(r=>r.costs).length} costed · ${Object.keys(art).length} target images`;
-$('coverage').textContent=coverage;$('sourceCoverage').textContent=coverage+'. '+recipes.filter(r=>!r.costs).length+' entries have unknown/conflicting costs and are disabled. Category coverage does not mean complete recipe coverage.';
+const coverage=`${recipes.length} entries · ${recipes.filter(r=>r.costs).length} selectable · ${Object.keys(art).length} target images`;
+$('coverage').textContent=coverage;$('sourceCoverage').textContent=coverage+'. '+recipes.filter(r=>!r.costs).length+' entries have unresolved requirements and are disabled. Category coverage does not mean complete recipe coverage.';
 render();

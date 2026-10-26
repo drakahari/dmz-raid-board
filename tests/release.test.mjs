@@ -18,12 +18,12 @@ try{
  await page.locator('#upgrades [data-recipe="gunsmith"]').click();await page.locator('#upgrades [data-recipe="stash"]').click();
  await page.locator('#browse summary').first().click();await page.locator('#search').fill('MIA Recovery Discount II');
  const entry=page.locator('.catalogEntry').filter({has:page.getByRole('heading',{name:'MIA Recovery Discount II',exact:true})});
- assert.match(await entry.innerText(),/Owner-verified/);assert.match(await entry.innerText(),/no cash/);assert.match(await entry.innerText(),/5% recovery cost reduction/);
+ assert.match(await entry.innerText(),/Owner-verified/);assert.doesNotMatch(await entry.innerText(),/cash|recovery cost|\$/i);
  await page.getByRole('button',{name:'Add MIA Recovery Discount II',exact:true}).click();
  const expected={'Binding Catalyst':'10','Degraded Execution Footage':'5','Nitro Compounds':'10','Nuclear Program Files':'5'};
  assert.deepEqual(await page.locator('#items h3').allTextContents(),Object.keys(expected));
  for(const [name,n] of Object.entries(expected))assert.equal(await page.getByLabel(name+' target',{exact:true}).inputValue(),n);
- assert.equal(await page.locator('#cash').innerText(),'$0 total selected-goal cost');
+ assert.equal(await page.locator('#cash').count(),0);
  pass('MIA II selectable with exact required counts, zero cash and A-Z targets');
  await page.locator('#browse summary').first().click();
  await page.getByLabel('Nitro Compounds target',{exact:true}).fill('9');await page.getByLabel('Nitro Compounds target',{exact:true}).press('Tab');

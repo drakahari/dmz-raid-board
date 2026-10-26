@@ -1,12 +1,16 @@
 # DMZ Raid Board
 
-An offline Windows raid planner and manual checklist built with TypeScript, HTML/CSS and Electron. Choose goals, aggregate shared ingredients, edit raid targets, and track picked-up counts using a simple picture-first layout.
+An offline standalone desktop raid planner and manual checklist built with TypeScript, HTML/CSS and Electron. Choose goals, aggregate shared ingredients, edit raid targets, and track picked-up counts using a simple picture-first layout. Planning and raid views show items to loot; monetary amounts are omitted. Settings displays the actual packaged app version.
 
 This is an unofficial community prototype, not affiliated with Activision. The repository contains original application source and a preview of the app. The artwork-inclusive prerelease bundles third-party game images; the individual image collection and private runtime data are not committed to the source tree. Game artwork and screenshots containing it are excluded from the MIT code license. Attribution does not establish permission or endorsement; see [third-party artwork notices](THIRD-PARTY-ARTWORK.md).
 
-## Windows portable build
+## Desktop downloads
 
 The artwork-inclusive prerelease contains third-party game imagery attributed to Activision/respective rights holders and sourced via DMZ Codex, plus an owner-provided gameplay screenshot. No affirmative reuse or redistribution license was established, and the app grants no downstream artwork rights. An artwork-free build remains available from source with `npm run package:public`. Extract the entire Windows x64 artwork-inclusive ZIP into a writable folder and run DMZ Raid Board.exe. Keep its accompanying files. The build is unsigned; no installation is required. Data is stored in the data folder beside the executable. Export/import a backup to move a board between folders.
+
+The 0.1.5 release targets Windows x64 portable ZIP, macOS Apple Silicon app ZIP/DMG, and Linux x64 AppImage. The app runs as a desktop application; an external browser is not required. No Intel Mac package is produced for this version.
+
+macOS builds are ad-hoc signed, without Developer ID signing or notarization. Native automated launch checks do not establish Gatekeeper acceptance on every Mac. Linux automated launch uses AppImage extract-and-run under Xvfb; FUSE mounting and desktop/distribution acceptance are separate checks. No system security changes or bypass instructions are included.
 
 ## Artwork-inclusive app preview
 
@@ -38,7 +42,7 @@ Picking up is not extracting. The app does not track stash or actual extracted l
 
 ## Catalog status
 
-The catalog includes all 95 crafting recipes in the two compared public references, plus 25 explicitly reported upgrade tiers: 120 entries, 112 selectable and eight disabled for concrete cost conflicts or missing cash requirements. All ten categories have working recipes, including 14 ingredient-printing recipes. This covers the compared published lists, not a claim that every current/future in-game tier is known. See [catalog evidence](CATALOG.md).
+The catalog includes all 95 crafting recipes in the two compared public references, plus 25 explicitly reported upgrade tiers: 120 entries, 112 selectable and eight disabled for unresolved requirements. All ten categories have working recipes, including 14 ingredient-printing recipes. This covers the compared published lists, not a claim that every current/future in-game tier is known. See [catalog evidence](CATALOG.md).
 
 Ingredients sort A–Z in planning, raid cards and selectors. Printing is explicit: selected ingredient crafts offset their matching required output once; no other recipe expands automatically and no unlock/production is credited. Print only with recipes/upgrades already unlocked in your game. Direct manual targets still override computed totals.
 
@@ -50,18 +54,18 @@ npm run test:ui
 npm run package:public
 ```
 
-The UI test drives a real Electron process and uses an isolated local profile. The public packaging command clears prior copied artwork and builds an unsigned Windows x64 ZIP with no game art. `npm run package` separately builds a private-art candidate; do not publish that private artifact. It does not install the app or publish a release. Packaged builds keep data beside the executable in a `data` folder, so extract into a writable folder and retain the accompanying files.
+The UI test drives a real Electron process and uses an isolated local profile. The public packaging command clears prior copied artwork and builds an unsigned Windows x64 ZIP with no game art. `npm run package` separately builds a private-art candidate; do not publish that private artifact. It does not install the app or publish a release. Windows packaged builds keep data beside the executable in a `data` folder, so extract into a writable folder and retain the accompanying files. macOS and Linux use Electron’s writable per-user application-data location, outside the app bundle or AppImage mount.
 
 ## License
 
 MIT for original application code. Game names, trademarks, artwork and other third-party materials remain their owners' property and are outside that license. The app code license does not grant any reuse or redistribution rights to third-party game artwork, including artwork shown in documentation previews.
 
-MIA Recovery Discount II is owner-verified on 2026-10-25 with four material requirements and zero cash. Its tier effect is a 5% recovery cost reduction. See the catalog for provenance and unresolved tiers.
+MIA Recovery Discount II retains its owner-verified four material requirements from 2026-10-25. See the catalog for provenance and unresolved tiers. Removing monetary UI does not alter the source evidence or silently enable unresolved entries.
 
 ## Settings and themes
 
-Use the visible Settings button at the top right for Export backup, Import backup and Theme. Original Raid Board remains the default. The other 26 choices adapt the confirmed DLMS collection, including Omarchy, with retained MIT notices; see THEMES.md. Layout and item artwork remain unchanged.
+Use the visible Settings button at the top right for the app version, Export backup, Import backup and Theme. Original Raid Board remains the default. The other 26 choices adapt the confirmed DLMS collection, including Omarchy, with retained MIT notices; see THEMES.md. Layout and item artwork remain unchanged.
 
-Board backups keep the existing version-1 JSON format. Theme preference is saved separately. When moving to a new portable folder, export from the older app, extract the entire candidate into a new writable folder, open Settings in the candidate and import the JSON. Selections, raid targets, picked-up counts and checks transfer; choose your theme again once in the new folder. Keep the older app and its data until the import is verified. The Windows v0.1.4 prerelease republishes the accepted candidate unchanged under a release filename.
+Board backups keep the existing version-1 JSON format. Theme preference is saved separately. When moving to a new portable folder, export from the older app, extract the entire candidate into a new writable folder, open Settings in the candidate and import the JSON. Selections, raid targets, picked-up counts and checks transfer; choose your theme again once in the new folder. Keep the older app and its data until the import is verified. Prior releases and their data remain unchanged. Version 0.1.5 imports existing version-1 backups, retaining legacy fields even where those fields no longer appear in the interface.
 
-Mac and Linux work remains separate native workflow candidates; see [platform candidate notes](PLATFORM-CANDIDATES.md) for exact automated checks, per-user storage and unsigned/notarization limitations. The Windows v0.1.4 release is preserved.
+See [native packaging notes](PLATFORM-CANDIDATES.md) for automated checks, per-user storage and signing limitations. The application icon is a separate owner-requested DMZ adaptation of the DLMS badge; see [icon provenance](branding/README.md). All previous release tags and binaries are preserved.

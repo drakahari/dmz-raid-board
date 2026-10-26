@@ -12,7 +12,7 @@ try {
  assert.equal(await page.locator('.item').count(),5);
  assert.deepEqual(await page.locator('#items h3').allTextContents(),['CPU','Detonators','Nylon Cloth','Power Regulator','Reactive Metals']);
  assert.equal(await page.getByLabel('Power Regulator target',{exact:true}).inputValue(),'10');
- assert.equal(await page.locator('#cash').innerText(),'$100,000 total selected-goal cost');
+ assert.equal(await page.locator('#cash').count(),0);
  const images=await page.locator('#items img').evaluateAll(imgs=>imgs.map(i=>({loaded:i.complete&&i.naturalWidth>0,source:i.getAttribute('src')})));
  const files=await readdir('assets');const expectedImages=['cpu.png','detonators.png','nylon-cloth.png','power-regulator.png','reactive-metals.png'].filter(n=>files.includes(n)).length;
  assert.equal(images.length,expectedImages);assert(images.every(i=>i.loaded));

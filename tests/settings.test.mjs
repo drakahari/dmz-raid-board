@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir,mkdtemp} from 'node:fs/promises';
 import path from 'node:path';
 import {themes,contrast,themeKey} from '../dist/renderer/themes.mjs';
+const expectedVersion=JSON.parse(await readFile('package.json','utf8')).version;
 const root=process.cwd(),qa=path.join(root,'.qa');await mkdir(qa,{recursive:true});
 const profile=await mkdtemp(path.join(qa,'settings-'));const extraction=process.argv[2];const packaged=!!extraction;
 const screenshots=path.join(qa,packaged?'settings-packaged':'settings-source');await mkdir(screenshots,{recursive:true});
@@ -16,7 +17,7 @@ async function colorCheck(selectors,minimum=4.5){
  for(const selector of selectors){const colors=await page.locator(selector).first().evaluate(el=>{const color=getComputedStyle(el).color;let current=el;let bg='';while(current){const value=getComputedStyle(current).backgroundColor;if(value!=='rgba(0, 0, 0, 0)'){bg=value;break;}current=current.parentElement;}return {color,bg};});assert(contrast(hex(colors.color),hex(colors.bg))>=minimum-.01,selector+' contrast '+JSON.stringify(colors));}
 }
 try{
- await launch();assert.equal(await app.evaluate(({app})=>app.getVersion()),'0.1.4');
+ await launch();assert.equal(await app.evaluate(({app})=>app.getVersion()),expectedVersion);
  assert.equal(await page.locator('html').getAttribute('data-theme'),'original');
  const box=await page.locator('#settingsBtn').boundingBox();assert(box.y<100);await page.locator('#settingsBtn').focus();await page.keyboard.press('Enter');
  assert.equal(await page.locator('#settings').getAttribute('open'),'');assert(await page.locator('#themePicker').evaluate(el=>el===document.activeElement));
@@ -28,7 +29,7 @@ try{
  await page.getByLabel('CPU target',{exact:true}).fill('7');await page.getByLabel('CPU target',{exact:true}).press('Tab');
  await page.locator('#raidTab').click();await page.getByRole('button',{name:'Collect one CPU',exact:true}).click();await page.locator('#planTab').click();
  const originalState=await state();
- await open();assert.equal(await page.locator('#themePicker option').count(),27);
+ await open();assert.equal(await page.locator('#appVersion').innerText(),'DMZ Raid Board '+expectedVersion);assert.equal(await page.locator('#themePicker option').count(),27);
  const paletteIds=packaged?['original','purple-gold','light','omarchy-catppuccin-latte','omarchy-nord']:themes.map(t=>t.id);
  const photos=new Set(['original','light','purple-gold','maroon-gold','ethereal','omarchy-catppuccin-latte','omarchy-nord','omarchy-rose-pine','omarchy-miasma']);
  for(const id of paletteIds){
@@ -59,5 +60,5 @@ try{
  await open();await page.locator('#themePicker').selectOption('omarchy-catppuccin-latte');await page.keyboard.press('Tab');assert(await page.locator('#settings').evaluate(el=>el.contains(document.activeElement)));
  const size=await page.locator('#settings').evaluate(el=>({scroll:el.scrollWidth,width:el.clientWidth,right:el.getBoundingClientRect().right,viewport:innerWidth}));assert(size.scroll<=size.width+1&&size.right<=size.viewport);await page.screenshot({path:path.join(screenshots,'small-window-light-settings.png'),fullPage:true});
  pass('Settings usable by keyboard at 800x650 and 125% app zoom without horizontal overflow');
- const result={date:new Date().toISOString(),version:'0.1.4',packaged,profile,themesChecked:paletteIds.length,checks,result:'PASS'};await writeFile(path.join(qa,packaged?'settings-packaged-results.json':'settings-source-results.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
+ const result={date:new Date().toISOString(),version:expectedVersion,packaged,profile,themesChecked:paletteIds.length,checks,result:'PASS'};await writeFile(path.join(qa,packaged?'settings-packaged-results.json':'settings-source-results.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
 }finally{if(app)await app.close();}

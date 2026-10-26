@@ -3,6 +3,8 @@ import path from 'node:path';
 import fs from 'node:fs';
 import {customProfilePath} from './data-path.cjs';
 
+if(process.platform==='win32')app.setAppUserModelId('private.dmz.raidboard');
+
 // Testing and portable runs can use an isolated data directory. No owner data is used by tests.
 const profileIndex = process.argv.indexOf('--profile-dir');
 const requestedProfile=profileIndex>=0?process.argv[profileIndex+1]:undefined;
@@ -18,6 +20,7 @@ if (!app.requestSingleInstanceLock()) app.quit();
 let mainWindow: BrowserWindow | undefined;
 function createWindow() {
   mainWindow = new BrowserWindow({
+    icon: path.join(__dirname,'../app-icon.png'),
     title: 'DMZ Raid Board', width: 1320, height: 920, minWidth: 760, minHeight: 600,
     backgroundColor: '#121813', autoHideMenuBar: true,
     webPreferences: { nodeIntegration: false, contextIsolation: true, sandbox: true, webSecurity: true }
