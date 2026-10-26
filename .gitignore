@@ -56,3 +56,7 @@ candidate-output/
 !/tests/platform-candidate.test.mjs
 
 !docs/app-default.png
+
+!branding/dmz-icon.png
+!/tests/loot-view.test.mjs
+!/tests/version.test.mjs
