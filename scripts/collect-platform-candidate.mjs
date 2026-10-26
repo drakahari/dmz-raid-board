@@ -1,0 +1,10 @@
+import {readdir,mkdir,copyFile,readFile,writeFile} from 'node:fs/promises';import {createHash} from 'node:crypto';
+const result=JSON.parse(await readFile('.ci/native-test.json','utf8'));if(result.result!=='PASS')throw Error('Native smoke did not pass; do not stage candidate binaries');
+await mkdir('candidate-output',{recursive:true});const names=(await readdir('release/platform-candidates')).filter(f=>f.endsWith('.dmg')||f.endsWith('.zip')||f.endsWith('.AppImage'));
+for(const name of names)await copyFile('release/platform-candidates/'+name,'candidate-output/'+name);
+for(const name of ['THEMES.md','THIRD-PARTY-ARTWORK.md'])await copyFile(name,'candidate-output/'+name);
+for(const name of ['LICENSE.DLMS','LICENSE.OMARCHY'])await copyFile('theme-notices/'+name,'candidate-output/'+name);
+await copyFile('dist/ARTWORK-SOURCES.json','candidate-output/ARTWORK-SOURCES.json');await copyFile('.ci/native-test.json','candidate-output/native-test.json');await copyFile('.ci/native-preview.png','candidate-output/native-preview.png');
+await writeFile('candidate-output/CANDIDATE-README.txt','Native GitHub-runner candidate, not a verified public platform release. Read native-test.json for the exact automated checks. Native owner acceptance is pending. macOS: ad-hoc only, no Developer ID or notarization; Gatekeeper behavior is not validated and no security-setting workaround is included. Linux: AppImage extract-and-run launch tested; normal FUSE mount/distribution desktop validation is pending. Data uses Electron per-user app-data paths; Windows portable behavior is unchanged. Third-party art rights are reserved; see included notices.\n');
+const lines=[];for(const name of await readdir('candidate-output'))lines.push(createHash('sha256').update(await readFile('candidate-output/'+name)).digest('hex')+'  '+name);
+await writeFile('candidate-output/SHA256SUMS.txt',lines.join('\n')+'\n');

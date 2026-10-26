@@ -45,3 +45,12 @@ assets/*
 !/tests/settings.test.mjs
 
 !docs/app-settings.png
+
+.ci/
+candidate-output/
+!/PLATFORM-CANDIDATES.md
+!/scripts/seed-release-artwork.mjs
+!/scripts/package-platform-candidate.mjs
+!/scripts/collect-platform-candidate.mjs
+!/tests/data-path.test.mjs
+!/tests/platform-candidate.test.mjs

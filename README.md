@@ -63,3 +63,5 @@ MIA Recovery Discount II is owner-verified on 2026-10-25 with four material requ
 Use the visible Settings button at the top right for Export backup, Import backup and Theme. Original Raid Board remains the default. The other 26 choices adapt the confirmed DLMS collection, including Omarchy, with retained MIT notices; see THEMES.md. Layout and item artwork remain unchanged.
 
 Board backups keep the existing version-1 JSON format. Theme preference is saved separately. When moving to a new portable folder, export from the older app, extract the entire candidate into a new writable folder, open Settings in the candidate and import the JSON. Selections, raid targets, picked-up counts and checks transfer; choose your theme again once in the new folder. Keep the older app and its data until the import is verified. The Windows v0.1.4 prerelease republishes the accepted candidate unchanged under a release filename.
+
+Mac and Linux work remains separate native workflow candidates; see [platform candidate notes](PLATFORM-CANDIDATES.md) for exact automated checks, per-user storage and unsigned/notarization limitations. The Windows v0.1.4 release is preserved.

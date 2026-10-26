@@ -1,13 +1,15 @@
 import { app, BrowserWindow, session } from 'electron';
 import path from 'node:path';
 import fs from 'node:fs';
+import {customProfilePath} from './data-path.cjs';
 
 // Testing and portable runs can use an isolated data directory. No owner data is used by tests.
 const profileIndex = process.argv.indexOf('--profile-dir');
 const requestedProfile=profileIndex>=0?process.argv[profileIndex+1]:undefined;
-if (requestedProfile || app.isPackaged) {
+const profile=customProfilePath(process.platform,app.isPackaged,requestedProfile,app.getPath('exe'));
+if (profile) {
   // This ZIP candidate keeps its data beside the executable, without an installer/profile prompt.
-  const profile=requestedProfile?path.resolve(requestedProfile):path.join(path.dirname(app.getPath('exe')),'data');
+
   fs.mkdirSync(path.join(profile,'downloads'),{recursive:true});
   app.setPath('userData', profile);
   app.setPath('downloads',path.join(profile,'downloads'));

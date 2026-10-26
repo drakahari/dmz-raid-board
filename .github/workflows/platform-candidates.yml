@@ -1,0 +1,62 @@
+name: Native platform candidates
+on:
+  push:
+    branches: [platform-candidates]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: native-candidates-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    name: ${{ matrix.platform }}-${{ matrix.arch }} candidate
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: mac
+            arch: arm64
+            runner: macos-15
+          - platform: mac
+            arch: x64
+            runner: macos-15-intel
+          - platform: linux
+            arch: x64
+            runner: ubuntu-22.04
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    env:
+      CANDIDATE_ARCH: ${{ matrix.arch }}
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.1
+          cache: npm
+      - run: npm ci
+      - run: node scripts/seed-release-artwork.mjs
+      - run: npm run build:artwork
+      - run: node --test tests/core.test.mjs tests/themes.test.mjs tests/data-path.test.mjs
+      - run: node scripts/package-platform-candidate.mjs
+      - if: runner.os == 'macOS'
+        run: node tests/platform-candidate.test.mjs
+      - if: runner.os == 'Linux'
+        run: xvfb-run -a node tests/platform-candidate.test.mjs
+      - run: node scripts/collect-platform-candidate.mjs
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: dmz-${{ matrix.platform }}-${{ matrix.arch }}-candidate-${{ github.run_number }}
+          path: candidate-output/
+          retention-days: 3
+          if-no-files-found: error
+      - if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: dmz-${{ matrix.platform }}-${{ matrix.arch }}-diagnostics-${{ github.run_number }}
+          path: .ci/native-test.json
+          retention-days: 3
+          if-no-files-found: ignore
