@@ -54,3 +54,5 @@ candidate-output/
 !/scripts/collect-platform-candidate.mjs
 !/tests/data-path.test.mjs
 !/tests/platform-candidate.test.mjs
+
+!docs/app-default.png
