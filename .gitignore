@@ -65,3 +65,5 @@ candidate-output/
 !/tests/target-core.test.mjs
 
 !/tests/summary-omitted.test.mjs
+
+!/scripts/stage-release-artwork.mjs
