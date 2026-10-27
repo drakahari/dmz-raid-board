@@ -63,3 +63,5 @@ candidate-output/
 
 !/tests/targets.test.mjs
 !/tests/target-core.test.mjs
+
+!/tests/summary-omitted.test.mjs

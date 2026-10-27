@@ -3,7 +3,7 @@ import {buildFlavor,appVersion} from './build-status.mjs';
 import {recipes,categories,materials,art as knownArt,checked,type Recipe,type Category,type ArtAsset} from './catalog.mjs';
 import {installedImageFiles} from './asset-status.mjs';
 import {compareNames,sortedNames} from './ordering.mjs';
-import {type BoardState,sampleState,emptyState,parseBackup,serialize,count,recipeTotals,raidTargets,chooseRecipe,isComplete,plannedProduction,newRaid,maxCount,setRaidTarget,addExtra,removeExtra,resetAdjustments} from './core.mjs';
+import {type BoardState,emptyState,parseBackup,serialize,count,recipeTotals,raidTargets,chooseRecipe,isComplete,plannedProduction,newRaid,maxCount,setRaidTarget,addExtra,removeExtra,resetAdjustments} from './core.mjs';
 const $ = <T extends HTMLElement = HTMLElement>(id:string) => document.getElementById(id) as T;
 $('buildLabel').textContent=buildFlavor==='public'?'PUBLIC PRERELEASE / NO GAME ART':buildFlavor==='artwork'?'UNOFFICIAL PRERELEASE / GAME ART':'PRIVATE WINDOWS PROTOTYPE / 01';
 const escape=(value:string)=>value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
@@ -23,7 +23,7 @@ const clearRecoveryKey=key+'-before-clear';
 let migratedLegacy=false;
 $('appVersion').textContent='DMZ Raid Board '+appVersion;
 const fmt=(n:number)=>n.toLocaleString();
-const art=Object.fromEntries(Object.entries(knownArt).filter(([,asset])=>installedImageFiles.includes(asset.file)));
+const art=Object.fromEntries(Object.entries(knownArt).filter(([,asset])=>asset.verified!==false&&installedImageFiles.includes(asset.file)));
 let state:BoardState=emptyState();
 let mode:'plan'|'raid'='plan';
 let corruptRaw:string|null=null;
@@ -62,12 +62,17 @@ const itemBenefit=(recipe:Recipe)=>recipe.ownerVerification&&recipe.effect&&!/(c
 const installedRecipeImage=(recipe:Recipe)=>recipe.image&&installedImageFiles.includes(recipe.image)?recipe.image:undefined;
 function materialImage(name:string,asset:ArtAsset):string {
  const image='<img src="assets/'+escape(asset.file)+'" alt="'+escape(name)+'" data-game-image="true">';
- return asset.presentation==='regional-notes-screenshot'?'<span class="source-crop regional-notes-screenshot">'+image+'</span>':image;
+ return asset.presentation?'<span class="source-crop '+escape(asset.presentation)+'">'+image+'</span>':image;
 }
 function renderGoals(){
- const goals=recipes.filter(r=>['gunsmith','stash'].includes(r.id)||(state.selected[r.id]||0)>0);
- $('upgrades').innerHTML=goals.map(r=>`<button class="upgrade ${state.selected[r.id]?'on':''}" data-recipe="${escape(r.id)}" aria-pressed="${!!state.selected[r.id]}" aria-label="${escape(r.name)}"><span class="symbol" aria-hidden="true">${installedRecipeImage(r)?`<img src="assets/${escape(installedRecipeImage(r)!)}" alt="">`:r.category==='Upgrades'?'◈':'+'}</span><div><h3>${escape(r.name)}</h3><p>${r.id==='gunsmith'?'Gunsmith upgrade goal':r.id==='stash'?'Expand your item stash':escape(itemBenefit(r)||r.category)}</p><p>${escape(costText(r))}${r.category!=='Upgrades'?' · Quantity '+(state.selected[r.id]||0):''}</p></div><span class="selection" aria-hidden="true">${state.selected[r.id]?'✓':'+'}</span></button>`).join('');
+ const goals=recipes.filter(r=>(state.selected[r.id]||0)>0);
+ $('goalEmpty').hidden=goals.length>0;
+ $('upgrades').innerHTML=goals.map(r=>`<article class="upgrade on selectedGoal" data-goal="${escape(r.id)}"><span class="symbol" aria-hidden="true">${installedRecipeImage(r)?`<img src="assets/${escape(installedRecipeImage(r)!)}" alt="">`:'+'}</span><div class="goalText"><h3>${escape(r.name)}</h3><p>${r.id==='gunsmith'?'Gunsmith upgrade goal':r.id==='stash'?'Expand your item stash':escape(itemBenefit(r)||r.category)}</p><p>${escape(costText(r))}${r.category!=='Upgrades'?' · Quantity '+(state.selected[r.id]||0):''}</p></div><button class="secondary goalRemove" data-summary-remove="${escape(r.id)}" aria-label="Remove ${escape(r.name)} goal">Remove</button></article>`).join('');
 }
+function addUpgrades(){const browse=$<HTMLDetailsElement>('browse');browse.open=true;$<HTMLSelectElement>('category').value='Upgrades';$<HTMLInputElement>('search').value='';renderCatalog();$('search').focus();}
+$('addUpgrades').addEventListener('click',addUpgrades);
+$('browse').addEventListener('toggle',()=>$('addUpgrades').setAttribute('aria-expanded',String($<HTMLDetailsElement>('browse').open)));
+
 function renderCatalog(){
  const category=$<HTMLSelectElement>('category').value;
  const term=$<HTMLInputElement>('search').value.trim().toLowerCase();
@@ -88,7 +93,11 @@ function render(){
  const totals=recipeTotals(state),targets=raidTargets(state);
  const active=sortedNames(Object.keys(targets));const wanted=active;
  const omitted=sortedNames(Object.keys(totals).filter(name=>name!=='DMZ Cash'&&totals[name]>0&&!targets[name]));
- $('omittedTargets').innerHTML=omitted.length?'<p>Omitted for this raid (not in the checklist):</p>'+omitted.map(name=>'<p>'+escape(name)+' · recipe baseline '+fmt(totals[name])+' <button class="secondary targetAction" data-reset-target="'+escape(name)+'" aria-label="Use baseline for '+escape(name)+'">Use baseline</button></p>').join(''):'';
+ $('omittedSection').hidden=omitted.length===0;
+ $('omittedCount').textContent=String(omitted.length);
+ if(!omitted.length)$<HTMLDetailsElement>('omittedSection').open=false;
+ $('omittedTargets').innerHTML=omitted.map(name=>'<p>'+escape(name)+' · recipe baseline '+fmt(totals[name])+' <button class="secondary targetAction" data-reset-target="'+escape(name)+'" aria-label="Use baseline for '+escape(name)+'">Use baseline</button></p>').join('');
+
  const printing=plannedProduction(state);$('printingNote').hidden=!Object.keys(printing).length;$('printingNote').textContent='Planned printing: '+sortedNames(Object.keys(printing)).map(name=>fmt(printing[name])+' '+name).join(', ')+'. These planned outputs offset matching required ingredients once. Print only with already-unlocked recipes; no other recipe is expanded automatically and no real production is credited.';
  $('navCount').textContent=String(wanted.length);
  let collected=0,total=0;
@@ -104,7 +113,7 @@ function render(){
  }).join('');
  for(const img of document.querySelectorAll<HTMLImageElement>('img[data-game-image]'))img.addEventListener('error',()=>{const view=img.closest<HTMLElement>('.source-crop')||img;view.hidden=true;const fallback=img.closest('.art')?.querySelector<HTMLElement>('.fallback');if(fallback)fallback.hidden=false;});
  $('empty').hidden=shown.length>0;
- $('empty').textContent=raid&&wanted.length?'All '+wanted.length+' targets are complete and hidden. Turn off Hide completed to review them.':Object.keys(totals).some(name=>name!=='DMZ Cash'&&totals[name]>0)?'All recipe items are omitted for this raid. Restore an item under manual extras or select another goal.':'No raid targets. Select a goal or add manual extras in Plan your raid.';
+ $('empty').textContent=raid&&wanted.length?'All '+wanted.length+' targets are complete and hidden. Turn off Hide completed to review them.':Object.keys(totals).some(name=>name!=='DMZ Cash'&&totals[name]>0)?'All recipe items are omitted for this raid. Expand Omitted for this raid to restore an item, or select another goal.':'No raid targets. Select a goal or add manual extras in Plan your raid.';
  $('settingsClear').toggleAttribute('disabled',!Object.keys(state.selected).length&&!Object.keys(state.adjustments).length&&!Object.keys(state.extras).length&&!Object.keys(state.picked).length&&!state.completed.length);
  try{$('settingsRestoreClear').toggleAttribute('disabled',localStorage.getItem(clearRecoveryKey)===null);}catch{$('settingsRestoreClear').setAttribute('disabled','');}
  save();
@@ -113,7 +122,8 @@ document.addEventListener('click',event=>{
  const button=(event.target as HTMLElement).closest<HTMLButtonElement>('button');if(!button)return;
  const d=button.dataset;
  try {
-  if(d.removeTarget){state=setRaidTarget(state,d.removeTarget,0);notice(d.removeTarget+' removed from this raid list. New raid keeps this removal. Recipe items can be restored under manual extras.');render();}
+  if(d.summaryRemove){state=chooseRecipe(state,d.summaryRemove,0);notice('Goal removed. Other goals, manual extras and picked-up counts are kept.');render();$('addUpgrades').focus();}
+  if(d.removeTarget){state=setRaidTarget(state,d.removeTarget,0);notice(d.removeTarget+' removed from this raid list. New raid keeps this removal. Expand Omitted for this raid to restore recipe items.');render();}
   if(d.resetTarget){state=resetAdjustments(state,d.resetTarget);notice('Recipe adjustment reset. Manual extras kept.');render();}
   if(d.removeExtra){state=removeExtra(state,d.removeExtra);notice('Manual extra removed.');render();}
   if(d.recipe){const current=state.selected[d.recipe]||0;state=chooseRecipe(state,d.recipe,current?0:1);notice('Recipe baselines updated. Adjustments follow needed ingredients; manual extras stay until removed.');render();}

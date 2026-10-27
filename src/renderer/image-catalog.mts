@@ -110,7 +110,9 @@ export const materialArt = {
     "rarity": "epic"
   },
   "Military Composites": {
-    "file": "item-military-composites.png",
+    "verified": true,
+    "presentation": "military-composites-screenshot" as const,
+    "file": "owner-military-composites.png",
     "rarity": "legendary"
   },
   "Experimental Compounds": {

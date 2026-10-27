@@ -36,6 +36,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: node scripts/seed-release-artwork.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
       - run: npm run build:artwork
       - run: node --test tests/core.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs
       - run: node scripts/package-platform-candidate.mjs

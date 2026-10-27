@@ -53,3 +53,8 @@ Owner gameplay screenshots confirm these **required** quantities. Owned counts a
 | Epic Ingredient Printing | Binding Catalyst 10; Printed Circuit Board 10; Military Composites 5 | Item quantities already matched |
 
 The new evidence makes MIA III selectable. The other four entries already had matching item amounts and are now marked owner-verified. Historical source reports remain in reported fields; money is omitted from the planning UI. Foreign Intelligence Targets image remains pending independently of correct recipe quantities. No new artwork was transferred for this update.
+
+
+## Local artwork update — 2026-10-27
+
+Military Composites now uses the owner-saved Epic Ingredient Printing screenshot, retained byte-identically and displayed through an icon-only CSS crop. Its requirement remains 5 in Epic Printing; the displayed owned counts are not requirements. The incorrect gray reference is retained unchanged but unused. This restores 40/41 target-image coverage; Foreign Intelligence Targets remains pending. Offline resource inventory is 129 files, including the retained unused reference. File inventory is separate from displayed image coverage.

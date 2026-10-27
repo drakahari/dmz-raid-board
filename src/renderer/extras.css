@@ -27,3 +27,10 @@ progress{height:7px;border:0;flex:1;background:#30372a;min-width:70px;border-rad
 .targetActions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.targetAction{padding:8px;font-size:11px;min-height:36px}#omittedTargets p{font-size:12px;line-height:1.6}#omittedTargets button{margin:5px}#migrationNotice{margin-bottom:20px}
 
 .itemRemove{margin-top:10px;width:100%}
+
+.selectedGoal{cursor:default}.goalText{flex:1;min-width:0}.goalRemove{flex-shrink:0;align-self:center}.emptyGoals{padding:18px;border:1px dashed var(--line);border-radius:6px;color:var(--muted);font-size:14px}.omitted{border:1px solid var(--line);border-radius:6px;padding:13px 16px;margin:16px 0}.direct h3{font-size:14px;margin:0}.direct p{font-size:12px;line-height:1.6}@media(max-width:700px){.selectedGoal{flex-wrap:wrap}.goalRemove{margin-left:auto}}
+
+/* Owner source remains byte-identical (665x660). Show only x84,y566,width50,height37.
+   A modest 2x presentation excludes all text, counts, other items and the corner badge. */
+.art .military-composites-screenshot{width:100px;height:74px}
+.art .military-composites-screenshot img{position:absolute;display:block;width:1330px;height:1320px;max-width:none;max-height:none;left:-168px;top:-1132px;object-fit:fill;filter:none}

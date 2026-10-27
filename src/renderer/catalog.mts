@@ -14,5 +14,5 @@ export interface Recipe {
 export const checked='2026-10-25';
 export const recipes:Recipe[]=(catalogData as unknown as Recipe[]).map(row=>({...row,image:recipeImages[row.name]||row.image}));
 export const materials=sortedNames(materialNames);
-export interface ArtAsset {file:string;rarity:string;presentation?:'regional-notes-screenshot'}
+export interface ArtAsset {file:string;rarity:string;verified?:boolean;presentation?:'regional-notes-screenshot'|'military-composites-screenshot'}
 export const art:Record<string,ArtAsset>=materialArt;

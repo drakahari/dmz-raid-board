@@ -14,7 +14,7 @@ try {
  assert.equal(info.version,JSON.parse(await readFile('package.json','utf8')).version);assert.equal(info.packaged,true);assert.equal(info.profile,profile);
  assert.equal(await page.locator('.item').count(),5);assert.equal(await page.getByLabel('Power Regulator target',{exact:true}).inputValue(),'10');
  assert(await page.locator('#items img').evaluateAll(imgs=>imgs.every(i=>i.complete&&i.naturalWidth>0)));
- await page.locator('.direct summary').click();
+
  for(const name of ['Comms Module','High-Tenacity Fibers']){await page.locator('#directItem').selectOption(name);await page.locator('#directCount').fill('2');await page.getByRole('button',{name:'Add extra',exact:true}).click();const image=page.locator(`[data-card="${name}"] img`);if(await image.count())assert(await image.evaluate(img=>img.complete&&img.naturalWidth>0));else assert.match(await page.locator(`[data-card="${name}"]`).innerText(),/No verified image yet/);}
  const names=await page.locator('#items h3').allTextContents();const order=new Intl.Collator(undefined,{numeric:true,sensitivity:'base'});assert.deepEqual(names,[...names].sort((a,b)=>order.compare(a,b)||(a<b?-1:a>b?1:0)));
  await page.getByRole('button',{name:'Open raid checklist →',exact:true}).click();await page.getByRole('button',{name:'Collect one CPU',exact:true}).click();assert.match(await page.locator('[data-card="CPU"]').innerText(),/1 picked up/);

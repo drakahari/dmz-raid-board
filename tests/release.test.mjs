@@ -16,7 +16,7 @@ try{
  assert.equal(await app.evaluate(({app})=>app.isPackaged),true);
  if(publicBuild){assert.match(await page.locator('#buildLabel').innerText(),/PUBLIC PRERELEASE \/ NO GAME ART/);assert.equal(await page.locator('img').count(),0);assert.equal(await page.getByText('No verified image yet',{exact:true}).count(),5);}
  pass('packaged version and truthful artwork mode');
- await page.locator('#upgrades [data-recipe="gunsmith"]').click();await page.locator('#upgrades [data-recipe="stash"]').click();
+ await page.locator('#upgrades [data-summary-remove="gunsmith"]').click();await page.locator('#upgrades [data-summary-remove="stash"]').click();
  await page.locator('#browse summary').first().click();await page.locator('#search').fill('MIA Recovery Discount II');
  const entry=page.locator('.catalogEntry').filter({has:page.getByRole('heading',{name:'MIA Recovery Discount II',exact:true})});
  assert.match(await entry.innerText(),/Owner-verified/);assert.doesNotMatch(await entry.innerText(),/cash|recovery cost|\$/i);
