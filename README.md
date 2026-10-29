@@ -6,7 +6,7 @@ This is an unofficial community prototype, not affiliated with Activision. The r
 
 ## Desktop downloads
 
-The artwork-inclusive prerelease contains third-party game imagery attributed to Activision/respective rights holders and sourced via DMZ Codex, plus an owner-provided gameplay screenshot. No affirmative reuse or redistribution license was established, and the app grants no downstream artwork rights. An artwork-free build remains available from source with `npm run package:public`. Extract the entire Windows x64 artwork-inclusive ZIP into a writable folder and run DMZ Raid Board.exe. Keep its accompanying files. The build is unsigned; no installation is required. Data is stored in the data folder beside the executable. Export/import a backup to move a board between folders.
+The artwork-inclusive prerelease contains third-party game imagery attributed to Activision/respective rights holders and sourced via DMZ Codex, plus owner-provided gameplay screenshots. No affirmative reuse or redistribution license was established, and the app grants no downstream artwork rights. An artwork-free build remains available from source with `npm run package:public`. Extract the entire Windows x64 artwork-inclusive ZIP into a writable folder and run DMZ Raid Board.exe. Keep its accompanying files. The build is unsigned; no installation is required. Data is stored in the data folder beside the executable. Export/import a backup to move a board between folders.
 
 The desktop builds target Windows x64 portable ZIP, macOS Apple Silicon app ZIP/DMG, and Linux x64 AppImage. The app runs as a desktop application; an external browser is not required. No Intel Mac package is produced for this version.
 
@@ -14,7 +14,7 @@ macOS builds are ad-hoc signed, without Developer ID signing or notarization. Na
 
 ## Artwork-inclusive app preview
 
-![Actual 0.1.6 app in its original theme, showing a synthetic Uncommon Printing plan](docs/app-default.png)
+![Actual app in its default theme, showing synthetic sample selections and counts](docs/app-default.png)
 
 Captured from the actual artwork-inclusive Windows artifact using a separate test profile. Counts are synthetic examples, not owner inventory. No desktop, account details, local paths or private runtime data are shown. Game artwork in this preview is third-party material; the notice above applies.
 
@@ -74,3 +74,16 @@ See [native packaging notes](PLATFORM-CANDIDATES.md) for automated checks, per-u
 ## 0.1.7 goal summary and artwork
 
 The goal summary contains selected goals only, with explicit Remove and Add upgrades controls. Manual extras stay visible. Omitted targets have a separate counted disclosure, collapsed by default. Version-2 board and backup semantics are unchanged. Military Composites now uses an unchanged owner screenshot with an icon-only CSS crop; surrounding recipe text and owned counts are excluded from display. See docs/local-0.1.7.md. The desktop prerelease targets Windows x64, Apple Silicon macOS and Linux x86_64. Back up before moving to a new portable folder.
+
+## 0.1.8 recipe update
+
+Vendor I is owner-confirmed and selectable. Four later upgrade tiers are selectable as explicitly community-reported item lists after dated web cross-checks; they are not confirmed in game. See the latest CATALOG.md section. DDOS and Radiation Blockers are now owner-confirmed too; all 120 catalog entries are selectable. Selectable does not mean every entry is owner-confirmed. Existing backups, themes, counts, omissions and selection behavior are unchanged. Export a backup before moving to a new portable folder. The desktop prerelease targets Windows x64, Apple Silicon and Linux x86_64.
+
+The approved candidate 2 is preserved. Publication builds retain its requirements and behavior; private owned-inventory observations are excluded from source metadata. Export a backup before updating.
+
+
+## 0.1.8 candidate3 - Foreign Intelligence Targets
+
+The owner-supplied MIA Recovery III screenshot is preserved unchanged and displayed through an icon-only CSS crop (x98,y418,width42,height40 at2x, with a small bottom-left presentation mask to exclude an adjacent rarity-marker fragment). Surrounding item rows, labels and owned counts are excluded from the displayed picture. Existing MIA III requirements remain W.M.D. Manifest5, Foreign Intelligence Targets5, Power Regulator10 and Comms Module10. No new image was downloaded from a website or generated. Offline image inventory is130 files; all41 current loot targets have mapped local art. All120 existing recipe/output cards have mapped image files, some shared between tiers; file presence is separate from exhaustive visual verification or full-game catalog completeness.
+
+Confidence remains9 owner-confirmed and111 web-reported entries;120 selectable does not mean120 owner-confirmed. Community reference tiers BankVII and Dog Tag CaseIII-IV are absent from this catalog and are not added in this image-only batch. Publication is handled separately from this catalog snapshot. All-platform builds must carry the same130-image payload; the earlier129-image public seed alone is insufficient.

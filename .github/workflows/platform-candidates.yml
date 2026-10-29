@@ -10,11 +10,11 @@ concurrency:
   cancel-in-progress: false
 jobs:
   stage-artwork:
-    name: Stage approved draft artwork
+    name: Stage verified Windows artwork
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     permissions:
-      contents: read # Draft staging completed; no write permission retained.
+      contents: read # No draft-write permission without fresh owner approval.
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -67,7 +67,7 @@ jobs:
         env:
           DMZ_ARTWORK_SEED_FILE: .ci/staged/windows.zip
       - run: npm run build:artwork
-      - run: node --test tests/core.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs
+      - run: node --test tests/core.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs tests/catalog-update018.test.mjs
       - run: node scripts/package-platform-candidate.mjs
       - if: runner.os == 'macOS'
         run: node tests/platform-candidate.test.mjs

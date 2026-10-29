@@ -6,10 +6,10 @@ import {sortedNames,compareNames} from '../dist/renderer/ordering.mjs';
 test('all 95 published crafting recipes and 25 evidenced upgrade tiers have dated sources',()=>{
  assert.equal(recipes.filter(r=>r.category!=='Upgrades').length,95);assert.equal(recipes.filter(r=>r.category==='Upgrades').length,25);
  assert.equal(recipes.length,new Set(recipes.map(r=>r.id)).size);
- assert.equal(recipes.filter(r=>r.costs).length,113);assert.equal(recipes.filter(r=>!r.costs).length,7);
+ assert.equal(recipes.filter(r=>r.costs).length,120);assert.equal(recipes.filter(r=>!r.costs).length,0);
  for(const category of categories)assert(recipes.some(r=>r.category===category&&r.costs),category);
  const allowed=new Set(materials);
- for(const recipe of recipes){assert.equal(recipe.checked,recipe.ownerVerification?.date||'2026-10-25');assert(recipe.sources?.length);assert(recipe.sources.every(s=>s.url.startsWith('https://')&&s.checked));
+ for(const recipe of recipes){assert(recipe.ownerVerification?recipe.checked===recipe.ownerVerification.date:recipe.sources.some(s=>s.checked===recipe.checked));assert(recipe.sources?.length);assert(recipe.sources.every(s=>s.url.startsWith('https://')&&s.checked));
   for(const [name,n] of Object.entries(recipe.reportedCosts||recipe.costs||{})){assert(allowed.has(name),name);assert(Number.isSafeInteger(n)&&n>0);}
   if(recipe.category!=='Upgrades')assert.equal(recipe.sources.length,2);
  }
@@ -25,10 +25,10 @@ test('14 ingredient prints are explicit plans; no automatic recipe expansion or 
  s=setRaidTarget(s,'Biomaterials',2);assert.equal(raidTargets(s).Biomaterials,2);
  const solo=chooseRecipe(emptyState(),'print-comms',2);assert.equal(recipeTotals(solo).Electronics,200);assert.equal(recipeTotals(solo).CPU,6);assert.equal(recipeTotals(solo)['Comms Module'],undefined);
 });
-test('all upgrade families enforce one selected tier and partial/conflicting costs stay disabled',()=>{
+test('all upgrade families enforce one selected tier and newly confirmed recipes are selectable',()=>{
  let s=chooseRecipe(sampleState(),'gunsmith-2',1);assert.equal(s.selected.gunsmith,undefined);assert.equal(s.selected['gunsmith-2'],1);
  s=chooseRecipe(s,'stash-1',1);assert.equal(s.selected.stash,undefined);
- for(const id of ['stash-4','stash-weapon-3','mia-4','vendor-1','vendor-2','radiation-blockers','ddos'])assert.throws(()=>chooseRecipe(s,id,1));
+ for(const id of ['radiation-blockers','ddos'])assert.doesNotThrow(()=>chooseRecipe(s,id,1));
  assert.throws(()=>parseBackup(JSON.stringify({...emptyState(),selected:{gunsmith:1,'gunsmith-2':1}})));
 });
 test('natural case-insensitive A–Z ordering has stable ties and does not mutate counts or IDs',()=>{
@@ -76,7 +76,7 @@ test('backup round trip retains selected recipes, adjustments, extras, pickup co
 test('corrupt, oversized, unknown and hostile backups are rejected',()=>{
  assert.throws(()=>parseBackup('{oops'),/valid JSON/);
  assert.throws(()=>parseBackup(' '.repeat(1_000_001)),/too large/);
- for(const patch of [{version:99},{picked:{Chemicals:-1}},{extras:{Chemicals:1.5}},{selected:{'not-real':1}},{selected:{'radiation-blockers':1}},{completed:['Chemicals','Chemicals']},{hideCompleted:'yes'},{picked:[]},{unexpected:true}]) assert.throws(()=>parseBackup(JSON.stringify({...emptyState(),...patch})));
+ for(const patch of [{version:99},{picked:{Chemicals:-1}},{extras:{Chemicals:1.5}},{selected:{'not-real':1}},{selected:{'radiation-blockers':-1}},{completed:['Chemicals','Chemicals']},{hideCompleted:'yes'},{picked:[]},{unexpected:true}]) assert.throws(()=>parseBackup(JSON.stringify({...emptyState(),...patch})));
  assert.throws(()=>parseBackup('{"version":1,"selected":{},"targets":{"__proto__":3},"picked":{},"completed":[],"hideCompleted":false}'));
  assert.equal({}.polluted,undefined);
 });
@@ -96,5 +96,5 @@ test('owner-verified MIA II uses required quantities, explicitly zero cash, and 
  assert.deepEqual(recipeTotals(state),expected);assert.deepEqual(raidTargets(state),expected);
  assert.equal(recipeTotals(state)['DMZ Cash'],undefined);assert.equal(state.picked['Binding Catalyst'],20);
  assert.equal(state.picked['Nitro Compounds'],4);assert.deepEqual(parseBackup(serialize(state)),state);
- for(const id of ['mia-4','stash-4','stash-weapon-3','vendor-1','vendor-2','ddos','radiation-blockers'])assert.throws(()=>chooseRecipe(state,id,1));
+ for(const id of ['ddos','radiation-blockers'])assert.doesNotThrow(()=>chooseRecipe(state,id,1));
 });

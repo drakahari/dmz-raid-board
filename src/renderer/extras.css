@@ -34,3 +34,8 @@ progress{height:7px;border:0;flex:1;background:#30372a;min-width:70px;border-rad
    A modest 2x presentation excludes all text, counts, other items and the corner badge. */
 .art .military-composites-screenshot{width:100px;height:74px}
 .art .military-composites-screenshot img{position:absolute;display:block;width:1330px;height:1320px;max-width:none;max-height:none;left:-168px;top:-1132px;object-fit:fill;filter:none}
+
+/* Owner source remains unchanged762x701; show only its Foreign Intelligence notebook.
+   x98,y418,width42,height40, presented at a modest2x; no text/counts/other rows. */
+.art .foreign-intelligence-targets-screenshot{width:84px;height:80px;clip-path:polygon(0 0,100% 0,100% 100%,20px 100%,0 calc(100% - 20px))}
+.art .foreign-intelligence-targets-screenshot img{position:absolute;display:block;width:1524px;height:1402px;max-width:none;max-height:none;left:-196px;top:-836px;object-fit:fill;filter:none}

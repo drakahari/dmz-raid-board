@@ -67,3 +67,10 @@ candidate-output/
 !/tests/summary-omitted.test.mjs
 
 !/scripts/stage-release-artwork.mjs
+
+!/tests/catalog-update018.test.mjs
+!/tests/vendor018.test.mjs
+
+!/tests/owner-confirmed018.test.mjs
+
+!/tests/foreign018.test.mjs

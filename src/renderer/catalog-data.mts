@@ -330,7 +330,12 @@ export const catalogData = [
     "category": "Upgrades",
     "family": "stash-item",
     "tier": 4,
-    "costs": null,
+    "costs": {
+      "Gold Skull": 5,
+      "Alloyed Plating": 30,
+      "Experimental Compounds": 10,
+      "Turned Components": 30
+    },
     "reportedCosts": {
       "Gold Skull": 5,
       "Alloyed Plating": 30,
@@ -338,15 +343,25 @@ export const catalogData = [
       "Turned Components": 30
     },
     "source": "https://dmzcodex.com/upgrades/stash-item-upgrade/",
-    "status": "Incomplete tier costs",
-    "note": "Cash is not documented. Materials are reported only; not selectable as a complete cost.",
-    "checked": "2026-10-25",
+    "status": "Community-reported item requirements; not confirmed in game",
+    "note": "Complete reported loot-item list agrees across the rechecked public references. Sources may share reports; agreement is not independent in-game verification. Selectable for item planning only; confirm the current game card and prior-tier unlock. No financial requirement is asserted.",
+    "checked": "2026-10-29",
     "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/stash-item-upgrade/",
         "sourceUpdated": "2026-10-24",
-        "checked": "2026-10-25"
+        "checked": "2026-10-29"
+      },
+      {
+        "url": "https://dmzmap.com/upgrades",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
+      },
+      {
+        "url": "https://detonated.com/which-items-should-you-keep-in-dmz-all-fob-upgrades-list/",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
       }
     ],
     "image": "upgrade-stash-item.png"
@@ -426,7 +441,12 @@ export const catalogData = [
     "category": "Upgrades",
     "family": "stash-weapon",
     "tier": 3,
-    "costs": null,
+    "costs": {
+      "Gold Bar": 5,
+      "Stabilized Reagents": 30,
+      "Volatile Explosives": 30,
+      "Nano-Structured Alloy": 10
+    },
     "reportedCosts": {
       "Gold Bar": 5,
       "Stabilized Reagents": 30,
@@ -434,15 +454,25 @@ export const catalogData = [
       "Nano-Structured Alloy": 10
     },
     "source": "https://dmzcodex.com/upgrades/stash-weapon-upgrade/",
-    "status": "Incomplete tier costs",
-    "note": "Cash is not documented. Reported materials do not establish a complete cost.",
-    "checked": "2026-10-25",
+    "status": "Community-reported item requirements; not confirmed in game",
+    "note": "Complete reported loot-item list agrees across the rechecked public references. Sources may share reports; agreement is not independent in-game verification. Selectable for item planning only; confirm the current game card and prior-tier unlock. No financial requirement is asserted.",
+    "checked": "2026-10-29",
     "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/stash-weapon-upgrade/",
         "sourceUpdated": "2026-10-24",
-        "checked": "2026-10-25"
+        "checked": "2026-10-29"
+      },
+      {
+        "url": "https://dmzmap.com/upgrades",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
+      },
+      {
+        "url": "https://detonated.com/which-items-should-you-keep-in-dmz-all-fob-upgrades-list/",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
       }
     ],
     "image": "upgrade-stash-weapon.png"
@@ -672,7 +702,12 @@ export const catalogData = [
     "category": "Upgrades",
     "family": "mia",
     "tier": 4,
-    "costs": null,
+    "costs": {
+      "Sanctioned Assassination List": 5,
+      "Ballistic Fabric": 30,
+      "Nylon Laminate": 30,
+      "Prototype RF Module": 10
+    },
     "reportedCosts": {
       "Sanctioned Assassination List": 5,
       "Ballistic Fabric": 30,
@@ -680,15 +715,25 @@ export const catalogData = [
       "Prototype RF Module": 10
     },
     "source": "https://dmzcodex.com/upgrades/mia-recovery-discount/",
-    "status": "Incomplete tier costs",
-    "note": "Cash is undocumented; materials and benefit are community reports.",
-    "checked": "2026-10-25",
+    "status": "Community-reported item requirements; not confirmed in game",
+    "note": "Complete reported loot-item list agrees across the rechecked public references. Sources may share reports; agreement is not independent in-game verification. Selectable for item planning only; confirm the current game card and prior-tier unlock. No financial requirement is asserted.",
+    "checked": "2026-10-29",
     "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/mia-recovery-discount/",
         "sourceUpdated": "2026-10-24",
-        "checked": "2026-10-25"
+        "checked": "2026-10-29"
+      },
+      {
+        "url": "https://dmzmap.com/upgrades",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
+      },
+      {
+        "url": "https://detonated.com/which-items-should-you-keep-in-dmz-all-fob-upgrades-list/",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
       }
     ],
     "image": "upgrade-mia.png"
@@ -699,7 +744,12 @@ export const catalogData = [
     "category": "Upgrades",
     "family": "vendor",
     "tier": 1,
-    "costs": null,
+    "costs": {
+      "Electronic Sensors": 20,
+      "CPU": 10,
+      "Printed Circuit Board": 10,
+      "Prototype RF Module": 2
+    },
     "reportedCosts": {
       "Electronic Sensors": 20,
       "CPU": 10,
@@ -707,23 +757,39 @@ export const catalogData = [
       "Prototype RF Module": 2
     },
     "source": "https://dmzcodex.com/upgrades/vendor-item-slots-upgrade/",
-    "status": "Incomplete tier costs",
-    "note": "Cash and exact offer benefit are undocumented; materials alone are not a complete cost.",
-    "checked": "2026-10-25",
+    "status": "Owner-confirmed item requirements",
+    "note": "Required item counts transcribed from the owner-provided in-game card; owned inventory is not a requirement. This app plans loot items only.",
+    "checked": "2026-10-29",
     "requires": "Vendor (DMZ Level 5).",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/vendor-item-slots-upgrade/",
         "sourceUpdated": "2026-10-24",
-        "checked": "2026-10-25"
+        "checked": "2026-10-29"
       },
       {
         "url": "https://codcentral.net/blog/mw4-dmz-3d-printer-recipes/",
         "sourceUpdated": "2026-10-22",
         "checked": "2026-10-25"
+      },
+      {
+        "url": "https://dmzmap.com/upgrades",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
+      },
+      {
+        "url": "https://detonated.com/which-items-should-you-keep-in-dmz-all-fob-upgrades-list/",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
       }
     ],
-    "image": "upgrade-vendor.png"
+    "image": "upgrade-vendor.png",
+    "effect": "Unlocks additional purchase options at vendor",
+    "ownerVerification": {
+      "date": "2026-10-29",
+      "evidence": "Owner-provided Vendor Item Upgrade I in-game screenshot, transcribed and pixel-inspected by parent.",
+      "scope": "Item requirements and vendor-options effect; no owned-inventory import or financial assertion."
+    }
   },
   {
     "id": "vendor-2",
@@ -731,7 +797,12 @@ export const catalogData = [
     "category": "Upgrades",
     "family": "vendor",
     "tier": 2,
-    "costs": null,
+    "costs": {
+      "Control Unit": 20,
+      "High-Tenacity Fibers": 10,
+      "Nylon Cloth": 10,
+      "Nano-Structured Alloy": 2
+    },
     "reportedCosts": {
       "Control Unit": 20,
       "High-Tenacity Fibers": 10,
@@ -739,15 +810,25 @@ export const catalogData = [
       "Nano-Structured Alloy": 2
     },
     "source": "https://dmzcodex.com/upgrades/vendor-item-slots-upgrade/",
-    "status": "Incomplete tier costs",
-    "note": "Cash and exact offer benefit are undocumented; earlier tier required.",
-    "checked": "2026-10-25",
+    "status": "Community-reported item requirements; not confirmed in game",
+    "note": "Complete reported loot-item list agrees across the rechecked public references. Sources may share reports; agreement is not independent in-game verification. Selectable for item planning only; confirm the current game card and prior-tier unlock. No financial requirement is asserted.",
+    "checked": "2026-10-29",
     "requires": "Requires previous tier already owned in game; only this tier is planned.",
     "sources": [
       {
         "url": "https://dmzcodex.com/upgrades/vendor-item-slots-upgrade/",
         "sourceUpdated": "2026-10-24",
-        "checked": "2026-10-25"
+        "checked": "2026-10-29"
+      },
+      {
+        "url": "https://dmzmap.com/upgrades",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
+      },
+      {
+        "url": "https://detonated.com/which-items-should-you-keep-in-dmz-all-fob-upgrades-list/",
+        "checked": "2026-10-29",
+        "sourceUpdated": "2026-10-25"
       }
     ],
     "image": "upgrade-vendor.png"
@@ -959,15 +1040,18 @@ export const catalogData = [
     "id": "radiation-blockers",
     "name": "Radiation Blockers",
     "category": "Consumables",
-    "costs": null,
+    "costs": {
+      "Chemicals": 30,
+      "Biomaterials": 3
+    },
     "reportedCosts": {
       "Chemicals": 30,
       "Biomaterials": 3
     },
     "source": "https://dmzcodex.com/recipes/radiation-blockers/",
-    "status": "Conflicting reports",
-    "note": "The two checked references agree on the listed reported cost, but an earlier third-source comparison differs. Current in-game card needed before selection.",
-    "checked": "2026-10-25",
+    "status": "Owner-confirmed item requirements",
+    "note": "Owner in-game card required quantities resolve the previous source conflict. Owned inventory is not used as requirements. Previous uncertainty retained for provenance: Current source explicitly reports conflicting item lists: Chemicals 30 + Biomaterials 3 versus Electronics 15 + Chemicals 15. Multiple reports agreeing on one list do not resolve the current conflict; an in-game card is still needed.",
+    "checked": "2026-10-29",
     "requires": "The two checked references agree on the listed reported cost, but an earlier third-source comparison differs. Current in-game card needed before selection.",
     "sources": [
       {
@@ -977,10 +1061,15 @@ export const catalogData = [
       },
       {
         "url": "https://dmzcodex.com/recipes/radiation-blockers/",
-        "checked": "2026-10-25"
+        "checked": "2026-10-29"
       }
     ],
-    "image": "recipe-radiation-blockers.png"
+    "image": "recipe-radiation-blockers.png",
+    "ownerVerification": {
+      "date": "2026-10-29",
+      "evidence": "Parent pixel-inspected owner-provided in-game Radiation Blockers screenshot; required counts read from the right side of the owned/required display.",
+      "scope": "Item requirements only; right-hand required counts. No owned-inventory import or financial assertion."
+    }
   },
   {
     "id": "smelling-salts",
@@ -2580,15 +2669,18 @@ export const catalogData = [
     "id": "ddos",
     "name": "DDOS",
     "category": "Field Upgrades",
-    "costs": null,
+    "costs": {
+      "Electronics": 30,
+      "Detonators": 3
+    },
     "reportedCosts": {
       "Electronics": 30,
       "Detonators": 3
     },
     "source": "https://dmzcodex.com/recipes/ddos/",
-    "status": "Conflicting reports",
-    "note": "The two checked references agree on the listed reported cost, but an earlier third-source comparison differs. Current in-game card needed before selection.",
-    "checked": "2026-10-25",
+    "status": "Owner-confirmed item requirements",
+    "note": "Owner in-game card required quantities resolve the previous source conflict. Owned inventory is not used as requirements. Previous uncertainty retained for provenance: The two checked references agree on the listed reported cost, but an earlier third-source comparison differs. Current in-game card needed before selection.",
+    "checked": "2026-10-29",
     "requires": "The two checked references agree on the listed reported cost, but an earlier third-source comparison differs. Current in-game card needed before selection.",
     "sources": [
       {
@@ -2601,7 +2693,12 @@ export const catalogData = [
         "checked": "2026-10-25"
       }
     ],
-    "image": "recipe-ddos.png"
+    "image": "recipe-ddos.png",
+    "ownerVerification": {
+      "date": "2026-10-29",
+      "evidence": "Parent pixel-inspected owner-provided in-game DDOS screenshot; required counts read from the right side of the owned/required display.",
+      "scope": "Item requirements only; right-hand required counts. No owned-inventory import or financial assertion."
+    }
   },
   {
     "id": "defibrillator",

@@ -1,8 +1,8 @@
-// Temporary draft access is confined to the staging job; no npm dependencies run there.
+// Isolated verified staging, with no npm dependencies. Any draft write permission needs fresh owner approval.
 import {mkdir,writeFile} from 'node:fs/promises';import {createHash} from 'node:crypto';
-const repository='drakahari/dmz-raid-board',tag='v0.1.7';
-const filename='DMZ-Raid-Board-0.1.7-win-x64-portable-with-artwork.zip';
-const expected='48b050ce1a81a6acfd5c79284f125db30dca0cf834cf0273aafb0689834c173d';
+const repository='drakahari/dmz-raid-board',tag='v0.1.8';
+const filename='DMZ-Raid-Board-0.1.8-win-x64-portable-with-artwork.zip';
+const expected='bc6c8d3b6a35054c3a811830fe3adce90a3e15839a939504adb612c2f4f93361';
 if(!process.env.GH_TOKEN)throw Error('Staging job token unavailable');
 const api='https://api.github.com/repos/'+repository;
 const headers={Authorization:'Bearer '+process.env.GH_TOKEN,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'dmz-release-staging'};
@@ -16,6 +16,6 @@ if([301,302,303,307,308].includes(response.status)){
  response=await fetch(location); // Do not forward repository token outside GitHub API.
 }
 if(!response.ok)throw Error('Seed asset HTTP '+response.status);
-const bytes=Buffer.from(await response.arrayBuffer());if(bytes.length!==165406794||createHash('sha256').update(bytes).digest('hex')!==expected)throw Error('Approved seed bytes mismatch');
+const bytes=Buffer.from(await response.arrayBuffer());if(bytes.length!==165730893||createHash('sha256').update(bytes).digest('hex')!==expected)throw Error('Approved seed bytes mismatch');
 await mkdir('.ci/staged',{recursive:true});await writeFile('.ci/staged/windows.zip',bytes);
 console.log('Verified Windows seed staged for read-only native jobs.');

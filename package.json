@@ -1,6 +1,6 @@
 {
   "name": "dmz-raid-board",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Offline DMZ item planner and raid checklist",
   "private": true,
   "license": "MIT",
@@ -13,10 +13,10 @@
     "test:ui": "npm run build && node tests/electron.test.mjs",
     "package": "npm run build && electron-builder --win zip --x64",
     "build:public": "tsc -p tsconfig.json && node scripts/build.mjs --public",
-    "package:public": "npm run build:public && electron-builder --win zip --x64 --config.directories.output=release/0.1.7-public --config.win.artifactName=DMZ-Raid-Board-0.1.7-win-x64-portable-public.zip",
+    "package:public": "npm run build:public && electron-builder --win zip --x64 --config.directories.output=release/0.1.8-public --config.win.artifactName=DMZ-Raid-Board-0.1.8-win-x64-portable-public.zip",
     "build:artwork": "tsc -p tsconfig.json && node scripts/build.mjs --with-artwork",
-    "package:artwork": "npm run build:artwork && electron-builder --win zip --x64 --config.directories.output=release/0.1.7-with-artwork --config.win.artifactName=DMZ-Raid-Board-0.1.7-win-x64-portable-with-artwork.zip",
-    "package:candidate": "npm run build:artwork && electron-builder --win zip --x64 --config.directories.output=release/0.1.7-candidate --config.win.artifactName=DMZ-Raid-Board-0.1.7-win-x64-settings-themes-candidate.zip"
+    "package:artwork": "npm run build:artwork && electron-builder --win zip --x64 --config.directories.output=release/0.1.8-with-artwork --config.win.artifactName=DMZ-Raid-Board-0.1.8-win-x64-portable-with-artwork.zip",
+    "package:candidate": "npm run build:artwork && electron-builder --win zip --x64 --config.directories.output=release/0.1.8-candidate --config.win.artifactName=DMZ-Raid-Board-0.1.8-win-x64-settings-themes-candidate.zip"
   },
   "devDependencies": {
     "electron": "45.0.0",
@@ -28,7 +28,7 @@
     "appId": "private.dmz.raidboard",
     "productName": "DMZ Raid Board",
     "directories": {
-      "output": "release/0.1.7-private"
+      "output": "release/0.1.8-private"
     },
     "files": [
       "dist/**/*",

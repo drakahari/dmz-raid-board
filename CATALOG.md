@@ -58,3 +58,22 @@ The new evidence makes MIA III selectable. The other four entries already had ma
 ## Local artwork update — 2026-10-27
 
 Military Composites now uses the owner-saved Epic Ingredient Printing screenshot, retained byte-identically and displayed through an icon-only CSS crop. Its requirement remains 5 in Epic Printing; the displayed owned counts are not requirements. The incorrect gray reference is retained unchanged but unused. This restores 40/41 target-image coverage; Foreign Intelligence Targets remains pending. Offline resource inventory is 129 files, including the retained unused reference. File inventory is separate from displayed image coverage.
+
+## 0.1.8 item-requirement review - 2026-10-29
+
+Vendor Item Upgrade I is owner-confirmed: Electronic Sensors 20, CPU 10, Printed Circuit Board 10, Prototype RF Module 2. These are required counts, not owned inventory. The prior reported amounts already matched. Its recorded effect unlocks additional vendor purchase options. No financial requirement is inferred.
+
+Stash Item IV (Gold Skull 5, Alloyed Plating 30, Experimental Compounds 10, Turned Components 30), Stash Weapon III (Gold Bar 5, Stabilized Reagents 30, Volatile Explosives 30, Nano-Structured Alloy 10), MIA IV (Sanctioned Assassination List 5, Ballistic Fabric 30, Nylon Laminate 30, Prototype RF Module 10), and Vendor II (Control Unit 20, High-Tenacity Fibers 10, Nylon Cloth 10, Nano-Structured Alloy 2) are selectable for loot planning with explicit community-reported / not confirmed in game labeling. Missing financial information no longer blocks a complete reported loot-item list. No zero financial requirement, in-game verification, prior-tier ownership or complete unlock knowledge is claimed.
+
+Exact family pages at https://dmzcodex.com/upgrades/ were rechecked on 2026-10-29, with factual item lists cross-checked against https://dmzmap.com/upgrades and https://detonated.com/which-items-should-you-keep-in-dmz-all-fob-upgrades-list/ (both dated 2026-10-25). These sources may share reports; agreement does not establish independent in-game confirmation. Individual records retain exact family URLs and check dates. Owner-confirmed values were preserved.
+
+Candidate 2 supersedes the initial candidate: 120 catalog entries are selectable, none disabled. Owner screenshots confirm DDOS Electronics 30 + Detonators 3 and Radiation Blockers Chemicals 30 + Biomaterials 3, superseding the earlier conflicting reports while retaining historical provenance. The four upper upgrades above remain community-reported, not owner-confirmed. No new images were downloaded; 129-resource inventory and Foreign Intelligence Targets picture gap are unchanged. Version-2 data and backups remain unchanged. The release data uses the approved candidate-2 requirements and confidence labels.
+
+Candidate 2 (2026-10-29) is preserved separately. Release packaging uses the same requirements and removes private owned-inventory observations from evidence metadata. Game-art inventory is unchanged.
+
+
+## 0.1.8 candidate3 - Foreign Intelligence Targets
+
+The owner-supplied MIA Recovery III screenshot is preserved unchanged and displayed through an icon-only CSS crop (x98,y418,width42,height40 at2x, with a small bottom-left presentation mask to exclude an adjacent rarity-marker fragment). Surrounding item rows, labels and owned counts are excluded from the displayed picture. Existing MIA III requirements remain W.M.D. Manifest5, Foreign Intelligence Targets5, Power Regulator10 and Comms Module10. No new image was downloaded from a website or generated. Offline image inventory is130 files; all41 current loot targets have mapped local art. All120 existing recipe/output cards have mapped image files, some shared between tiers; file presence is separate from exhaustive visual verification or full-game catalog completeness.
+
+Confidence remains9 owner-confirmed and111 web-reported entries;120 selectable does not mean120 owner-confirmed. Community reference tiers BankVII and Dog Tag CaseIII-IV are absent from this catalog and are not added in this image-only batch. Publication is handled separately from this catalog snapshot. All-platform builds must carry the same130-image payload; the earlier129-image public seed alone is insufficient.

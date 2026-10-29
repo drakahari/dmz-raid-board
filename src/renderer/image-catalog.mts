@@ -1,5 +1,11 @@
 // Optional file mappings only; copyrighted pixels are private and excluded from public Git.
 export const materialArt = {
+  "Foreign Intelligence Targets": {
+    "file": "owner-foreign-intelligence-targets.png",
+    "rarity": "unknown",
+    "verified": true,
+    "presentation": "foreign-intelligence-targets-screenshot" as const
+  },
   "Regional Combat Notes": {
     "file": "owner-regional-combat-notes.png",
     "rarity": "unknown",
