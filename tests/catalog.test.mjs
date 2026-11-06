@@ -34,12 +34,12 @@ test('credited artwork metadata identifies shared/promo references and keeps mis
 
 test('version-2 and version-1 backups migrate without losing existing plan and raid fields',()=>{
  const old={version:2,selected:{gunsmith:1,stash:1},adjustments:{CPU:-3},extras:{Chemicals:4},picked:{CPU:2},completed:['Power Regulator'],hideCompleted:true};
- const migrated=parseBackup(JSON.stringify(old));assert.equal(migrated.version,3);
+ const migrated=parseBackup(JSON.stringify(old));assert.equal(migrated.version,4);
  for(const field of ['selected','adjustments','extras','picked','completed','hideCompleted'])assert.deepEqual(migrated[field],old[field]);
- assert.deepEqual(migrated.blueprintProgress,{});assert.deepEqual(migrated.wanted,[]);assert.deepEqual(migrated.acquisitionPlans,{});
+ assert.deepEqual(migrated.blueprintProgress,{});assert.deepEqual(migrated.wanted,[]);assert.deepEqual(migrated.owned,[]);assert.deepEqual(migrated.acquisitionPlans,{});
  assert.deepEqual(raidTargets(migrated),{CPU:7,'Power Regulator':10,'Reactive Metals':20,Detonators:20,'Nylon Cloth':10,Chemicals:4});
  const v1=parseBackup(JSON.stringify({version:1,selected:{gunsmith:1},targets:{CPU:7,Chemicals:4},picked:{CPU:2},completed:['Power Regulator'],hideCompleted:true}));
- assert.equal(v1.adjustments.CPU,-3);assert.equal(v1.extras.Chemicals,4);assert.equal(v1.picked.CPU,2);assert.equal(v1.version,3);
+ assert.equal(v1.adjustments.CPU,-3);assert.equal(v1.extras.Chemicals,4);assert.equal(v1.picked.CPU,2);assert.equal(v1.version,4);
 });
 
 test('found, unlocked and wanted are manual progress, independent from item pickups and planned requirements',()=>{

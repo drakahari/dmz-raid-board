@@ -1,6 +1,6 @@
 {
   "name": "dmz-raid-board",
-  "version": "0.1.9-season1.2",
+  "version": "0.1.9-season1.3",
   "description": "Offline DMZ item planner and raid checklist",
   "private": true,
   "license": "MIT",
@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && node scripts/build.mjs",
     "start": "npm run build && electron .",
-    "test": "npm run build && node --test tests/core.test.mjs tests/catalog.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs tests/catalog-update018.test.mjs",
+    "test": "npm run build && node --test tests/core.test.mjs tests/catalog.test.mjs tests/simple-wanted.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs tests/catalog-update018.test.mjs",
     "test:ui": "npm run build && node tests/electron.test.mjs",
     "package": "node scripts/package-local.mjs",
     "build:public": "tsc -p tsconfig.json && node scripts/build.mjs --public",
@@ -29,7 +29,7 @@
     "appId": "private.dmz.raidboard",
     "productName": "DMZ Raid Board",
     "directories": {
-      "output": "release/0.1.9-season1.2-local"
+      "output": "release/0.1.9-season1.3-local"
     },
     "files": [
       "dist/**/*",
@@ -40,7 +40,8 @@
       "docs/SEASON-1-UPDATE.md",
       "docs/season1-printer-audit.json",
       "docs/IMAGE-SOURCES-2026-11-06.json",
-      "docs/IMAGE-UPDATE-2026-11-06.md"
+      "docs/IMAGE-UPDATE-2026-11-06.md",
+      "docs/SIMPLE-WANTED-UPDATE.md"
     ],
     "asar": true,
     "win": {

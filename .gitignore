@@ -79,3 +79,7 @@ candidate-output/
 !/scripts/package-local.mjs
 !/tests/catalog.test.mjs
 !/tests/season-ui.test.mjs
+
+# Simple Have/Want workflow coverage.
+!/tests/simple-wanted.test.mjs
+!/tests/simple-wanted-ui.test.mjs

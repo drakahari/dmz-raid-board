@@ -1,16 +1,14 @@
 # Season 1 Windows test build
 
-Version `0.1.9-season1.2`, researched 6 November 2026 for Modern Warfare 4 DMZ Season 1. This is a Windows test build prepared for a clearly labeled prerelease.
+Version `0.1.9-season1.3`, researched 6 November 2026 for Modern Warfare 4 DMZ Season 1. This is a Windows test build prepared for a clearly labeled prerelease.
 
 ## Using the library
 
-Open **Blueprint & item library**. Search by name, ingredient, unlock or location; combine category, type, season, acquisition method, progress and wanted filters. The library pages through 20 records at a time.
+Open **Blueprint & item library**. Search and combine category, type, season and item-status filters. The library pages through 20 records at a time. Choose **Have it**, **Want it** or **Neither** for each entry. Want it places that named item directly in Raid checklist; it does not add its ingredients. Have it or Neither removes its wanted request. These are manual choices, not an in-game inventory or unlock detector.
 
-- **Your unlock record** is a manual record of what you found/acquired or unlocked in game. It never changes from picking up loot or planning a craft.
-- **Want this** keeps a separate list of goals.
-- **Add to raid plan** selects one acquisition route and quantity. Existing printer selections are shared with the original planner, so adding the same recipe through either view never doubles its requirements. Permanent tiers still replace another tier in the same family.
-- **Add item to raid** adds a physical Manual, key, gear or valuable as a manual extra. This targets the item itself, not an unverified recipe.
-- A route with unknown requirements cannot be used to create a crafting plan. Its name, evidence and unlock guidance remain searchable. Picking up a Manual is separate from successfully extracting it; record its unlock yourself.
+**Select all matches as wanted** applies across every filtered page and skips Have it entries. **Unselect wanted matches** clears only wanted choices in that same scope after confirmation, preserving Have it. Counts and scope stay visible. Reset filters to apply to the entire library. **Undo last bulk change** is available during the session and preserves later individual changes. See [complete workflow and recovery rules](SIMPLE-WANTED-UPDATE.md).
+
+Recipe quantities and ingredient planning remain in **Plan your raid**. Library status choices preserve those plans and pickup counts. A wanted item matching an existing material target uses one Raid card with a Wanted badge, without adding quantity. Old acquisition plans and unlock notes remain in saved data; the simplified library does not show recipe controls or infer Have it from those notes.
 
 ## Coverage and limits
 
@@ -26,11 +24,11 @@ The existing 130 optional local artwork files are preserved, including owner scr
 
 ## Saves and rollback
 
-Back up using Settings before moving to a new portable folder. The new app exports version-3 backups containing blueprint progress, wanted entries and one acquisition plan per item in addition to prior fields. Version-1 and version-2 backups remain importable. Version-2 selections, adjustments, extras, picked counts, checks and hide-completed preference retain their values. Version-1 positive-target migration keeps the existing rules; stale zero overrides are dropped with a notice.
+Export a backup in Settings before updating and extract into a fresh writable folder. Version-4 backups add an owned list, mutually exclusive with wanted items. Versions 1–3 remain importable. Existing printer goals, route plans, extras, adjustments, counts, checks and preferences carry forward. Version-3 wants now appear directly in Raid checklist. Legacy found/unlocked notes are retained but do not establish ownership of a finished item.
 
-The new storage key is `dmz-raid-board-state-v3`. On automatic migration, old v1/v2 text stays at its original key and is also retained in a before-migration snapshot. The original old app can still read its original board. Older app versions cannot import v3 exports. The old portable folder and its data are not modified by using a candidate extracted into a separate folder; export/import transfers your board. Theme remains separate.
+The new storage key is `dmz-raid-board-state-v4`. Earlier original save text and before-migration copies remain available for recovery. A corrupt v4 save opens recovery instead of silently substituting an older board. Older apps cannot import v4 exports; keep the old app and backup. Theme remains separate.
 
-**New raid** clears only pickup counts and checks. **Clear entire list** clears plans and raid data but keeps blueprint progress, wanted items and theme; its recovery snapshot restores the plan while keeping your latest library progress. Import replaces the complete board only after confirmation and saves a recovery copy.
+**New raid** clears counts and checks, retaining plans and Have/Want choices. **Clear entire list** clears wants, plans and raid progress after confirmation and a recovery copy; it preserves Have it, legacy notes and theme. Restore keeps current Have it choices when reconciling restored wants. Import replaces the board after confirmation and saves a recovery copy. See [detailed recovery behavior](SIMPLE-WANTED-UPDATE.md).
 
 ## Maintenance and validation
 

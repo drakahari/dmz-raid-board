@@ -1,9 +1,10 @@
 # DMZ Raid Board
 
-## Season 1 Windows test build — 0.1.9-season1.2
+## Season 1 Windows test build - 0.1.9-season1.3
 
-The new Blueprint & item library has 229 sourced records: 120 existing printer/upgrade entries, 34 Weapon Manuals, 59 cosmetic blueprints and 16 X01 items. Search/filter, separate unlock progress and wanted items, shared recipe plans and manual loot targets are available. Saves migrate to version 3 while retaining older originals. New X01 recipes and ingredient quantities remain unverified. Credited shared icons and official promotional panels now cover 94 new records; 15 X01 records retain placeholders. This is a Windows test build; see the prerelease page for download and limitations. See [usage, migration and limits](docs/SEASON-1-UPDATE.md) and [research evidence](docs/SEASON-1-EVIDENCE.md).
+The Blueprint & item library has 229 sourced records: 120 existing printer/upgrade entries, 34 Weapon Manuals, 59 cosmetic blueprints and 16 X01 items. Choose **Have it**, **Want it** or **Neither**. Wanted items appear directly in the Raid checklist, without expanding into ingredients. Bulk select/unselect applies to every filtered result across all pages and preserves Have it choices; clearing wants asks for confirmation and a session undo is available. Existing printer plans and pickup counts are preserved. Version-4 saves retain older originals. See [Have/Want usage and migration](docs/SIMPLE-WANTED-UPDATE.md), [coverage and limitations](docs/SEASON-1-UPDATE.md) and [research evidence](docs/SEASON-1-EVIDENCE.md).
 
+The Windows test includes 174 credited artwork files. Shared icons and official promotional panels cover 94 new records; 15 X01 records retain placeholders. Artwork rights remain reserved; attribution does not establish a redistribution license. Only Windows is rebuilt for this revision.
 
 An offline standalone desktop raid planner and manual checklist built with TypeScript, HTML/CSS and Electron. Choose goals, aggregate shared ingredients, edit raid targets, and track picked-up counts using a simple picture-first layout. Planning and raid views show items to loot; monetary amounts are omitted. Settings displays the actual packaged app version.
 

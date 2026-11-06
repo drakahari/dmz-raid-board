@@ -6,6 +6,7 @@ import {catalogArtwork} from './artwork-data.mjs';
 export type CatalogKind='printer-recipe'|'weapon-manual'|'cosmetic-blueprint'|'item';
 export type AcquisitionMethod='printer'|'gunsmith'|'vendor'|'loot'|'reward'|'battle-pass'|'store'|'unknown';
 export type BlueprintProgress='not-found'|'found'|'unlocked';
+export type ItemStatus='have'|'want'|'neither';
 export interface EvidenceSource {url:string;checked:string;sourceUpdated?:string}
 export interface PrinterUnlockOverlay {id:string;unlock:string;checked:string;status:string;sources:EvidenceSource[]}
 export interface AcquisitionRoute {
@@ -23,10 +24,11 @@ export interface AcquisitionPlan {routeId:string;quantity:number}
 export interface CatalogProgressState {
  blueprintProgress:Partial<Record<string,Exclude<BlueprintProgress,'not-found'>>>;
  wanted:string[];
+ owned?:string[];
 }
 export interface CatalogFilters {
  search?:string;category?:string;season?:string;kind?:string;method?:string;
- progress?:string;wantedOnly?:boolean;
+ progress?:string;wantedOnly?:boolean;status?:string;
 }
 
 const printerEntries:CatalogEntry[]=recipes.map(recipe=>{
@@ -85,6 +87,7 @@ export function filterCatalog(filters:CatalogFilters={},state?:CatalogProgressSt
   match(filters.category,entry.category)&&match(filters.season,entry.season)&&match(filters.kind,entry.kind)&&
   (!filters.method||filters.method==='all'||entry.routes.some(route=>route.method===filters.method))&&
   (!filters.wantedOnly||state?.wanted.includes(entry.id))&&
+  match(filters.status,state?.owned?.includes(entry.id)?'have':state?.wanted.includes(entry.id)?'want':'neither')&&
   (!filters.progress||filters.progress==='all'||canTrackBlueprint(entry)&&filters.progress===(state?.blueprintProgress[entry.id]||'not-found'))&&
   (!term||[entry.name,entry.description,entry.blueprintRequirement,...entry.routes.flatMap(route=>[route.label,route.location,route.unlock,route.note,...Object.keys(route.requirements||{})])].filter(Boolean).join(' ').toLocaleLowerCase().includes(term))
  ).sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'})||a.id.localeCompare(b.id));

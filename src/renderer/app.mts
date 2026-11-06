@@ -1,10 +1,10 @@
 import {themes,normalizeTheme,themeKey,defaultTheme} from './themes.mjs';
 import {buildFlavor,appVersion} from './build-status.mjs';
 import {recipes,categories,materials,art as knownArt,checked,type Recipe,type Category,type ArtAsset} from './catalog.mjs';
-import {catalogEntries,catalogMaterials,getCatalogEntry,getCatalogRoute,filterCatalog,type CatalogEntry,type AcquisitionRoute} from './acquisition.mjs';
+import {catalogEntries,catalogMaterials,getCatalogEntry,getCatalogRoute,filterCatalog,type CatalogEntry} from './acquisition.mjs';
 import {installedImageFiles} from './asset-status.mjs';
 import {compareNames,sortedNames} from './ordering.mjs';
-import {type BoardState,emptyState,parseBackup,serialize,count,recipeTotals,raidTargets,chooseRecipe,isComplete,plannedProduction,newRaid,maxCount,setRaidTarget,addExtra,removeExtra,resetAdjustments,setBlueprintProgress,setWanted,chooseAcquisition,acquisitionQuantity} from './core.mjs';
+import {type BoardState,type ItemStatus,emptyState,parseBackup,serialize,count,recipeTotals,raidTargets,chooseRecipe,isComplete,plannedProduction,newRaid,maxCount,setRaidTarget,addExtra,removeExtra,resetAdjustments,setItemStatus,getItemStatus,wantedRaidItems,setWantedBulk} from './core.mjs';
 const $ = <T extends HTMLElement = HTMLElement>(id:string) => document.getElementById(id) as T;
 $('buildLabel').textContent=buildFlavor==='public'?'PUBLIC PRERELEASE / NO GAME ART':buildFlavor==='artwork'?'UNOFFICIAL PRERELEASE / GAME ART':'PRIVATE WINDOWS PROTOTYPE / 01';
 const escape=(value:string)=>value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
@@ -49,26 +49,26 @@ function closeSettings(){settings.close();}
 $('settingsBtn').addEventListener('click',openSettings);$('closeSettings').addEventListener('click',closeSettings);
 settings.addEventListener('close',()=>$('settingsBtn').focus());
 themePicker.addEventListener('change',()=>{selectedTheme=normalizeTheme(themePicker.value);document.documentElement.dataset.theme=selectedTheme;try{localStorage.setItem(themeKey,selectedTheme);$('themeFeedback').textContent=themes.find(t=>t.id===selectedTheme)!.name+' applied and saved.';}catch{$('themeFeedback').textContent='Theme applied for this session; device storage is unavailable.';}});
-const key='dmz-raid-board-state-v3';
-const previousKey='dmz-raid-board-state-v2';
+const key='dmz-raid-board-state-v4';
+const previousKey='dmz-raid-board-state-v3';
+const olderKey='dmz-raid-board-state-v2';
 const legacyKey='dmz-raid-board-state-v1';
 const clearRecoveryKey=key+'-before-clear';
 let migratedLegacy=false;
-let migratedVersion=3;
+let migratedVersion=4;
 $('appVersion').textContent='DMZ Raid Board '+appVersion;
 const fmt=(n:number)=>n.toLocaleString();
 const art=Object.fromEntries(Object.entries(knownArt).filter(([,asset])=>asset.verified!==false&&installedImageFiles.includes(asset.file)));
 let state:BoardState=emptyState();
+let bulkUndo:Array<{id:string;before:ItemStatus;after:ItemStatus}>|null=null;
 type ViewMode='plan'|'raid'|'library';
 let mode:ViewMode='plan';
-const libraryRoutes=new Map<string,string>();
-const libraryQuantities=new Map<string,string>();
 let corruptRaw:string|null=null;
 let storageAvailable=true;
 try {
- const raw=localStorage.getItem(key)??localStorage.getItem(previousKey)??localStorage.getItem(legacyKey);
- if(raw!==null){try{state=parseBackup(raw);migratedVersion=JSON.parse(raw).version;migratedLegacy=migratedVersion<3;}catch(e){corruptRaw=raw;$('recovery').hidden=false;$('recoveryReason').textContent=String((e as Error).message);}if(migratedLegacy){try{if(localStorage.getItem(key+'-before-migration')===null)localStorage.setItem(key+'-before-migration',raw);}catch{storageAvailable=false;}}}
- const savedMode=localStorage.getItem('dmz-raid-board-mode-v3')??localStorage.getItem('dmz-raid-board-mode-v2')??localStorage.getItem('dmz-raid-board-mode');if(savedMode==='raid'||savedMode==='library')mode=savedMode;
+ const raw=localStorage.getItem(key)??localStorage.getItem(previousKey)??localStorage.getItem(olderKey)??localStorage.getItem(legacyKey);
+ if(raw!==null){try{state=parseBackup(raw);migratedVersion=JSON.parse(raw).version;migratedLegacy=migratedVersion<4;}catch(e){corruptRaw=raw;$('recovery').hidden=false;$('recoveryReason').textContent=String((e as Error).message);}if(migratedLegacy){try{if(localStorage.getItem(key+'-before-migration')===null)localStorage.setItem(key+'-before-migration',raw);}catch{storageAvailable=false;}}}
+ const savedMode=localStorage.getItem('dmz-raid-board-mode-v4')??localStorage.getItem('dmz-raid-board-mode-v3')??localStorage.getItem('dmz-raid-board-mode-v2')??localStorage.getItem('dmz-raid-board-mode');if(savedMode==='raid'||savedMode==='library')mode=savedMode;
 }catch{storageAvailable=false;}
 
 let pending:(()=>void)|null=null;
@@ -78,7 +78,7 @@ function notice(message:string){const target=settings.open?$('settingsMessage'):
 function showError(error:unknown){notice(error instanceof Error?error.message:'This action could not be completed. Your board has not changed.');}
 function save(){
  if(corruptRaw!==null){$('saved').textContent='Session only · saved data needs recovery';return;}
- try {if(!storageAvailable)throw new Error('Storage unavailable');localStorage.setItem(key,serialize(state));localStorage.setItem('dmz-raid-board-mode-v3',mode);$('saved').textContent='● Saved on this device';}
+ try {if(!storageAvailable)throw new Error('Storage unavailable');localStorage.setItem(key,serialize(state));localStorage.setItem('dmz-raid-board-mode-v4',mode);$('saved').textContent='● Saved on this device';}
  catch {$('saved').textContent='Storage unavailable · export a backup';storageAvailable=false;}
 }
 function ask(title:string,body:string,action:()=>void,label='Confirm'){
@@ -103,16 +103,8 @@ function materialImage(name:string,asset:ArtAsset):string {
 }
 function renderGoals(){
  const goals=recipes.filter(r=>(state.selected[r.id]||0)>0);
- $('goalEmpty').hidden=goals.length>0||Object.keys(state.acquisitionPlans).length>0;
+ $('goalEmpty').hidden=goals.length>0;
  $('upgrades').innerHTML=goals.map(r=>`<article class="upgrade on selectedGoal" data-goal="${escape(r.id)}"><span class="symbol" aria-hidden="true">${installedRecipeImage(r)?`<img src="assets/${escape(installedRecipeImage(r)!)}" alt="">`:'+'}</span><div class="goalText"><h3>${escape(r.name)}</h3><p>${r.id==='gunsmith'?'Gunsmith upgrade goal':r.id==='stash'?'Expand your item stash':escape(itemBenefit(r)||r.category)}</p><p>${escape(costText(r))}${r.category!=='Upgrades'?' · Quantity '+(state.selected[r.id]||0):''}</p></div><button class="secondary goalRemove" data-summary-remove="${escape(r.id)}" aria-label="Remove ${escape(r.name)} goal">Remove</button></article>`).join('');
-}
-function renderAcquisitionGoals(){
- for(const [entryId,plan] of Object.entries(state.acquisitionPlans)){
-  const entry=getCatalogEntry(entryId),route=getCatalogRoute(entryId,plan.routeId);if(!entry||!route)continue;
-  const card=document.createElement('article');card.className='upgrade on selectedGoal';card.dataset.acquisitionGoal=entryId;
-  card.innerHTML='<span class="symbol" aria-hidden="true">+</span><div class="goalText"><h3>'+escape(entry.name)+'</h3><p>'+escape(route.label)+'</p><p>Quantity '+fmt(plan.quantity)+'</p></div><button class="secondary goalRemove" data-acquisition-remove="'+escape(entryId)+'" aria-label="Remove '+escape(entry.name)+' acquisition goal">Remove</button>';
-  $('upgrades').append(card);
- }
 }
 function addUpgrades(){const browse=$<HTMLDetailsElement>('browse');browse.open=true;$<HTMLSelectElement>('category').value='Upgrades';$<HTMLInputElement>('search').value='';renderCatalog();$('search').focus();}
 $('addUpgrades').addEventListener('click',addUpgrades);
@@ -132,15 +124,24 @@ function renderCatalog(){
  }).join(''):'<p>No matching recipes in this category.</p>';
 }
 const kindLabels:Record<string,string>={'printer-recipe':'Printer recipes & upgrades','weapon-manual':'Weapon Manuals','cosmetic-blueprint':'Cosmetic blueprints',item:'Items'};
-const methodLabels:Record<string,string>={printer:'3D Printer',gunsmith:'Gunsmith',vendor:'Vendor',loot:'Loot / extraction',reward:'Reward / unlock','battle-pass':'Battle Pass',store:'Store',unknown:'Unknown route'};
+const itemStatusLabels={have:'Have it',want:'Want it',neither:'Neither'} as const;
+type WantedRaidGroup=ReturnType<typeof wantedRaidItems>[number];
 let libraryPage=0;
 const libraryPageSize=20;
-function currentRoute(entry:CatalogEntry):AcquisitionRoute {
- const id=libraryRoutes.get(entry.id)||state.acquisitionPlans[entry.id]?.routeId;
- return entry.routes.find(route=>route.id===id)||entry.routes[0];
+function filteredLibraryEntries():CatalogEntry[]{
+ return filterCatalog({search:$<HTMLInputElement>('librarySearch').value,category:$<HTMLSelectElement>('libraryCategory').value,kind:$<HTMLSelectElement>('libraryKind').value,season:$<HTMLSelectElement>('librarySeason').value,status:$<HTMLSelectElement>('libraryItemStatus').value},state).sort((a,b)=>compareNames(a.name,b.name)||compareNames(a.id,b.id));
 }
 function renderLibrary(){
- const shown=filterCatalog({search:$<HTMLInputElement>('librarySearch').value,category:$<HTMLSelectElement>('libraryCategory').value,kind:$<HTMLSelectElement>('libraryKind').value,season:$<HTMLSelectElement>('librarySeason').value,method:$<HTMLSelectElement>('libraryMethod').value,progress:$<HTMLSelectElement>('libraryProgress').value,wantedOnly:$<HTMLInputElement>('libraryWanted').checked},state).sort((a,b)=>compareNames(a.name,b.name)||compareNames(a.id,b.id));
+ const shown=filteredLibraryEntries();
+ const wantCount=shown.filter(entry=>getItemStatus(state,entry.id)==='neither').length;
+ const clearCount=shown.filter(entry=>getItemStatus(state,entry.id)==='want').length;
+ $('libraryWantAll').textContent='Select all matches as wanted ('+wantCount+')';
+ ($('libraryWantAll') as HTMLButtonElement).disabled=wantCount===0;
+ $('libraryClearWanted').textContent='Unselect wanted matches ('+clearCount+')';
+ ($('libraryClearWanted') as HTMLButtonElement).disabled=clearCount===0;
+ $('libraryBulkScope').textContent='Applies to all '+shown.length+' filtered matches across every page. Have it items are kept.';
+ $('libraryUndoBulk').hidden=!bulkUndo;
+ $('libraryUndoNote').hidden=!bulkUndo;
  const pages=Math.max(1,Math.ceil(shown.length/libraryPageSize));libraryPage=Math.max(0,Math.min(libraryPage,pages-1));
  const start=libraryPage*libraryPageSize;
  const dated=sortedNames(catalogEntries.map(entry=>entry.checked)).at(-1)||'2026-11-06';
@@ -148,27 +149,15 @@ function renderLibrary(){
  $('libraryPageLabel').textContent='Page '+(libraryPage+1)+' of '+pages;
  ($('libraryPrevious') as HTMLButtonElement).disabled=libraryPage===0;
  ($('libraryNext') as HTMLButtonElement).disabled=libraryPage>=pages-1;
+ $('libraryViewRaid').textContent='View raid checklist ('+wantedRaidItems(state).length+' wanted)';
  $('libraryList').innerHTML=shown.slice(start,start+libraryPageSize).map(entry=>{
-  const route=currentRoute(entry),quantity=acquisitionQuantity(state,entry.id,route.id),hasPlan=acquisitionQuantity(state,entry.id)>0;
-  const progress:string=state.blueprintProgress[entry.id]||'not-found',wanted=state.wanted.includes(entry.id);
+  const status=getItemStatus(state,entry.id);
   const image=entry.image&&installedImageFiles.includes(entry.image)?entry.image:undefined;
-  const known=route.requirements!==null&&Object.keys(route.requirements).length>0;
-  const requirements=known?Object.entries(route.requirements!).filter(([name])=>name!=='DMZ Cash').map(([name,n])=>fmt(n)+' × '+escape(name)).join(' · '):'';
-  const entered=libraryQuantities.get(entry.id)??String(quantity||1);
-  const max=entry.category==='Upgrades'?1:99;
-  const sources=route.sources?.length?route.sources:entry.sources;
-  return `<article class="libraryCard" data-library-entry="${escape(entry.id)}">
+  return `<article class="libraryCard librarySimpleCard" data-library-entry="${escape(entry.id)}" data-item-status-current="${status}">
    <div class="libraryCardHeading"><div class="libraryArt">${image?`<button type="button" class="libraryArtButton" data-artwork-preview="${escape(entry.id)}" aria-label="View image for ${escape(entry.name)}" aria-haspopup="dialog" aria-controls="artworkPreview"><img src="assets/${escape(image)}" alt="${escape(entry.imageLabel||entry.name)}" data-library-image><span class="libraryArtFallback" hidden>Image unavailable</span></button>`:'<span class="libraryArtFallback">No verified image</span>'}</div><div><p class="libraryBadges">${escape(kindLabels[entry.kind]||entry.kind)}${entry.season==='season-1'?' <span class="seasonBadge">SEASON 1</span>':''}</p><h3>${escape(entry.name)}</h3><p>${escape(entry.category)}</p></div></div>
    ${image&&(entry.imageLabel||entry.imageCredit)?`<p class="libraryImageCredit">${entry.imageLabel?'<span>'+escape(entry.imageLabel)+'</span>':''}${entry.imageCredit?'<span>Credit: '+escape(entry.imageCredit)+'</span>':''}</p>`:''}
-   <p>${escape(entry.description)}</p><p class="libraryEvidence">${escape(entry.status)} · ${escape(entry.checked)}</p>
-   ${entry.blueprintRequirement?`<p>${escape(entry.blueprintRequirement)}</p>`:''}
-   <div class="libraryProgress">${entry.kind!=='item'?`<label>Your unlock record<select data-blueprint-progress="${escape(entry.id)}" aria-label="${escape(entry.name)} blueprint progress"><option value="not-found" ${progress==='not-found'?'selected':''}>Not recorded</option><option value="found" ${progress==='found'?'selected':''}>Found / acquired</option><option value="unlocked" ${progress==='unlocked'?'selected':''}>Unlocked</option></select></label>`:'<span class="micro">ITEM · NO BLUEPRINT PROGRESS</span>'}<button class="secondary wantedButton" data-wanted="${escape(entry.id)}" aria-label="${wanted?'Unmark':'Mark'} ${escape(entry.name)} wanted" aria-pressed="${wanted}">${wanted?'Wanted ✓':'Want this'}</button></div>
-   <div class="libraryRoute"><label>Acquisition route<select data-library-route="${escape(entry.id)}" aria-label="${escape(entry.name)} acquisition route">${entry.routes.map(r=>`<option value="${escape(r.id)}" ${r.id===route.id?'selected':''}>${escape(r.label)}</option>`).join('')}</select></label>
-   <p class="libraryRouteMethod">${escape(methodLabels[route.method]||route.method)}${route.location?' · '+escape(route.location):''}</p>${route.unlock?`<p><strong>Unlock:</strong> ${escape(route.unlock)}</p>`:''}${route.note?`<p>${escape(route.note)}</p>`:''}
-   <p class="${known?'libraryRequirements':'libraryUnknown'}">${known?(requirements||'No loot ingredient amounts on this route.'):'Loot requirements unknown or not applicable to this acquisition. No craft quantities assumed.'}${route.outputQuantity?'<br>Output per plan: '+fmt(route.outputQuantity):''}</p>
-   <div class="libraryPlan"><label>Planned quantity<input data-catalog-quantity="${escape(entry.id)}" aria-label="${escape(entry.name)} planned quantity" type="number" min="0" max="${max}" step="1" value="${escape(entered)}" ${known?'':'disabled'}></label><button class="secondary" data-catalog-plan="${escape(entry.id)}" ${known?'':'disabled'}>${quantity?'Update plan':'Add to raid plan'}</button>${hasPlan?`<button class="secondary" data-catalog-remove="${escape(entry.id)}">Remove plan</button>`:''}</div>
-   ${hasPlan?`<p class="libraryPlanned">Planned: ${acquisitionQuantity(state,entry.id)}${state.acquisitionPlans[entry.id]?' · '+escape(getCatalogRoute(entry.id,state.acquisitionPlans[entry.id].routeId)!.label):''}</p>`:''}
-   </div>${entry.isLoot?`<div class="libraryLootTarget"><label>Loot target quantity<input data-catalog-track-quantity="${escape(entry.id)}" aria-label="${escape(entry.name)} loot target quantity" type="number" min="1" max="99" step="1" value="1"></label><button class="secondary" data-catalog-track="${escape(entry.id)}">Add item to raid</button><p>Add this loot item itself as a manual extra. Its acquisition requirements and unlock record stay separate.</p></div>`:''}<details class="librarySources"><summary>Evidence &amp; sources</summary><p>${sources.map(source=>escape(source.url)+' · checked '+escape(source.checked)).join('<br>')}</p></details>
+   <div class="itemStatusControls" role="group" aria-label="Status for ${escape(entry.name)}">${(['have','want','neither'] as const).map(value=>`<button type="button" class="secondary itemStatusButton ${status===value?'isSelected':''}" data-item-status="${value}" data-status-id="${escape(entry.id)}" aria-pressed="${status===value}">${itemStatusLabels[value]}</button>`).join('')}</div>
+   <details class="librarySources"><summary>Evidence &amp; sources</summary><p>${escape(entry.status)} · ${escape(entry.checked)}</p><p>${entry.sources.map(source=>escape(source.url)+' · checked '+escape(source.checked)).join('<br>')}</p></details>
   </article>`;
  }).join('')||'<p class="libraryNoResults">No records match these filters.</p>';
  for(const image of document.querySelectorAll<HTMLImageElement>('img[data-library-image]'))image.addEventListener('error',()=>{image.hidden=true;image.nextElementSibling?.removeAttribute('hidden');});
@@ -179,22 +168,59 @@ function initializeLibraryFilters(){
  options('libraryCategory',sortedNames([...new Set(catalogEntries.map(entry=>entry.category))]));
  options('libraryKind',Object.keys(kindLabels),kindLabels);
  options('librarySeason',['season-1','preseason'],{'season-1':'Season 1','preseason':'Preseason'});
- options('libraryMethod',Object.keys(methodLabels),methodLabels);
- options('libraryProgress',['not-found','found','unlocked'],{'not-found':'Not recorded',found:'Found / acquired',unlocked:'Unlocked'});
- for(const id of ['libraryCategory','libraryKind','librarySeason','libraryMethod','libraryProgress','libraryWanted'])$(id).addEventListener('change',()=>{libraryPage=0;renderLibrary();});
+ options('libraryItemStatus',['have','want','neither'],itemStatusLabels);
+ for(const id of ['libraryCategory','libraryKind','librarySeason','libraryItemStatus'])$(id).addEventListener('change',()=>{libraryPage=0;renderLibrary();});
  $('librarySearch').addEventListener('input',()=>{libraryPage=0;renderLibrary();});
  $('libraryPrevious').addEventListener('click',()=>{libraryPage--;renderLibrary();$('libraryStatus').focus();});
  $('libraryNext').addEventListener('click',()=>{libraryPage++;renderLibrary();$('libraryStatus').focus();});
- $('libraryReset').addEventListener('click',()=>{$<HTMLInputElement>('librarySearch').value='';for(const id of ['libraryCategory','libraryKind','librarySeason','libraryMethod','libraryProgress'])$<HTMLSelectElement>(id).value='all';$<HTMLInputElement>('libraryWanted').checked=false;libraryPage=0;renderLibrary();$('librarySearch').focus();});
+ $('libraryReset').addEventListener('click',()=>{$<HTMLInputElement>('librarySearch').value='';for(const id of ['libraryCategory','libraryKind','librarySeason','libraryItemStatus'])$<HTMLSelectElement>(id).value='all';libraryPage=0;renderLibrary();$('librarySearch').focus();});
+ $('libraryViewRaid').addEventListener('click',()=>setMode('raid'));
+ $('libraryWantAll').addEventListener('click',()=>applyBulkWanted(filteredLibraryEntries().map(entry=>entry.id),true));
+ $('libraryClearWanted').addEventListener('click',()=>{
+  const entries=filteredLibraryEntries();
+  const ids=entries.filter(entry=>getItemStatus(state,entry.id)==='want').map(entry=>entry.id);
+  if(!ids.length)return;
+  ask('Unselect '+ids.length+' wanted matches?','Remove Want it from '+ids.length+' matching records across all pages of the current '+entries.length+' filtered matches? Have it items and wanted records outside these matches are kept.',()=>applyBulkWanted(ids,false),'Unselect '+ids.length+' wanted matches');
+ });
+ $('libraryUndoBulk').addEventListener('click',()=>{
+  if(!bulkUndo)return;
+  const changes=bulkUndo.filter(change=>getItemStatus(state,change.id)===change.after);
+  for(const change of changes)state=setItemStatus(state,change.id,change.before);
+  bulkUndo=null;render();notice('Undid the bulk change for '+changes.length+' records. Later individual status changes were kept.');$('librarySearch').focus();
+ });
+}
+function applyBulkWanted(ids:string[],wanted:boolean){
+ const eligible=ids.filter(id=>getItemStatus(state,id)===(wanted?'neither':'want'));
+ if(!eligible.length)return;
+ const changes=eligible.map(id=>({id,before:getItemStatus(state,id),after:(wanted?'want':'neither') as ItemStatus}));
+ state=setWantedBulk(state,eligible,wanted);
+ bulkUndo=changes.filter(change=>getItemStatus(state,change.id)===change.after);
+ render();notice((wanted?'Selected ':'Unselected ')+bulkUndo.length+' matching records '+(wanted?'as wanted.':'from wanted items.')+' Undo is available for this session.');
+}
+function wantedActions(group:WantedRaidGroup,merged=false):string {
+ return '<div class="wantedActions"><button class="secondary" data-raid-have="'+escape(group.entry.id)+'" aria-label="Have '+escape(group.entry.name)+'">Have it</button><button class="secondary" data-raid-remove-want="'+escape(group.entry.id)+'" aria-label="Remove wanted '+escape(group.entry.name)+'">'+(merged?'Remove want':'Remove')+'</button></div>';
+}
+function wantedCard(group:WantedRaidGroup):string {
+ const entry=group.entry,image=entry.image&&installedImageFiles.includes(entry.image)?entry.image:undefined;
+ return `<article class="item wantedItem" data-wanted-card="${escape(entry.id)}"><div class="art">${image?`<button type="button" class="libraryArtButton wantedArtButton" data-artwork-preview="${escape(entry.id)}" aria-label="View image for ${escape(entry.name)}" aria-haspopup="dialog" aria-controls="artworkPreview"><img src="assets/${escape(image)}" alt="${escape(entry.imageLabel||entry.name)}" data-game-image="true"><span class="fallback" hidden>Image unavailable</span></button>`:'<span class="fallback">No verified image yet</span>'}</div><div class="itembody"><span class="wantedBadge">Wanted item</span><h3>${escape(entry.name)}</h3><p class="for">${escape(entry.category)}</p>${image&&(entry.imageLabel||entry.imageCredit)?`<p class="libraryImageCredit">${entry.imageLabel?'<span>'+escape(entry.imageLabel)+'</span>':''}${entry.imageCredit?'<span>Credit: '+escape(entry.imageCredit)+'</span>':''}</p>`:''}${wantedActions(group)}</div></article>`;
+}
+function clearRecoveryRaw():string|null {
+ return localStorage.getItem(clearRecoveryKey)??localStorage.getItem(previousKey+'-before-clear')??localStorage.getItem(olderKey+'-before-clear');
 }
 
 function render(){
  const raid=mode==='raid',library=mode==='library';$('plan').hidden=mode!=='plan';$('raidIntro').hidden=!raid;$('library').hidden=!library;$('items').hidden=library;$('printingNote').hidden=library;$('empty').hidden=library;
  for(const [id,active] of [['planTab',mode==='plan'],['raidTab',raid],['libraryTab',library]] as const){$(id).classList.toggle('active',active);if(active)$(id).setAttribute('aria-current','page');else $(id).removeAttribute('aria-current');}
  $<HTMLInputElement>('hideDone').checked=state.hideCompleted;
- renderGoals();renderAcquisitionGoals();renderCatalog();renderLibrary();
+ renderGoals();renderCatalog();renderLibrary();
  const totals=recipeTotals(state),targets=raidTargets(state);
  const active=sortedNames(Object.keys(targets));const wanted=active;
+ const wantedGroups=wantedRaidItems(state);
+ const wantedByMaterial=new Map(wantedGroups.filter(group=>group.materialName).map(group=>[group.materialName!,group]));
+ const standaloneWanted=wantedGroups.filter(group=>!group.materialName);
+ $('wantedRaidSummary').hidden=!raid||wantedGroups.length===0;
+ $('wantedRaidSummary').textContent=wantedGroups.length+' wanted item'+(wantedGroups.length===1?'':'s')+' · use Have it when you find one.';
+ $('materialProgressLine').hidden=active.length===0;
  const omitted=sortedNames(Object.keys(totals).filter(name=>name!=='DMZ Cash'&&totals[name]>0&&!targets[name]));
  $('omittedSection').hidden=omitted.length===0;
  $('omittedCount').textContent=String(omitted.length);
@@ -202,23 +228,23 @@ function render(){
  $('omittedTargets').innerHTML=omitted.map(name=>'<p>'+escape(name)+' · recipe baseline '+fmt(totals[name])+' <button class="secondary targetAction" data-reset-target="'+escape(name)+'" aria-label="Use baseline for '+escape(name)+'">Use baseline</button></p>').join('');
 
  const printing=plannedProduction(state);$('printingNote').hidden=library||!Object.keys(printing).length;$('printingNote').textContent='Planned printing: '+sortedNames(Object.keys(printing)).map(name=>fmt(printing[name])+' '+name).join(', ')+'. These planned outputs offset matching required ingredients once. Print only with already-unlocked recipes; no other recipe is expanded automatically and no real production is credited.';
- $('navCount').textContent=String(wanted.length);
+ $('navCount').textContent=String(active.length+standaloneWanted.length);
  let collected=0,total=0;
  for(const name of wanted){total+=targets[name];collected+=Math.min(targets[name],state.picked[name]||0);}
  const done=wanted.filter(name=>isComplete(state,name,targets[name])).length;
  $('progressText').textContent=fmt(collected)+' / '+fmt(total)+' picked up · '+done+' / '+wanted.length+' targets done';
  $<HTMLProgressElement>('progress').max=total||1;$<HTMLProgressElement>('progress').value=collected;
- const shown=active.filter(name=>!raid||(targets[name]>0&&(!state.hideCompleted||!isComplete(state,name,targets[name]))));
+ const shown=active.filter(name=>!raid||(targets[name]>0&&(!state.hideCompleted||!isComplete(state,name,targets[name])||wantedByMaterial.has(name))));
  $('items').innerHTML=shown.map(name=>{
-  const target=targets[name],picked=state.picked[name]||0,complete=isComplete(state,name,target),asset=art[name];
+  const target=targets[name],picked=state.picked[name]||0,complete=isComplete(state,name,target),asset=art[name],wantedGroup=raid?wantedByMaterial.get(name):undefined;
   const users=[...recipes.filter(r=>(state.selected[r.id]||0)>0&&r.costs?.[name]).map(r=>r.id==='gunsmith'?'Gunsmith I':r.id==='stash'?'Stash II':r.name),...Object.entries(state.acquisitionPlans).filter(([id,plan])=>!!getCatalogRoute(id,plan.routeId)?.requirements?.[name]).map(([id])=>getCatalogEntry(id)!.name)].join(' + ');
-  return `<article class="item ${asset?.rarity||''} ${raid&&complete?'done':''}" data-card="${escape(name)}"><div class="art">${asset?`<span class="rarity" title="${asset.rarity}"></span>${materialImage(name,asset)}<span class="fallback" hidden>Image unavailable</span>`:'<span class="fallback">No verified image yet</span>'}${raid?`<button class="complete" data-complete="${escape(name)}" aria-label="${complete?'Uncheck':'Complete'} ${escape(name)}" aria-pressed="${complete}">${complete?'✓':'○'}</button>`:''}</div><div class="itembody"><h3>${escape(name)}</h3><div class="for">${escape(users||'Manual extra')}</div>${raid?`<div class="count">${fmt(Math.max(0,target-picked))} <span>left to find</span></div><div class="for">${fmt(picked)} picked up / ${fmt(target)} target${state.completed.includes(name)?' · checked manually':''}</div><div class="controls"><button data-delta="-1" data-item="${escape(name)}" aria-label="Remove one ${escape(name)}">−</button><button class="add" data-delta="1" data-item="${escape(name)}" aria-label="Collect one ${escape(name)}">+</button></div>`:`<p class="required">Recipe baseline: ${fmt(totals[name]||0)} · Adjustment: ${(state.adjustments[name]||0)>0?'+':''}${fmt(state.adjustments[name]||0)} · Extra: +${fmt(state.extras[name]||0)}</p><label class="target">Need this raid <input aria-label="${escape(name)} target" type="number" min="0" max="100000000" step="1" value="${target}" data-target="${escape(name)}"></label><div class="targetActions">${state.adjustments[name]?`<button class="secondary targetAction" data-reset-target="${escape(name)}" aria-label="Reset ${escape(name)} adjustment">Reset adjustment</button>`:''}${state.extras[name]?`<button class="secondary targetAction" data-remove-extra="${escape(name)}" aria-label="Remove ${escape(name)} extra">Remove extra</button>`:''}</div>`}<button class="secondary targetAction itemRemove" data-remove-target="${escape(name)}" aria-label="Remove ${escape(name)} from list">Remove item</button></div></article>`;
- }).join('');
+  return `<article class="item ${asset?.rarity||''} ${raid&&complete?'done':''} ${wantedGroup?'withWanted':''}" data-card="${escape(name)}"><div class="art">${asset?`<span class="rarity" title="${asset.rarity}"></span>${materialImage(name,asset)}<span class="fallback" hidden>Image unavailable</span>`:'<span class="fallback">No verified image yet</span>'}${raid?`<button class="complete" data-complete="${escape(name)}" aria-label="${complete?'Uncheck':'Complete'} ${escape(name)}" aria-pressed="${complete}">${complete?'✓':'○'}</button>`:''}</div><div class="itembody">${wantedGroup?'<span class="wantedBadge">Wanted item</span>':''}<h3>${escape(name)}</h3><div class="for">${escape(users||'Manual extra')}</div>${raid?`<div class="count">${fmt(Math.max(0,target-picked))} <span>left to find</span></div><div class="for">${fmt(picked)} picked up / ${fmt(target)} target${state.completed.includes(name)?' · checked manually':''}</div><div class="controls"><button data-delta="-1" data-item="${escape(name)}" aria-label="Remove one ${escape(name)}">−</button><button class="add" data-delta="1" data-item="${escape(name)}" aria-label="Collect one ${escape(name)}">+</button></div>`:`<p class="required">Recipe baseline: ${fmt(totals[name]||0)} · Adjustment: ${(state.adjustments[name]||0)>0?'+':''}${fmt(state.adjustments[name]||0)} · Extra: +${fmt(state.extras[name]||0)}</p><label class="target">Need this raid <input aria-label="${escape(name)} target" type="number" min="0" max="100000000" step="1" value="${target}" data-target="${escape(name)}"></label><div class="targetActions">${state.adjustments[name]?`<button class="secondary targetAction" data-reset-target="${escape(name)}" aria-label="Reset ${escape(name)} adjustment">Reset adjustment</button>`:''}${state.extras[name]?`<button class="secondary targetAction" data-remove-extra="${escape(name)}" aria-label="Remove ${escape(name)} extra">Remove extra</button>`:''}</div>`}<button class="secondary targetAction itemRemove" data-remove-target="${escape(name)}" aria-label="Remove ${escape(name)} from list">Remove item</button>${wantedGroup?wantedActions(wantedGroup,true):''}</div></article>`;
+ }).join('')+(raid?standaloneWanted.map(wantedCard).join(''):'');
  for(const img of document.querySelectorAll<HTMLImageElement>('img[data-game-image]'))img.addEventListener('error',()=>{const view=img.closest<HTMLElement>('.source-crop')||img;view.hidden=true;const fallback=img.closest('.art')?.querySelector<HTMLElement>('.fallback');if(fallback)fallback.hidden=false;});
- $('empty').hidden=library||shown.length>0;
+ $('empty').hidden=library||shown.length>0||(raid&&standaloneWanted.length>0);
  $('empty').textContent=raid&&wanted.length?'All '+wanted.length+' targets are complete and hidden. Turn off Hide completed to review them.':Object.keys(totals).some(name=>name!=='DMZ Cash'&&totals[name]>0)?'All recipe items are omitted for this raid. Expand Omitted for this raid to restore an item, or select another goal.':'No raid targets. Select a goal or add manual extras in Plan your raid.';
- $('settingsClear').toggleAttribute('disabled',!Object.keys(state.selected).length&&!Object.keys(state.acquisitionPlans).length&&!Object.keys(state.adjustments).length&&!Object.keys(state.extras).length&&!Object.keys(state.picked).length&&!state.completed.length);
- try{$('settingsRestoreClear').toggleAttribute('disabled',localStorage.getItem(clearRecoveryKey)===null);}catch{$('settingsRestoreClear').setAttribute('disabled','');}
+ $('settingsClear').toggleAttribute('disabled',!Object.keys(state.selected).length&&!Object.keys(state.acquisitionPlans).length&&!Object.keys(state.adjustments).length&&!Object.keys(state.extras).length&&!Object.keys(state.picked).length&&!state.completed.length&&!state.wanted.length);
+ try{$('settingsRestoreClear').toggleAttribute('disabled',clearRecoveryRaw()===null);}catch{$('settingsRestoreClear').setAttribute('disabled','');}
  save();
 }
 document.addEventListener('click',event=>{
@@ -226,11 +252,16 @@ document.addEventListener('click',event=>{
  const d=button.dataset;
  try {
   if(d.artworkPreview)openArtworkPreview(d.artworkPreview,button);
-  if(d.acquisitionRemove){const plan=state.acquisitionPlans[d.acquisitionRemove];if(plan){state=chooseAcquisition(state,d.acquisitionRemove,plan.routeId,0);notice('Acquisition goal removed. Your library progress is unchanged.');render();}}
-  if(d.wanted){state=setWanted(state,d.wanted,!state.wanted.includes(d.wanted));render();document.querySelector<HTMLButtonElement>('button[data-wanted="'+CSS.escape(d.wanted)+'"]')?.focus();}
-  if(d.catalogTrack){const entry=getCatalogEntry(d.catalogTrack)!;if(!entry.isLoot)throw new Error('This record is not a loot item.');const input=document.querySelector<HTMLInputElement>('input[data-catalog-track-quantity="'+CSS.escape(entry.id)+'"]')!;if(!input.value.trim())throw new Error('Enter a whole-number loot target quantity.');const amount=count(Number(input.value),99);if(!amount)throw new Error('Choose at least one loot item.');state=addExtra(state,entry.name,amount);notice(entry.name+' added as a manual raid extra. Unlock progress is unchanged.');render();}
-  if(d.catalogPlan){const entry=getCatalogEntry(d.catalogPlan)!;const route=currentRoute(entry);const input=document.querySelector<HTMLInputElement>('input[data-catalog-quantity="'+CSS.escape(entry.id)+'"]')!;if(!input.value.trim())throw new Error('Enter a whole-number quantity.');state=chooseAcquisition(state,entry.id,route.id,count(Number(input.value),entry.category==='Upgrades'?1:99));notice(entry.name+' plan updated. Unlock progress and picked-up counts are unchanged.');render();}
-  if(d.catalogRemove){const entry=getCatalogEntry(d.catalogRemove)!;const planned=state.acquisitionPlans[entry.id];const route=planned?getCatalogRoute(entry.id,planned.routeId)!:currentRoute(entry);state=chooseAcquisition(state,entry.id,route.id,0);notice('Plan removed. Library progress kept.');render();}
+  if(d.statusId&&d.itemStatus){
+   const status=d.itemStatus;if(status!=='have'&&status!=='want'&&status!=='neither')throw new Error('Choose a supported item status.');
+   const entry=getCatalogEntry(d.statusId)!;state=setItemStatus(state,entry.id,status);render();
+   notice(status==='want'?entry.name+' added to Raid checklist.':status==='have'?entry.name+' marked Have it.':entry.name+' set to Neither.');
+   const control=document.querySelector<HTMLButtonElement>('button[data-status-id="'+CSS.escape(entry.id)+'"][data-item-status="'+status+'"]');(control||$('librarySearch')).focus();
+  }
+  if(d.raidHave||d.raidRemoveWant){
+   const id=d.raidHave||d.raidRemoveWant;const group=wantedRaidItems(state).find(value=>value.entry.id===id||value.ids.includes(id!));
+   if(group){for(const itemId of group.ids)state=setItemStatus(state,itemId,d.raidHave?'have':'neither');render();notice(d.raidHave?group.entry.name+' marked Have it.':group.entry.name+' removed from wanted items.');$('raidTab').focus();}
+  }
   if(d.summaryRemove){state=chooseRecipe(state,d.summaryRemove,0);notice('Goal removed. Other goals, manual extras and picked-up counts are kept.');render();$('addUpgrades').focus();}
   if(d.removeTarget){state=setRaidTarget(state,d.removeTarget,0);notice(d.removeTarget+' removed from this raid list. New raid keeps this removal. Expand Omitted for this raid to restore recipe items.');render();}
   if(d.resetTarget){state=resetAdjustments(state,d.resetTarget);notice('Recipe adjustment reset. Manual extras kept.');render();}
@@ -243,9 +274,6 @@ document.addEventListener('click',event=>{
 document.addEventListener('change',event=>{
  const input=event.target as HTMLInputElement;
  try {
-  if(input.dataset.libraryRoute){libraryRoutes.set(input.dataset.libraryRoute,input.value);libraryQuantities.delete(input.dataset.libraryRoute);renderLibrary();}
-  if(input.dataset.blueprintProgress){state=setBlueprintProgress(state,input.dataset.blueprintProgress,input.value as 'not-found'|'found'|'unlocked');render();document.querySelector<HTMLSelectElement>('select[data-blueprint-progress="'+CSS.escape(input.dataset.blueprintProgress)+'"]')?.focus();}
-  if(input.dataset.catalogQuantity)libraryQuantities.set(input.dataset.catalogQuantity,input.value);
   if(input.dataset.target){if(input.value.trim()==='')throw new Error('Enter a whole-number target.');state=setRaidTarget(state,input.dataset.target,count(Number(input.value)));render();}
   if(input.dataset.quantity){if(input.value.trim()==='')throw new Error('Enter a whole-number quantity.');state=chooseRecipe(state,input.dataset.quantity,count(Number(input.value),99));render();}
  }catch(e){showError(e);render();}
@@ -254,7 +282,7 @@ $('planTab').addEventListener('click',()=>setMode('plan'));
 $('libraryTab').addEventListener('click',()=>setMode('library'));
 for(const id of ['raidTab','startRaid'])$(id).addEventListener('click',()=>setMode('raid'));
 $('hideDone').addEventListener('change',()=>{state.hideCompleted=$<HTMLInputElement>('hideDone').checked;render();});
-$('newRaid').addEventListener('click',()=>ask('Start a new raid?','Clear this raid’s picked-up counts and manual checks? Recipe selections and raid targets will stay the same.',()=>{state=newRaid(state);notice('New raid ready. Targets kept; picked-up counts and checks cleared.');render();},'New raid'));
+$('newRaid').addEventListener('click',()=>ask('Start a new raid?','Clear this raid’s picked-up counts and manual checks? Recipe selections, raid targets and Have it / Want it choices will stay the same.',()=>{state=newRaid(state);notice('New raid ready. Targets kept; picked-up counts and checks cleared.');render();},'New raid'));
 $('restoreTotals').addEventListener('click',()=>ask('Reset recipe adjustments?','Use the selected recipes’ baseline amounts again? Explicit manual extras and picked-up counts will stay.',()=>{state=resetAdjustments(state);notice('Recipe adjustments reset; manual extras kept.');render();},'Reset adjustments'));
 $('addTarget').addEventListener('click',()=>{try{const name=$<HTMLSelectElement>('directItem').value;const input=$<HTMLInputElement>('directCount');if(!input.value.trim())throw new Error('Enter an extra quantity.');state=addExtra(state,name,count(Number(input.value)));notice(name+' extra added.');render();}catch(e){showError(e);}});
 
@@ -265,18 +293,18 @@ $('backup').addEventListener('click',exportBackup);$('settingsBackup').addEventL
 $('import').addEventListener('click',importBackup);
 $('importFile').addEventListener('change',async()=>{
  const file=$<HTMLInputElement>('importFile').files?.[0];if(!file)return;
- try {if(file.size>1_000_000)throw new Error('Backup is too large (maximum 1 MB).');const original=await file.text();const next=parseBackup(original);const importVersion=JSON.parse(original).version;const legacyImport=importVersion===1;ask('Replace your board?','Import this valid backup and replace your current selections, raid targets, picked-up counts, checks, blueprint progress and wanted list? Your current board will be retained as a local recovery copy.',()=>{try{localStorage.setItem(key+'-recovery',corruptRaw??serialize(state));localStorage.setItem(key+'-last-import-original',original);localStorage.setItem(key,serialize(next));}catch{throw new Error('Could not preserve the current board. Export a backup first; import canceled.');}state=next;corruptRaw=null;storageAvailable=true;$('recovery').hidden=true;if(settings.open)closeSettings();notice(legacyImport?'Older backup imported: positive targets became labeled adjustments or extras; old zero overrides were dropped so selected baselines are visible. Review manual extras below; your original file is unchanged.':importVersion===2?'Older backup imported. Your plan and raid progress are preserved; blueprint progress starts empty.':'Backup imported, including library progress.');render();},'Import backup');}catch(e){showError(e);}
+ try {if(file.size>1_000_000)throw new Error('Backup is too large (maximum 1 MB).');const original=await file.text();const next=parseBackup(original);const importVersion=JSON.parse(original).version;const legacyImport=importVersion===1;ask('Replace your board?','Import this valid backup and replace your current selections, raid targets, picked-up counts, checks, Have it items and wanted list? Your current board will be retained as a local recovery copy.',()=>{try{localStorage.setItem(key+'-recovery',corruptRaw??serialize(state));localStorage.setItem(key+'-last-import-original',original);localStorage.setItem(key,serialize(next));}catch{throw new Error('Could not preserve the current board. Export a backup first; import canceled.');}state=next;bulkUndo=null;corruptRaw=null;storageAvailable=true;$('recovery').hidden=true;if(settings.open)closeSettings();notice(legacyImport?'Older backup imported: positive targets became labeled adjustments or extras; old zero overrides were dropped so selected baselines are visible. Review manual extras below; your original file is unchanged.':importVersion<4?'Older backup imported. Existing printer plans and any wanted items were retained. Older found/unlocked notes were kept without marking items Have it.':'Backup imported, including Have it and Want it choices.');render();},'Import backup');}catch(e){showError(e);}
 });
 // Save the recovery snapshot and replacement before changing session state. Failure leaves the board intact.
 function replaceWithRecovery(next:BoardState,snapshotKey:string){
  if(corruptRaw!==null)throw new Error('Recover the unreadable saved board first.');
  try{localStorage.setItem(snapshotKey,serialize(state));localStorage.setItem(key,serialize(next));}catch{throw new Error('Recovery/replacement could not be saved. Your list has not changed; export a backup first.');}
- state=next;storageAvailable=true;mode='plan';try{localStorage.setItem('dmz-raid-board-mode-v3',mode);}catch{}render();
+ state=next;bulkUndo=null;storageAvailable=true;mode='plan';try{localStorage.setItem('dmz-raid-board-mode-v4',mode);}catch{}render();
 }
-$('settingsClear').addEventListener('click',()=>ask('Clear entire list?','Remove all selected goals, recipe adjustments, manual extras, picked-up counts and checks? A recovery copy will be saved first. Blueprint progress, wanted items and your theme are kept.',()=>{replaceWithRecovery({...emptyState(),blueprintProgress:{...state.blueprintProgress},wanted:[...state.wanted]},clearRecoveryKey);notice('Entire list cleared. Restore cleared list is available here.');$('settingsRestoreClear').focus();},'Clear entire list'));
-$('settingsRestoreClear').addEventListener('click',()=>{try{const raw=localStorage.getItem(clearRecoveryKey);if(raw===null)throw new Error('No cleared list is available.');const previous=parseBackup(raw);ask('Restore cleared list?','Replace the current list with your last cleared list? The current list will be saved as a recovery copy. Current blueprint progress, wanted items and theme are kept.',()=>{replaceWithRecovery({...previous,blueprintProgress:{...state.blueprintProgress},wanted:[...state.wanted]},key+'-before-restore-clear');notice('Cleared list restored.');},'Restore list');}catch(e){showError(e);}});
+$('settingsClear').addEventListener('click',()=>ask('Clear entire list?','Remove all selected goals, wanted items, recipe adjustments, manual extras, picked-up counts and checks? A recovery copy will be saved first. Have it items, older unlock notes and your theme are kept.',()=>{replaceWithRecovery({...emptyState(),owned:[...state.owned],blueprintProgress:{...state.blueprintProgress}},clearRecoveryKey);notice('Entire list cleared, including wanted items. Restore cleared list is available here.');$('settingsRestoreClear').focus();},'Clear entire list'));
+$('settingsRestoreClear').addEventListener('click',()=>{try{const raw=clearRecoveryRaw();if(raw===null)throw new Error('No cleared list is available.');const previous=parseBackup(raw);ask('Restore cleared list?','Replace your current plan, wanted items and raid progress with the saved cleared list? The current list will be saved as a recovery copy. Your latest Have it items, older unlock notes and theme are kept.',()=>{replaceWithRecovery({...previous,owned:[...state.owned],blueprintProgress:{...state.blueprintProgress},wanted:previous.wanted.filter(id=>!state.owned.includes(id))},key+'-before-restore-clear');notice('Cleared list restored.');},'Restore list');}catch(e){showError(e);}});
 $('exportRecovery').addEventListener('click',()=>{if(corruptRaw!==null)fileDownload(corruptRaw,'DMZ-Raid-Board-recovery.txt');});
-$('freshBoard').addEventListener('click',()=>ask('Start a fresh board?','Keep the unreadable saved text as a recovery copy and replace the active board with an empty board?',()=>{try{localStorage.setItem(key+'-recovery',corruptRaw||'');}catch{throw new Error('Recovery copy could not be saved. Export the saved text first.');}state=emptyState();corruptRaw=null;storageAvailable=true;$('recovery').hidden=true;render();},'Start fresh'));
+$('freshBoard').addEventListener('click',()=>ask('Start a fresh board?','Keep the unreadable saved text as a recovery copy and replace the active board with an empty board?',()=>{try{localStorage.setItem(key+'-recovery',corruptRaw||'');}catch{throw new Error('Recovery copy could not be saved. Export the saved text first.');}state=emptyState();bulkUndo=null;corruptRaw=null;storageAvailable=true;$('recovery').hidden=true;render();},'Start fresh'));
 $('sourcesBtn').addEventListener('click',()=>$<HTMLDialogElement>('sources').showModal());
 $('closeSources').addEventListener('click',()=>$<HTMLDialogElement>('sources').close());
 $<HTMLSelectElement>('category').innerHTML='<option>All</option>'+categories.map(c=>`<option ${c==='Upgrades'?'selected':''}>${c}</option>`).join('');
@@ -286,4 +314,4 @@ $('coverage').textContent=coverage;$('sourceCoverage').textContent=coverage+'. '
 $('unconfirmedList').textContent=recipes.filter(r=>!r.costs).map(r=>r.name).join(', ')||'None in this catalog snapshot';
 initializeLibraryFilters();
 render();
-if(migratedLegacy){$('migrationNotice').hidden=false;$('migrationNotice').textContent=migratedVersion===1?'Older board migrated: positive targets became adjustments or extras and old zero overrides were dropped. Blueprint progress starts empty. The original saved board remains unchanged for rollback.':'Your earlier plan, targets and raid counts were carried forward. Blueprint progress starts empty. The original saved board remains unchanged for rollback.';}
+if(migratedLegacy){$('migrationNotice').hidden=false;$('migrationNotice').textContent=(migratedVersion===1?'Older positive targets became adjustments or extras and stale zero overrides were dropped. ':'')+'Your existing printer plans and raid counts were carried forward. Any wanted items now appear directly in Raid checklist. Older found/unlocked notes were retained without marking items Have it. The original saved board remains unchanged for rollback.';}
