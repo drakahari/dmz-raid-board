@@ -2,11 +2,12 @@ import {themes,normalizeTheme,themeKey,defaultTheme} from './themes.mjs';
 import {buildFlavor,appVersion} from './build-status.mjs';
 import {recipes,categories,materials,art as knownArt,checked,type Recipe,type Category,type ArtAsset} from './catalog.mjs';
 import {catalogEntries,catalogMaterials,getCatalogEntry,getCatalogRoute,filterCatalog,type CatalogEntry} from './acquisition.mjs';
+import {fieldBoxArtwork,renderFieldBoxCrop} from './field-box-artwork.mjs';
 import {installedImageFiles} from './asset-status.mjs';
 import {compareNames,sortedNames} from './ordering.mjs';
 import {type BoardState,type ItemStatus,emptyState,parseBackup,serialize,count,recipeTotals,raidTargets,chooseRecipe,isComplete,plannedProduction,newRaid,maxCount,setRaidTarget,addExtra,removeExtra,resetAdjustments,setItemStatus,getItemStatus,wantedRaidItems,setWantedBulk} from './core.mjs';
 const $ = <T extends HTMLElement = HTMLElement>(id:string) => document.getElementById(id) as T;
-$('buildLabel').textContent=buildFlavor==='public'?'PUBLIC RELEASE / NO GAME ART':buildFlavor==='artwork'?'UNOFFICIAL RELEASE / GAME ART':'PRIVATE WINDOWS PROTOTYPE / 01';
+$('buildLabel').textContent=buildFlavor==='public'?(appVersion.includes('-')?'PUBLIC TEST BUILD / NO GAME ART':'PUBLIC RELEASE / NO GAME ART'):buildFlavor==='artwork'?(appVersion.includes('-')?'UNOFFICIAL TEST BUILD / GAME ART':'UNOFFICIAL RELEASE / GAME ART'):'PRIVATE WINDOWS PROTOTYPE / 01';
 const escape=(value:string)=>value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 const settings=$<HTMLDialogElement>('settings');
 const themePicker=$<HTMLSelectElement>('themePicker');
@@ -18,10 +19,16 @@ function openArtworkPreview(entryId:string,trigger:HTMLButtonElement){
  const image=$<HTMLImageElement>('artworkPreviewImage');
  artworkPreviewTrigger=trigger;
  $('artworkPreviewHeading').textContent=entry.name;
- image.alt=entry.imageLabel?entry.name+' — '+entry.imageLabel:entry.name;
- image.hidden=false;
+ const crop=entry.imageCrop||fieldBoxArtwork[entry.id]?.crop;
+ const cropPreview=$('artworkPreviewCrop');
+ image.alt=entry.imageLabel?entry.name+' - '+entry.imageLabel:entry.name;
+ image.hidden=!!crop;
+ image.removeAttribute('src');
  $('artworkPreviewError').hidden=true;
- image.src='assets/'+entry.image;
+ cropPreview.hidden=!crop;
+ cropPreview.innerHTML=crop?renderFieldBoxCrop({file:entry.image,crop},entry.imageLabel||entry.name):'';
+ if(!crop)image.src='assets/'+entry.image;
+ bindFieldBoxFallbacks(cropPreview,true);
  $('artworkPreviewCaption').textContent=[
   entry.imageLabel,
   entry.imageCredit?'Credit: '+entry.imageCredit:undefined,
@@ -96,15 +103,45 @@ function setMode(value:ViewMode){mode=value;notice('');render();$(value==='plan'
 function costText(recipe:Recipe){if(!recipe.costs)return 'Requirements unconfirmed';const itemCount=Object.keys(recipe.costs).filter(k=>k!=='DMZ Cash').length;return itemCount?itemCount+' loot ingredient'+(itemCount===1?'':'s'):'No loot ingredients listed';}
 function lootEntries(recipe:Recipe){return Object.entries(recipe.costs||recipe.reportedCosts||{}).filter(([name])=>name!=='DMZ Cash');}
 const itemBenefit=(recipe:Recipe)=>recipe.ownerVerification&&recipe.effect&&!/(cash|money|cost|price|discount|purchase|wallet|bank)/i.test(recipe.effect)?recipe.effect:undefined;
-const installedRecipeImage=(recipe:Recipe)=>recipe.image&&installedImageFiles.includes(recipe.image)?recipe.image:undefined;
+const installedRecipeImage=(recipe:Recipe)=>{
+ const file=fieldBoxArtwork['printer:'+recipe.id]?.file||recipe.image;
+ return file&&installedImageFiles.includes(file)?file:undefined;
+};
+function recipeArtwork(recipe:Recipe):string {
+ const file=installedRecipeImage(recipe);if(!file)return '';
+ const field=fieldBoxArtwork['printer:'+recipe.id];
+ return field?renderFieldBoxCrop(field,field.label)+'<span data-field-box-fallback class="fieldBoxFallback" hidden>Image unavailable</span>':'<img src="assets/'+escape(file)+'" alt="'+escape(recipe.name)+'">';
+}
+function recipeThumbnail(recipe:Recipe):string {
+ const file=installedRecipeImage(recipe);if(!file)return '';
+ return fieldBoxArtwork['printer:'+recipe.id]?'<span class="catalogThumb fieldBoxThumb">'+recipeArtwork(recipe)+'</span>':'<img class="catalogThumb" src="assets/'+escape(file)+'" alt="'+escape(recipe.name)+'">';
+}
+function entryImageMarkup(entry:CatalogEntry,file:string,context:'library'|'raid'):string {
+ const crop=entry.imageCrop||fieldBoxArtwork[entry.id]?.crop;
+ if(crop)return renderFieldBoxCrop({file,crop},entry.imageLabel||entry.name)+'<span data-field-box-fallback class="'+(context==='library'?'libraryArtFallback':'fallback')+'" hidden>Image unavailable</span>';
+ return '<img src="assets/'+escape(file)+'" alt="'+escape(entry.imageLabel||entry.name)+'" '+(context==='library'?'data-library-image':'data-game-image="true"')+'><span class="'+(context==='library'?'libraryArtFallback':'fallback')+'" hidden>Image unavailable</span>';
+}
+function bindFieldBoxFallbacks(root:ParentNode=document,preview=false){
+ for(const image of root.querySelectorAll<SVGImageElement>('image[data-field-box-image]')){
+  if(image.hasAttribute('data-fallback-bound'))continue;
+  image.setAttribute('data-fallback-bound','true');
+  image.addEventListener('error',()=>{
+   const svg=image.closest('svg[data-field-box-crop]');svg?.setAttribute('hidden','');
+   const fallback=svg?.nextElementSibling;
+   if(fallback?.hasAttribute('data-field-box-fallback'))fallback.removeAttribute('hidden');
+   if(preview){$('artworkPreviewCrop').hidden=true;$('artworkPreviewError').hidden=false;}
+  });
+ }
+}
 function materialImage(name:string,asset:ArtAsset):string {
+ if(asset.crop)return renderFieldBoxCrop({file:asset.file,crop:asset.crop},name);
  const image='<img src="assets/'+escape(asset.file)+'" alt="'+escape(name)+'" data-game-image="true">';
  return asset.presentation?'<span class="source-crop '+escape(asset.presentation)+'">'+image+'</span>':image;
 }
 function renderGoals(){
  const goals=recipes.filter(r=>(state.selected[r.id]||0)>0);
  $('goalEmpty').hidden=goals.length>0;
- $('upgrades').innerHTML=goals.map(r=>`<article class="upgrade on selectedGoal" data-goal="${escape(r.id)}"><span class="symbol" aria-hidden="true">${installedRecipeImage(r)?`<img src="assets/${escape(installedRecipeImage(r)!)}" alt="">`:'+'}</span><div class="goalText"><h3>${escape(r.name)}</h3><p>${r.id==='gunsmith'?'Gunsmith upgrade goal':r.id==='stash'?'Expand your item stash':escape(itemBenefit(r)||r.category)}</p><p>${escape(costText(r))}${r.category!=='Upgrades'?' · Quantity '+(state.selected[r.id]||0):''}</p></div><button class="secondary goalRemove" data-summary-remove="${escape(r.id)}" aria-label="Remove ${escape(r.name)} goal">Remove</button></article>`).join('');
+ $('upgrades').innerHTML=goals.map(r=>`<article class="upgrade on selectedGoal" data-goal="${escape(r.id)}"><span class="symbol" aria-hidden="true">${recipeArtwork(r)||'+'}</span><div class="goalText"><h3>${escape(r.name)}</h3><p>${r.id==='gunsmith'?'Gunsmith upgrade goal':r.id==='stash'?'Expand your item stash':escape(itemBenefit(r)||r.category)}</p><p>${escape(costText(r))}${r.category!=='Upgrades'?' · Quantity '+(state.selected[r.id]||0):''}</p></div><button class="secondary goalRemove" data-summary-remove="${escape(r.id)}" aria-label="Remove ${escape(r.name)} goal">Remove</button></article>`).join('');
 }
 function addUpgrades(){const browse=$<HTMLDetailsElement>('browse');browse.open=true;$<HTMLSelectElement>('category').value='Upgrades';$<HTMLInputElement>('search').value='';renderCatalog();$('search').focus();}
 $('addUpgrades').addEventListener('click',addUpgrades);
@@ -120,8 +157,9 @@ function renderCatalog(){
   const entries=lootEntries(r);
   const unlock=getCatalogEntry('printer:'+r.id)?.routes[0]?.unlock||r.requires;
   const costs=(entries.length?entries.map(([name,n])=>fmt(n)+' x '+escape(name)).join(' · '):r.costs?'No loot ingredients listed':'No confirmed item requirements')+(!r.costs?' · Requirements unresolved: selection unavailable':'');
-  return `<article class="catalogEntry">${installedRecipeImage(r)?`<img class="catalogThumb" src="assets/${escape(installedRecipeImage(r)!)}" alt="${escape(r.name)}">`:''}<div class="catalogText"><h3>${escape(r.name)}</h3><p>${costs}</p><p class="status">${r.ownerVerification?'Owner-verified item requirements':'Community-reported item requirements (not confirmed in game)'} · ${escape(r.checked||checked)}</p><p>${r.costs?'Confirm the current in-game requirements and unlocks before planning.':'This entry remains unavailable until its full requirements are verified.'}</p>${r.costConflict?`<p class="libraryUnknown"><strong>Conflicting reports:</strong> ${escape(r.costConflict)}</p>`:''}${itemBenefit(r)?`<p>${escape(itemBenefit(r)!)}</p>`:''}${unlock?`<p>Requires: ${escape(unlock)}</p>`:''}<details><summary>Source</summary><p class="sourceUrl">${(r.sources||[{url:r.source,checked}]).map(s=>escape(s.url)+' · checked '+escape(s.checked)).join('<br>')}</p></details></div>${r.costs?`<div class="catalogControl"><button class="secondary" data-recipe="${escape(r.id)}" aria-label="${selected?'Remove':'Add'} ${escape(r.name)}" aria-pressed="${!!selected}">${selected?'✓ Selected':'+ Select'}</button>${r.category!=='Upgrades'?`<label>${r.category==='Ingredients'?'Planned prints':'Quantity'} <input type="number" min="0" max="99" step="1" value="${selected}" data-quantity="${escape(r.id)}" aria-label="${escape(r.name)} quantity"></label>`:'<span class="micro">FIXED PERMANENT TIER</span>'}</div>`:'<span class="unconfirmed">Unconfirmed</span>'}</article>`;
+  return `<article class="catalogEntry">${recipeThumbnail(r)}<div class="catalogText"><h3>${escape(r.name)}</h3><p>${costs}</p><p class="status">${!r.costs?'Requirements unresolved':r.ownerVerification?'Owner-verified item requirements':'Community-reported item requirements (not confirmed in game)'} · ${escape(r.checked||checked)}</p><p>${r.costs?'Confirm the current in-game requirements and unlocks before planning.':'This entry remains unavailable until its full requirements are verified.'}</p>${r.costConflict?`<p class="libraryUnknown"><strong>Conflicting reports:</strong> ${escape(r.costConflict)}</p>`:''}${itemBenefit(r)?`<p>${escape(itemBenefit(r)!)}</p>`:''}${unlock?`<p>Requires: ${escape(unlock)}</p>`:''}<details><summary>Source</summary><p class="sourceUrl">${(r.sources||[{url:r.source,checked}]).map(s=>escape(s.url)+' · checked '+escape(s.checked)).join('<br>')}</p></details></div>${r.costs?`<div class="catalogControl"><button class="secondary" data-recipe="${escape(r.id)}" aria-label="${selected?'Remove':'Add'} ${escape(r.name)}" aria-pressed="${!!selected}">${selected?'✓ Selected':'+ Select'}</button>${r.category!=='Upgrades'?`<label>${r.category==='Ingredients'?'Planned prints':'Quantity'} <input type="number" min="0" max="99" step="1" value="${selected}" data-quantity="${escape(r.id)}" aria-label="${escape(r.name)} quantity"></label>`:'<span class="micro">FIXED PERMANENT TIER</span>'}</div>`:'<span class="unconfirmed">Requirements unresolved</span>'}</article>`;
  }).join(''):'<p>No matching recipes in this category.</p>';
+ bindFieldBoxFallbacks($('catalogList'));
 }
 const kindLabels:Record<string,string>={'printer-recipe':'Printer recipes & upgrades','weapon-manual':'Weapon Manuals','cosmetic-blueprint':'Cosmetic blueprints',item:'Items'};
 const itemStatusLabels={have:'Have it',want:'Want it',neither:'Neither'} as const;
@@ -154,20 +192,21 @@ function renderLibrary(){
   const status=getItemStatus(state,entry.id);
   const image=entry.image&&installedImageFiles.includes(entry.image)?entry.image:undefined;
   return `<article class="libraryCard librarySimpleCard" data-library-entry="${escape(entry.id)}" data-item-status-current="${status}">
-   <div class="libraryCardHeading"><div class="libraryArt">${image?`<button type="button" class="libraryArtButton" data-artwork-preview="${escape(entry.id)}" aria-label="View image for ${escape(entry.name)}" aria-haspopup="dialog" aria-controls="artworkPreview"><img src="assets/${escape(image)}" alt="${escape(entry.imageLabel||entry.name)}" data-library-image><span class="libraryArtFallback" hidden>Image unavailable</span></button>`:'<span class="libraryArtFallback">No verified image</span>'}</div><div><p class="libraryBadges">${escape(kindLabels[entry.kind]||entry.kind)}${entry.season==='season-1'?' <span class="seasonBadge">SEASON 1</span>':''}</p><h3>${escape(entry.name)}</h3><p>${escape(entry.category)}</p></div></div>
+   <div class="libraryCardHeading"><div class="libraryArt">${image?`<button type="button" class="libraryArtButton" data-artwork-preview="${escape(entry.id)}" aria-label="View image for ${escape(entry.name)}" aria-haspopup="dialog" aria-controls="artworkPreview">${entryImageMarkup(entry,image,'library')}</button>`:'<span class="libraryArtFallback">No verified image</span>'}</div><div><p class="libraryBadges">${escape(kindLabels[entry.kind]||entry.kind)}${entry.season==='season-1'?' <span class="seasonBadge">SEASON 1</span>':''}</p><h3>${escape(entry.name)}</h3><p>${escape(entry.category)}</p></div></div>
    ${image&&(entry.imageLabel||entry.imageCredit)?`<p class="libraryImageCredit">${entry.imageLabel?'<span>'+escape(entry.imageLabel)+'</span>':''}${entry.imageCredit?'<span>Credit: '+escape(entry.imageCredit)+'</span>':''}</p>`:''}
    <div class="itemStatusControls" role="group" aria-label="Status for ${escape(entry.name)}">${(['have','want','neither'] as const).map(value=>`<button type="button" class="secondary itemStatusButton ${status===value?'isSelected':''}" data-item-status="${value}" data-status-id="${escape(entry.id)}" aria-pressed="${status===value}">${itemStatusLabels[value]}</button>`).join('')}</div>
    <details class="librarySources"><summary>Evidence &amp; sources</summary><p>${escape(entry.status)} · ${escape(entry.checked)}</p><p>${entry.sources.map(source=>escape(source.url)+' · checked '+escape(source.checked)).join('<br>')}</p></details>
   </article>`;
  }).join('')||'<p class="libraryNoResults">No records match these filters.</p>';
  for(const image of document.querySelectorAll<HTMLImageElement>('img[data-library-image]'))image.addEventListener('error',()=>{image.hidden=true;image.nextElementSibling?.removeAttribute('hidden');});
+ bindFieldBoxFallbacks($('libraryList'));
  $('librarySourceCoverage').textContent=catalogEntries.length+' library records: '+catalogEntries.filter(entry=>entry.kind==='printer-recipe').length+' printer recipes/upgrades, '+catalogEntries.filter(entry=>entry.kind==='weapon-manual').length+' Weapon Manual records, '+catalogEntries.filter(entry=>entry.kind==='cosmetic-blueprint').length+' cosmetic blueprints and '+catalogEntries.filter(entry=>entry.kind==='item').length+' other items. Available records do not establish a complete in-game catalog.';
 }
 function initializeLibraryFilters(){
  const options=(id:string,values:string[],labels:Record<string,string>={})=>{$<HTMLSelectElement>(id).innerHTML='<option value="all">All</option>'+values.map(value=>'<option value="'+escape(value)+'">'+escape(labels[value]||value)+'</option>').join('');};
  options('libraryCategory',sortedNames([...new Set(catalogEntries.map(entry=>entry.category))]));
  options('libraryKind',Object.keys(kindLabels),kindLabels);
- options('librarySeason',['season-1','preseason'],{'season-1':'Season 1','preseason':'Preseason'});
+ options('librarySeason',['season-1','preseason','unknown'],{'season-1':'Season 1','preseason':'Preseason',unknown:'Unknown season'});
  options('libraryItemStatus',['have','want','neither'],itemStatusLabels);
  for(const id of ['libraryCategory','libraryKind','librarySeason','libraryItemStatus'])$(id).addEventListener('change',()=>{libraryPage=0;renderLibrary();});
  $('librarySearch').addEventListener('input',()=>{libraryPage=0;renderLibrary();});
@@ -197,29 +236,40 @@ function applyBulkWanted(ids:string[],wanted:boolean){
  bulkUndo=changes.filter(change=>getItemStatus(state,change.id)===change.after);
  render();notice((wanted?'Selected ':'Unselected ')+bulkUndo.length+' matching records '+(wanted?'as wanted.':'from wanted items.')+' Undo is available for this session.');
 }
-function wantedActions(group:WantedRaidGroup,merged=false):string {
- return '<div class="wantedActions"><button class="secondary" data-raid-have="'+escape(group.entry.id)+'" aria-label="Have '+escape(group.entry.name)+'">Have it</button><button class="secondary" data-raid-remove-want="'+escape(group.entry.id)+'" aria-label="Remove wanted '+escape(group.entry.name)+'">'+(merged?'Remove want':'Remove')+'</button></div>';
+function requestIdentity(entry:CatalogEntry){
+ const kind=entry.kind==='printer-recipe'?(entry.category==='Upgrades'?'upgrade':'recipe'):entry.kind==='cosmetic-blueprint'?'blueprint':entry.kind==='weapon-manual'?'weapon manual':'item';
+ const name=entry.kind==='weapon-manual'?entry.name.replace(/^Manual:\s*/i,''):entry.name;
+ const heading=kind==='item'?'Wanted item':kind==='weapon manual'?'Weapon Manual':kind[0].toUpperCase()+kind.slice(1);
+ return {kind,name,title:heading+': '+name};
+}
+function wantedActions(group:WantedRaidGroup):string {
+ const identity=requestIdentity(group.entry);
+ return '<div class="wantedActions"><button class="secondary" data-raid-have="'+escape(group.entry.id)+'" aria-label="Have '+escape(identity.kind+' '+identity.name)+'">Have it</button><button class="secondary" data-raid-remove-want="'+escape(group.entry.id)+'" aria-label="Remove wanted '+escape(identity.kind+' '+identity.name)+'">Remove request</button></div>';
 }
 function wantedCard(group:WantedRaidGroup):string {
- const entry=group.entry,image=entry.image&&installedImageFiles.includes(entry.image)?entry.image:undefined;
- return `<article class="item wantedItem" data-wanted-card="${escape(entry.id)}"><div class="art">${image?`<button type="button" class="libraryArtButton wantedArtButton" data-artwork-preview="${escape(entry.id)}" aria-label="View image for ${escape(entry.name)}" aria-haspopup="dialog" aria-controls="artworkPreview"><img src="assets/${escape(image)}" alt="${escape(entry.imageLabel||entry.name)}" data-game-image="true"><span class="fallback" hidden>Image unavailable</span></button>`:'<span class="fallback">No verified image yet</span>'}</div><div class="itembody"><span class="wantedBadge">Wanted item</span><h3>${escape(entry.name)}</h3><p class="for">${escape(entry.category)}</p>${image&&(entry.imageLabel||entry.imageCredit)?`<p class="libraryImageCredit">${entry.imageLabel?'<span>'+escape(entry.imageLabel)+'</span>':''}${entry.imageCredit?'<span>Credit: '+escape(entry.imageCredit)+'</span>':''}</p>`:''}${wantedActions(group)}</div></article>`;
+ const entry=group.entry,image=entry.image&&installedImageFiles.includes(entry.image)?entry.image:undefined,identity=requestIdentity(entry);
+ return `<article class="item wantedItem" data-wanted-card="${escape(entry.id)}" data-request-kind="${escape(identity.kind)}"><div class="art">${image?`<button type="button" class="libraryArtButton wantedArtButton" data-artwork-preview="${escape(entry.id)}" aria-label="View image for ${escape(entry.name)}" aria-haspopup="dialog" aria-controls="artworkPreview">${entryImageMarkup(entry,image,'raid')}</button>`:'<span class="fallback">No verified image yet</span>'}</div><div class="itembody"><span class="wantedBadge">Library request</span><h3>${escape(identity.title)}</h3><p class="for">${escape(entry.category)}</p>${image&&(entry.imageLabel||entry.imageCredit)?`<p class="libraryImageCredit">${entry.imageLabel?'<span>'+escape(entry.imageLabel)+'</span>':''}${entry.imageCredit?'<span>Credit: '+escape(entry.imageCredit)+'</span>':''}</p>`:''}${wantedActions(group)}</div></article>`;
 }
 function clearRecoveryRaw():string|null {
  return localStorage.getItem(clearRecoveryKey)??localStorage.getItem(previousKey+'-before-clear')??localStorage.getItem(olderKey+'-before-clear');
 }
 
 function render(){
- const raid=mode==='raid',library=mode==='library';$('plan').hidden=mode!=='plan';$('raidIntro').hidden=!raid;$('library').hidden=!library;$('items').hidden=library;$('printingNote').hidden=library;$('empty').hidden=library;
+ const raid=mode==='raid',library=mode==='library';$('plan').hidden=mode!=='plan';$('raidIntro').hidden=!raid;$('library').hidden=!library;$('lootTargetsSection').hidden=library;$('physicalLootHeader').hidden=!raid;$('wantedLibrarySection').hidden=!raid;$('items').hidden=library;$('printingNote').hidden=library;$('empty').hidden=library;
  for(const [id,active] of [['planTab',mode==='plan'],['raidTab',raid],['libraryTab',library]] as const){$(id).classList.toggle('active',active);if(active)$(id).setAttribute('aria-current','page');else $(id).removeAttribute('aria-current');}
  $<HTMLInputElement>('hideDone').checked=state.hideCompleted;
  renderGoals();renderCatalog();renderLibrary();
  const totals=recipeTotals(state),targets=raidTargets(state);
  const active=sortedNames(Object.keys(targets));const wanted=active;
  const wantedGroups=wantedRaidItems(state);
- const wantedByMaterial=new Map(wantedGroups.filter(group=>group.materialName).map(group=>[group.materialName!,group]));
- const standaloneWanted=wantedGroups.filter(group=>!group.materialName);
+ $('physicalLootCount').textContent=String(active.length);
+ $('wantedLibraryCount').textContent=String(wantedGroups.length);
+ $('viewLootTargets').textContent='Physical loot ('+active.length+')';
+ $('viewLibraryRequests').textContent='Library requests ('+wantedGroups.length+')';
+ $('wantedLibraryTargets').innerHTML=raid?wantedGroups.map(wantedCard).join(''):'';
+ $('wantedLibraryEmpty').hidden=wantedGroups.length>0;
  $('wantedRaidSummary').hidden=!raid||wantedGroups.length===0;
- $('wantedRaidSummary').textContent=wantedGroups.length+' wanted item'+(wantedGroups.length===1?'':'s')+' · use Have it when you find one.';
+ $('wantedRaidSummary').textContent=wantedGroups.length+' library request'+(wantedGroups.length===1?'':'s')+' shown separately from physical loot below.';
  $('materialProgressLine').hidden=active.length===0;
  const omitted=sortedNames(Object.keys(totals).filter(name=>name!=='DMZ Cash'&&totals[name]>0&&!targets[name]));
  $('omittedSection').hidden=omitted.length===0;
@@ -228,21 +278,22 @@ function render(){
  $('omittedTargets').innerHTML=omitted.map(name=>'<p>'+escape(name)+' · recipe baseline '+fmt(totals[name])+' <button class="secondary targetAction" data-reset-target="'+escape(name)+'" aria-label="Use baseline for '+escape(name)+'">Use baseline</button></p>').join('');
 
  const printing=plannedProduction(state);$('printingNote').hidden=library||!Object.keys(printing).length;$('printingNote').textContent='Planned printing: '+sortedNames(Object.keys(printing)).map(name=>fmt(printing[name])+' '+name).join(', ')+'. These planned outputs offset matching required ingredients once. Print only with already-unlocked recipes; no other recipe is expanded automatically and no real production is credited.';
- $('navCount').textContent=String(active.length+standaloneWanted.length);
+ $('navCount').textContent=String(active.length+wantedGroups.length);
  let collected=0,total=0;
  for(const name of wanted){total+=targets[name];collected+=Math.min(targets[name],state.picked[name]||0);}
  const done=wanted.filter(name=>isComplete(state,name,targets[name])).length;
  $('progressText').textContent=fmt(collected)+' / '+fmt(total)+' picked up · '+done+' / '+wanted.length+' targets done';
  $<HTMLProgressElement>('progress').max=total||1;$<HTMLProgressElement>('progress').value=collected;
- const shown=active.filter(name=>!raid||(targets[name]>0&&(!state.hideCompleted||!isComplete(state,name,targets[name])||wantedByMaterial.has(name))));
+ const shown=active.filter(name=>!raid||(targets[name]>0&&(!state.hideCompleted||!isComplete(state,name,targets[name]))));
  $('items').innerHTML=shown.map(name=>{
-  const target=targets[name],picked=state.picked[name]||0,complete=isComplete(state,name,target),asset=art[name],wantedGroup=raid?wantedByMaterial.get(name):undefined;
+  const target=targets[name],picked=state.picked[name]||0,complete=isComplete(state,name,target),asset=art[name];
   const users=[...recipes.filter(r=>(state.selected[r.id]||0)>0&&r.costs?.[name]).map(r=>r.id==='gunsmith'?'Gunsmith I':r.id==='stash'?'Stash II':r.name),...Object.entries(state.acquisitionPlans).filter(([id,plan])=>!!getCatalogRoute(id,plan.routeId)?.requirements?.[name]).map(([id])=>getCatalogEntry(id)!.name)].join(' + ');
-  return `<article class="item ${asset?.rarity||''} ${raid&&complete?'done':''} ${wantedGroup?'withWanted':''}" data-card="${escape(name)}"><div class="art">${asset?`<span class="rarity" title="${asset.rarity}"></span>${materialImage(name,asset)}<span class="fallback" hidden>Image unavailable</span>`:'<span class="fallback">No verified image yet</span>'}${raid?`<button class="complete" data-complete="${escape(name)}" aria-label="${complete?'Uncheck':'Complete'} ${escape(name)}" aria-pressed="${complete}">${complete?'✓':'○'}</button>`:''}</div><div class="itembody">${wantedGroup?'<span class="wantedBadge">Wanted item</span>':''}<h3>${escape(name)}</h3><div class="for">${escape(users||'Manual extra')}</div>${raid?`<div class="count">${fmt(Math.max(0,target-picked))} <span>left to find</span></div><div class="for">${fmt(picked)} picked up / ${fmt(target)} target${state.completed.includes(name)?' · checked manually':''}</div><div class="controls"><button data-delta="-1" data-item="${escape(name)}" aria-label="Remove one ${escape(name)}">−</button><button class="add" data-delta="1" data-item="${escape(name)}" aria-label="Collect one ${escape(name)}">+</button></div>`:`<p class="required">Recipe baseline: ${fmt(totals[name]||0)} · Adjustment: ${(state.adjustments[name]||0)>0?'+':''}${fmt(state.adjustments[name]||0)} · Extra: +${fmt(state.extras[name]||0)}</p><label class="target">Need this raid <input aria-label="${escape(name)} target" type="number" min="0" max="100000000" step="1" value="${target}" data-target="${escape(name)}"></label><div class="targetActions">${state.adjustments[name]?`<button class="secondary targetAction" data-reset-target="${escape(name)}" aria-label="Reset ${escape(name)} adjustment">Reset adjustment</button>`:''}${state.extras[name]?`<button class="secondary targetAction" data-remove-extra="${escape(name)}" aria-label="Remove ${escape(name)} extra">Remove extra</button>`:''}</div>`}<button class="secondary targetAction itemRemove" data-remove-target="${escape(name)}" aria-label="Remove ${escape(name)} from list">Remove item</button>${wantedGroup?wantedActions(wantedGroup,true):''}</div></article>`;
- }).join('')+(raid?standaloneWanted.map(wantedCard).join(''):'');
+  return `<article class="item ${asset?.rarity||''} ${raid&&complete?'done':''}" data-card="${escape(name)}"><div class="art">${asset?`<span class="rarity" title="${asset.rarity}"></span>${materialImage(name,asset)}<span class="fallback" hidden>Image unavailable</span>`:'<span class="fallback">No verified image yet</span>'}${raid?`<button class="complete" data-complete="${escape(name)}" aria-label="${complete?'Uncheck':'Complete'} ${escape(name)}" aria-pressed="${complete}">${complete?'✓':'○'}</button>`:''}</div><div class="itembody"><h3>${escape(name)}</h3><div class="for">${escape(users||'Manual extra')}</div>${raid?`<div class="count">${fmt(Math.max(0,target-picked))} <span>left to find</span></div><div class="for">${fmt(picked)} picked up / ${fmt(target)} target${state.completed.includes(name)?' · checked manually':''}</div><div class="controls"><button data-delta="-1" data-item="${escape(name)}" aria-label="Remove one ${escape(name)}">−</button><button class="add" data-delta="1" data-item="${escape(name)}" aria-label="Collect one ${escape(name)}">+</button></div>`:`<p class="required">Recipe baseline: ${fmt(totals[name]||0)} · Adjustment: ${(state.adjustments[name]||0)>0?'+':''}${fmt(state.adjustments[name]||0)} · Extra: +${fmt(state.extras[name]||0)}</p><label class="target">Need this raid <input aria-label="${escape(name)} target" type="number" min="0" max="100000000" step="1" value="${target}" data-target="${escape(name)}"></label><div class="targetActions">${state.adjustments[name]?`<button class="secondary targetAction" data-reset-target="${escape(name)}" aria-label="Reset ${escape(name)} adjustment">Reset adjustment</button>`:''}${state.extras[name]?`<button class="secondary targetAction" data-remove-extra="${escape(name)}" aria-label="Remove ${escape(name)} extra">Remove extra</button>`:''}</div>`}<button class="secondary targetAction itemRemove" data-remove-target="${escape(name)}" aria-label="Remove ${escape(name)} from list">Remove item</button></div></article>`;
+ }).join('');
  for(const img of document.querySelectorAll<HTMLImageElement>('img[data-game-image]'))img.addEventListener('error',()=>{const view=img.closest<HTMLElement>('.source-crop')||img;view.hidden=true;const fallback=img.closest('.art')?.querySelector<HTMLElement>('.fallback');if(fallback)fallback.hidden=false;});
- $('empty').hidden=library||shown.length>0||(raid&&standaloneWanted.length>0);
- $('empty').textContent=raid&&wanted.length?'All '+wanted.length+' targets are complete and hidden. Turn off Hide completed to review them.':Object.keys(totals).some(name=>name!=='DMZ Cash'&&totals[name]>0)?'All recipe items are omitted for this raid. Expand Omitted for this raid to restore an item, or select another goal.':'No raid targets. Select a goal or add manual extras in Plan your raid.';
+ bindFieldBoxFallbacks();
+ $('empty').hidden=library||shown.length>0;
+ $('empty').textContent=raid&&wanted.length?'All '+wanted.length+' targets are complete and hidden. Turn off Hide completed to review them.':Object.keys(totals).some(name=>name!=='DMZ Cash'&&totals[name]>0)?'All recipe items are omitted for this raid. Expand Omitted for this raid to restore an item, or select another goal.':'No physical loot targets. Select a goal or add manual extras in Plan your raid.';
  $('settingsClear').toggleAttribute('disabled',!Object.keys(state.selected).length&&!Object.keys(state.acquisitionPlans).length&&!Object.keys(state.adjustments).length&&!Object.keys(state.extras).length&&!Object.keys(state.picked).length&&!state.completed.length&&!state.wanted.length);
  try{$('settingsRestoreClear').toggleAttribute('disabled',clearRecoveryRaw()===null);}catch{$('settingsRestoreClear').setAttribute('disabled','');}
  save();
@@ -259,8 +310,8 @@ document.addEventListener('click',event=>{
    const control=document.querySelector<HTMLButtonElement>('button[data-status-id="'+CSS.escape(entry.id)+'"][data-item-status="'+status+'"]');(control||$('librarySearch')).focus();
   }
   if(d.raidHave||d.raidRemoveWant){
-   const id=d.raidHave||d.raidRemoveWant;const group=wantedRaidItems(state).find(value=>value.entry.id===id||value.ids.includes(id!));
-   if(group){for(const itemId of group.ids)state=setItemStatus(state,itemId,d.raidHave?'have':'neither');render();notice(d.raidHave?group.entry.name+' marked Have it.':group.entry.name+' removed from wanted items.');$('raidTab').focus();}
+   const id=(d.raidHave||d.raidRemoveWant)!;const entry=getCatalogEntry(id);
+   if(entry&&state.wanted.includes(id)){state=setItemStatus(state,id,d.raidHave?'have':'neither');render();const identity=requestIdentity(entry);notice(d.raidHave?identity.title+' marked Have it.':identity.title+' request removed.');$('raidTab').focus();}
   }
   if(d.summaryRemove){state=chooseRecipe(state,d.summaryRemove,0);notice('Goal removed. Other goals, manual extras and picked-up counts are kept.');render();$('addUpgrades').focus();}
   if(d.removeTarget){state=setRaidTarget(state,d.removeTarget,0);notice(d.removeTarget+' removed from this raid list. New raid keeps this removal. Expand Omitted for this raid to restore recipe items.');render();}
@@ -280,6 +331,11 @@ document.addEventListener('change',event=>{
 });
 $('planTab').addEventListener('click',()=>setMode('plan'));
 $('libraryTab').addEventListener('click',()=>setMode('library'));
+$('openWantedLibrary').addEventListener('click',()=>setMode('library'));
+function jumpToRaidSection(id:string){const heading=$(id);heading.scrollIntoView({block:'start'});heading.focus({preventScroll:true});}
+$('viewLootTargets').addEventListener('click',()=>jumpToRaidSection('physicalLootHeading'));
+$('viewLibraryRequests').addEventListener('click',()=>jumpToRaidSection('wantedLibraryHeading'));
+$('backToLootTargets').addEventListener('click',()=>jumpToRaidSection('physicalLootHeading'));
 for(const id of ['raidTab','startRaid'])$(id).addEventListener('click',()=>setMode('raid'));
 $('hideDone').addEventListener('change',()=>{state.hideCompleted=$<HTMLInputElement>('hideDone').checked;render();});
 $('newRaid').addEventListener('click',()=>ask('Start a new raid?','Clear this raid’s picked-up counts and manual checks? Recipe selections, raid targets and Have it / Want it choices will stay the same.',()=>{state=newRaid(state);notice('New raid ready. Targets kept; picked-up counts and checks cleared.');render();},'New raid'));

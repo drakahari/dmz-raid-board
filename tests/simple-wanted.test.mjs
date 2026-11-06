@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {catalogEntries,filterCatalog,getCatalogEntry} from '../dist/renderer/acquisition.mjs';
-import {emptyState,sampleState,parseBackup,serialize,recipeTotals,raidTargets,newRaid,setRaidTarget,setBlueprintProgress,setItemStatus,getItemStatus,setWanted,setWantedBulk,wantedRaidItems,chooseAcquisition} from '../dist/renderer/core.mjs';
+import {emptyState,sampleState,parseBackup,serialize,recipeTotals,raidTargets,newRaid,setRaidTarget,addExtra,setBlueprintProgress,setItemStatus,getItemStatus,setWanted,setWantedBulk,wantedRaidItems,chooseAcquisition} from '../dist/renderer/core.mjs';
 
 const vestId='printer:3-plate-ballistic-gel-vest';
 const planFields=['selected','adjustments','extras','picked','completed','hideCompleted','blueprintProgress','acquisitionPlans'];
 const planSnapshot=state=>Object.fromEntries(planFields.map(field=>[field,structuredClone(state[field])]));
 
-test('Want it places the chosen finished vest in the raid wishlist without selecting its recipe or ingredients',()=>{
+test('Want it places the chosen vest recipe in the raid wishlist without selecting ingredients or physical loot',()=>{
  const vest=getCatalogEntry(vestId);assert(vest);
  const initial=emptyState(),before=planSnapshot(initial);
  const wanted=setItemStatus(initial,vestId,'want');
@@ -69,17 +69,39 @@ const duplicates=[
 const legacyPlan={...fixtureBase,id:'test-legacy-plan',name:'Synthetic legacy plan',routes:[{id:'craft',method:'printer',label:'Test',requirements:{CPU:2}}]};
 function withFixtures(action){const start=catalogEntries.length;catalogEntries.push(...duplicates,legacyPlan);try{return action();}finally{catalogEntries.splice(start);}}
 
-test('wishlist outputs group by normalized name and match existing canonical material cards even when completed or hidden',()=>withFixtures(()=>{
+test('same-name wanted catalog IDs remain separate from each other and physical material targets',()=>withFixtures(()=>{
  let state=sampleState();state=setItemStatus(state,duplicates[1].id,'want');state=setItemStatus(state,duplicates[0].id,'want');
  state.hideCompleted=true;state.completed=['Reactive Metals'];state.picked['Reactive Metals']=20;
  const before=raidTargets(state),groups=wantedRaidItems(state);
- assert.equal(groups.length,1);assert.deepEqual(groups[0].ids,duplicates.map(entry=>entry.id));
- assert.equal(groups[0].entry.id,duplicates[0].id);assert.equal(groups[0].materialName,'Reactive Metals');
+ assert.equal(groups.length,2);assert.deepEqual(new Set(groups.map(group=>group.entry.id)),new Set(duplicates.map(entry=>entry.id)));
+ for(const group of groups){assert.deepEqual(group.ids,[group.entry.id]);assert.equal(group.materialName,undefined);}
  assert.deepEqual(raidTargets(state),before);assert.equal(before['Reactive Metals'],20);
- for(const id of groups[0].ids)state=setItemStatus(state,id,'have');
+ state=setItemStatus(state,groups[0].entry.id,'have');
+ assert.equal(wantedRaidItems(state).length,1);assert.equal(getItemStatus(state,groups[1].entry.id),'want');
+ state=setItemStatus(state,groups[1].entry.id,'have');
  assert.equal(wantedRaidItems(state).length,0);assert.deepEqual(raidTargets(state),before);
  assert.equal(state.picked['Reactive Metals'],20);assert.deepEqual(state.completed,['Reactive Metals']);
 }));
+
+test('Comms Module recipe choices and physical pickup checks stay independent through v4 persistence',()=>{
+ const recipeId='printer:print-comms',recipe=getCatalogEntry(recipeId);assert(recipe);assert.equal(recipe.name,'Comms Module');
+ let state=addExtra(sampleState(),'Comms Module',6);state=setItemStatus(state,recipeId,'want');
+ state=setItemStatus(state,'printer:bandage','have');state=setBlueprintProgress(state,recipeId,'found');
+ const physicalBefore=raidTargets(state),baselineBefore=recipeTotals(state),ownedBefore=[...state.owned],wantedBefore=[...state.wanted];
+ const cards=wantedRaidItems(state);assert.equal(cards.length,1);assert.deepEqual(cards[0].ids,[recipeId]);assert.equal(cards[0].materialName,undefined);
+ assert.equal(physicalBefore['Comms Module'],6);assert.equal(baselineBefore['Comms Module'],undefined,'Want does not plan printing');
+ state.picked['Comms Module']=6;state.completed=['Comms Module'];state.hideCompleted=true;
+ assert.equal(getItemStatus(state,recipeId),'want','physical pickup and manual check never mark the recipe Have');
+ assert.equal(wantedRaidItems(state).length,1,'completed/hidden physical items do not hide the wanted recipe');
+ assert.deepEqual(state.owned,ownedBefore);assert.deepEqual(state.wanted,wantedBefore);
+ const persisted=parseBackup(serialize(state));assert.deepEqual(persisted,state);assert.equal(persisted.version,4);
+ assert.deepEqual(persisted.owned,ownedBefore);assert.deepEqual(persisted.wanted,wantedBefore);
+ state=setItemStatus(persisted,recipeId,'have');
+ assert.equal(wantedRaidItems(state).length,0);assert.deepEqual(raidTargets(state),physicalBefore);assert.deepEqual(recipeTotals(state),baselineBefore);
+ assert.equal(state.picked['Comms Module'],6);assert.deepEqual(state.completed,['Comms Module']);
+ state=setItemStatus(state,recipeId,'want');state=setItemStatus(state,recipeId,'neither');
+ assert.deepEqual(raidTargets(state),physicalBefore);assert.equal(state.picked['Comms Module'],6);assert.deepEqual(state.completed,['Comms Module']);
+});
 
 test('existing acquisition plans survive item-status changes and v3 migration without adding or discarding requirements',()=>withFixtures(()=>{
  let state=chooseAcquisition(sampleState(),legacyPlan.id,'craft',2);state.picked.CPU=1;

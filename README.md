@@ -1,10 +1,8 @@
 # DMZ Raid Board
 
-## Season 1 Windows release - 0.1.9
+## Windows test - 0.1.10-field-upgrades.1
 
-The Blueprint & item library has 229 sourced records: 120 existing printer/upgrade entries, 34 Weapon Manuals, 59 cosmetic blueprints and 16 X01 items. Choose **Have it**, **Want it** or **Neither**. Wanted items appear directly in the Raid checklist, without expanding into ingredients. Bulk select/unselect applies to every filtered result across all pages and preserves Have it choices; clearing wants asks for confirmation and a session undo is available. Existing printer plans and pickup counts are preserved. Version-4 saves retain older originals. See [Have/Want usage and migration](docs/SIMPLE-WANTED-UPDATE.md), [coverage and limitations](docs/SEASON-1-UPDATE.md) and [research evidence](docs/SEASON-1-EVIDENCE.md).
-
-The Windows release includes 174 credited artwork files. Shared icons and official promotional panels cover 94 new records; 15 X01 records retain placeholders. Artwork rights remain reserved; attribution does not establish a redistribution license. Only Windows is rebuilt for this revision.
+Adds Consumable Box, Medical Box, Hazmat Box, Utility Box and Survivor Box under Field Upgrades, with icon-only views from the owner screenshot. Survivor Box has cross-checked X01 requirements; the other four retain explicit unknown crafting quantities and remain trackable through library Have/Want choices. Raid now separates physical loot targets from blueprint/recipe/library requests, with independent actions even when names match. Existing saves, quantities, themes and prior releases are preserved. See [data, images, limitations and usage](docs/FIELD-UPGRADES-UPDATE.md). This revision is Windows-only.
 
 An offline standalone desktop raid planner and manual checklist built with TypeScript, HTML/CSS and Electron. Choose goals, aggregate shared ingredients, edit raid targets, and track picked-up counts using a simple picture-first layout. Planning and raid views show items to loot; monetary amounts are omitted. Settings displays the actual packaged app version.
 

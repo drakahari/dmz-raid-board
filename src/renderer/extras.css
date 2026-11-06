@@ -71,3 +71,19 @@ nav{flex-wrap:wrap}.libraryIntro{padding:13px 16px;border:1px solid var(--line);
 #library .itemStatusButton.isSelected{border-color:var(--lime);background:var(--selected);color:var(--lime);box-shadow:inset 0 -3px 0 var(--lime)}
 #items .wantedActions button:first-child{background:var(--lime);border-color:var(--lime);color:var(--on-accent)}
 .item.done.withWanted{opacity:1;border-color:var(--lime)}
+
+/* Viewports reveal only the item icon; original owner screenshot bytes are unchanged. */
+.fieldBoxCrop{display:block;width:100%;height:100%;overflow:hidden;flex-shrink:0}
+.fieldBoxThumb{display:flex;align-items:center;justify-content:center}
+.symbol .fieldBoxCrop{width:46px;height:46px}
+.libraryArtButton .fieldBoxCrop{width:65px;height:65px}
+.wantedArtButton .fieldBoxCrop{width:108px;height:112px;max-width:88%;max-height:112px}
+.fieldBoxFallback{font-size:10px;line-height:1.4;text-align:center;color:var(--muted)}
+#artworkPreviewCrop{width:min(280px,100%);height:280px;max-height:55vh;margin:0 auto;background:var(--art-stage)}
+#artworkPreviewCrop .fieldBoxCrop{width:100%;height:100%}
+.wantedLibrarySection{margin-top:38px;padding-top:28px;border-top:1px solid var(--line)}
+.raidSectionHead h2{font-size:24px}.raidSectionHead p{max-width:800px}
+#wantedLibraryTargets .wantedActions button:first-child{background:var(--lime);border-color:var(--lime);color:var(--on-accent)}
+#wantedLibraryTargets .wantedItem h3{font-size:15px;line-height:1.4;min-height:0}
+@media(max-width:600px){.wantedLibrarySection{margin-top:28px;padding-top:22px}.raidSectionHead h2{font-size:22px}}
+.raidJumpLinks,.raidSectionActions{display:flex;flex-wrap:wrap;gap:10px}.raidJumpLinks{margin:16px 0 22px}.raidJumpLinks button,.raidSectionActions button{min-height:44px}#physicalLootHeading,#wantedLibraryHeading{scroll-margin-top:18px}#physicalLootHeading:focus,#wantedLibraryHeading:focus{outline:2px solid var(--lime);outline-offset:5px}

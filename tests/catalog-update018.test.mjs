@@ -10,8 +10,10 @@ test('four consistent complete item reports are selectable but retain web confid
  for(const [id,costs] of Object.entries(expected)){const r=recipes.find(x=>x.id===id);assert.deepEqual(r.costs,costs);assert.equal(r.ownerVerification,undefined);assert.match(r.status,/Community-reported.*not confirmed in game/);assert.equal(r.checked,'2026-10-29');assert(r.sources.some(s=>s.url==='https://dmzmap.com/upgrades'&&s.checked==='2026-10-29'));assert(r.sources.some(s=>s.url.startsWith('https://detonated.com/')));assert.deepEqual(raidTargets(chooseRecipe(emptyState(),id,1)),costs);assert.equal(r.costs['DMZ Cash'],undefined);}
  let s=chooseRecipe(chooseRecipe(emptyState(),'vendor-1',1),'vendor-2',1);assert.deepEqual(s.selected,{'vendor-2':1});assert.equal(raidTargets(s).CPU,undefined);
 });
-test('all catalog entries are selectable after owner evidence settles the two conflicts; prior owner evidence is retained',()=>{
- assert.equal(recipes.filter(r=>!r.costs).length,0);assert.equal(recipes.filter(r=>r.costs).length,120);
+test('all original 120 entries remain selectable after owner evidence settles the two conflicts',()=>{
+ const additions=new Set(['consumable-box','medical-box','hazmat-box','utility-box','survivor-box']);
+ const original=recipes.filter(r=>!additions.has(r.id));
+ assert.equal(original.filter(r=>!r.costs).length,0);assert.equal(original.filter(r=>r.costs).length,120);
  for(const id of ['mia-2','mia-3','stash-3','dog-tag-2','epic-printing','uncommon-printing'])assert(recipes.find(r=>r.id===id).ownerVerification,id);
 });
 test('owner DDOS and Radiation requirements use required counts, retain conflict provenance and aggregate shared loot safely',()=>{

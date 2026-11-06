@@ -3,15 +3,16 @@ import assert from 'node:assert/strict';
 import {emptyState,sampleState,chooseRecipe,recipeTotals,raidTargets,plannedProduction,newRaid,isComplete,serialize,parseBackup,count,setRaidTarget,addExtra,removeExtra,resetAdjustments} from '../dist/renderer/core.mjs';
 import {recipes,materials,categories} from '../dist/renderer/catalog.mjs';
 import {sortedNames,compareNames} from '../dist/renderer/ordering.mjs';
-test('all 95 published crafting recipes and 25 evidenced upgrade tiers have dated sources',()=>{
- assert.equal(recipes.filter(r=>r.category!=='Upgrades').length,95);assert.equal(recipes.filter(r=>r.category==='Upgrades').length,25);
+test('original 95 crafting recipes plus five field boxes and 25 upgrade tiers retain dated evidence and explicit unknowns',()=>{
+ const additions=new Set(['consumable-box','medical-box','hazmat-box','utility-box','survivor-box']);
+ assert.equal(recipes.filter(r=>r.category!=='Upgrades').length,100);assert.equal(recipes.filter(r=>r.category==='Upgrades').length,25);
  assert.equal(recipes.length,new Set(recipes.map(r=>r.id)).size);
- assert.equal(recipes.filter(r=>r.costs).length,120);assert.equal(recipes.filter(r=>!r.costs).length,0);
+ assert.equal(recipes.filter(r=>r.costs).length,121);assert.equal(recipes.filter(r=>!r.costs).length,4);
  for(const category of categories)assert(recipes.some(r=>r.category===category&&r.costs),category);
  const allowed=new Set(materials);
  for(const recipe of recipes){assert(recipe.ownerVerification?recipe.checked===recipe.ownerVerification.date:recipe.sources.some(s=>s.checked===recipe.checked));assert(recipe.sources?.length);assert(recipe.sources.every(s=>s.url.startsWith('https://')&&s.checked));
   for(const [name,n] of Object.entries(recipe.reportedCosts||recipe.costs||{})){assert(allowed.has(name),name);assert(Number.isSafeInteger(n)&&n>0);}
-  if(recipe.category!=='Upgrades')assert.equal(recipe.sources.length,2);
+  if(recipe.category!=='Upgrades'&&!additions.has(recipe.id))assert.equal(recipe.sources.length,2);
  }
 });
 test('14 ingredient prints are explicit plans; no automatic recipe expansion or double-counted output',()=>{

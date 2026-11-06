@@ -196,18 +196,11 @@ export function setItemStatus(state:BoardState,id:string,status:ItemStatus):Boar
  return {...state,wanted,owned};
 }
 export interface WantedRaidItem {entry:CatalogEntry;ids:string[];materialName?:string}
-/** Wishlist outputs appear once; existing ingredient targets remain unchanged. */
+/** Each catalog choice stays separate from physical loot and other catalog IDs. */
 export function wantedRaidItems(state:BoardState):WantedRaidItem[] {
- const normalize=(name:string)=>name.trim().toLowerCase();
- const materialNames=new Map(Object.keys(raidTargets(state)).map(name=>[normalize(name),name]));
- const wanted=new Set(state.wanted),grouped=new Map<string,WantedRaidItem>();
- for(const entry of catalogEntries){
-  if(!wanted.has(entry.id))continue;
-  const name=normalize(entry.name),group=grouped.get(name);
-  if(group)group.ids.push(entry.id);
-  else grouped.set(name,{entry,ids:[entry.id],...(materialNames.has(name)?{materialName:materialNames.get(name)!}:{})});
- }
- return [...grouped.values()].sort((a,b)=>compareNames(a.entry.name,b.entry.name)||compareNames(a.entry.id,b.entry.id));
+ const wanted=new Set(state.wanted);
+ return catalogEntries.filter(entry=>wanted.has(entry.id)).map(entry=>({entry,ids:[entry.id]}))
+  .sort((a,b)=>compareNames(a.entry.name,b.entry.name)||compareNames(a.entry.id,b.entry.id));
 }
 export function acquisitionQuantity(state:BoardState,entryId:string,routeId?:string):number {
  const entry=getCatalogEntry(entryId);if(!entry)return 0;

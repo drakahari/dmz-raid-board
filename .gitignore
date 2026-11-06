@@ -83,3 +83,7 @@ candidate-output/
 # Simple Have/Want workflow coverage.
 !/tests/simple-wanted.test.mjs
 !/tests/simple-wanted-ui.test.mjs
+
+# Field Upgrades and separated Raid regression coverage.
+!/tests/field-upgrades.test.mjs
+!/tests/field-upgrades-ui.test.mjs
