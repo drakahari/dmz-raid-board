@@ -67,7 +67,7 @@ jobs:
         env:
           DMZ_ARTWORK_SEED_FILE: .ci/staged/windows.zip
       - run: npm run build:artwork
-      - run: node --test tests/core.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs tests/catalog-update018.test.mjs
+      - run: node --test tests/core.test.mjs tests/catalog.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs tests/catalog-update018.test.mjs
       - run: node scripts/package-platform-candidate.mjs
       - if: runner.os == 'macOS'
         run: node tests/platform-candidate.test.mjs

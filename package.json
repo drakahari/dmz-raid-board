@@ -1,6 +1,6 @@
 {
   "name": "dmz-raid-board",
-  "version": "0.1.8",
+  "version": "0.1.9-season1.2",
   "description": "Offline DMZ item planner and raid checklist",
   "private": true,
   "license": "MIT",
@@ -9,14 +9,15 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && node scripts/build.mjs",
     "start": "npm run build && electron .",
-    "test": "npm run build && node --test tests/core.test.mjs",
+    "test": "npm run build && node --test tests/core.test.mjs tests/catalog.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs tests/catalog-update018.test.mjs",
     "test:ui": "npm run build && node tests/electron.test.mjs",
-    "package": "npm run build && electron-builder --win zip --x64",
+    "package": "node scripts/package-local.mjs",
     "build:public": "tsc -p tsconfig.json && node scripts/build.mjs --public",
-    "package:public": "npm run build:public && electron-builder --win zip --x64 --config.directories.output=release/0.1.8-public --config.win.artifactName=DMZ-Raid-Board-0.1.8-win-x64-portable-public.zip",
+    "package:public": "node scripts/package-local.mjs --public",
     "build:artwork": "tsc -p tsconfig.json && node scripts/build.mjs --with-artwork",
-    "package:artwork": "npm run build:artwork && electron-builder --win zip --x64 --config.directories.output=release/0.1.8-with-artwork --config.win.artifactName=DMZ-Raid-Board-0.1.8-win-x64-portable-with-artwork.zip",
-    "package:candidate": "npm run build:artwork && electron-builder --win zip --x64 --config.directories.output=release/0.1.8-candidate --config.win.artifactName=DMZ-Raid-Board-0.1.8-win-x64-settings-themes-candidate.zip"
+    "package:artwork": "node scripts/package-local.mjs --with-artwork",
+    "package:candidate": "node scripts/package-local.mjs --with-artwork",
+    "test:catalog-ui": "npm run build && node tests/season-ui.test.mjs"
   },
   "devDependencies": {
     "electron": "45.0.0",
@@ -28,13 +29,18 @@
     "appId": "private.dmz.raidboard",
     "productName": "DMZ Raid Board",
     "directories": {
-      "output": "release/0.1.8-private"
+      "output": "release/0.1.9-season1.2-local"
     },
     "files": [
       "dist/**/*",
       "package.json",
       "CATALOG.md",
-      "README.md"
+      "README.md",
+      "docs/SEASON-1-EVIDENCE.md",
+      "docs/SEASON-1-UPDATE.md",
+      "docs/season1-printer-audit.json",
+      "docs/IMAGE-SOURCES-2026-11-06.json",
+      "docs/IMAGE-UPDATE-2026-11-06.md"
     ],
     "asar": true,
     "win": {

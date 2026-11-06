@@ -1,5 +1,5 @@
 // Minimal normalized factual fields; source dates and uncertainty are part of each record.
-export const catalogData = [
+export const catalogData =[
   {
     "id": "stash",
     "name": "Stash Item Upgrade II",
@@ -3497,23 +3497,25 @@ export const catalogData = [
       "Chemicals": 20
     },
     "source": "https://dmzcodex.com/recipes/detonators/",
-    "status": "Cross-checked community costs",
-    "note": "Requires Uncommon Ingredient Printing already unlocked in game. One planned craft supplies one output unit; this is planning, not confirmed production.",
-    "checked": "2026-10-25",
+    "status": "Conflicting community requirements",
+    "note": "Requires Uncommon Ingredient Printing already unlocked in game. One planned craft supplies one output unit; this is planning, not confirmed production. Sources disagree: COD Central reports 20 Electronics + 20 Chemicals; DMZ Codex reports 20 Electronics + 20 Metals. Existing Chemicals plan retained; check the current in-game printer before collecting or spending.",
+    "checked": "2026-11-06",
     "requires": "Uncommon Ingredient Printing",
     "outputPerCraft": 1,
     "sources": [
       {
         "url": "https://codcentral.net/blog/mw4-dmz-3d-printer-recipes/",
-        "sourceUpdated": "2026-10-22",
-        "checked": "2026-10-25"
+        "checked": "2026-11-06",
+        "sourceUpdated": "2026-11-03"
       },
       {
         "url": "https://dmzcodex.com/recipes/detonators/",
-        "checked": "2026-10-25"
+        "checked": "2026-11-06",
+        "sourceUpdated": "2026-10-25"
       }
     ],
-    "image": "recipe-detonators.png"
+    "image": "recipe-detonators.png",
+    "costConflict": "Sources disagree: COD Central reports 20 Electronics + 20 Chemicals; DMZ Codex reports 20 Electronics + 20 Metals. Existing Chemicals plan retained; check the current in-game printer before collecting or spending."
   },
   {
     "id": "print-electronic-sensors",

@@ -1,0 +1,3043 @@
+{
+  "checked": "2026-11-06",
+  "scope": "Windows local test preparation; no commit, push, upload or publication performed.",
+  "newImageAssetsAdded": 0,
+  "newRecordsReviewed": 109,
+  "sourceIndexIconMatches": 33,
+  "newX01IndexCardsWithoutImages": 15,
+  "placeholderDecision": "Retained for all 109 new acquisition records under the delegated requirement to import only images with established redistribution terms.",
+  "policies": [
+    {
+      "url": "https://dmzcodex.com/about/",
+      "finding": "Independent fan site; game images attributed to Activision; no artwork redistribution grant found."
+    },
+    {
+      "url": "https://dmzcodex.com/robots.txt",
+      "finding": "Current successful HTTP retrieval allows crawling and asks AI answer engines to cite the source. This does not state artwork redistribution terms."
+    },
+    {
+      "url": "https://brand.callofduty.com/terms-and-conditions",
+      "finding": "Limited noncommercial use of supplied COD Brand Assets; applicable grant for arbitrary game item screenshots or icons was not established."
+    },
+    {
+      "url": "https://www.activision.com/legal/terms-of-use",
+      "finding": "No affirmative static offline-app artwork redistribution grant established in reviewed terms."
+    }
+  ],
+  "existingLocalAssets": [
+    {
+      "name": "Synthetics",
+      "file": "item-synthetics.webp",
+      "sourcePage": "https://dmzcodex.com/items/synthetics/",
+      "imageURL": "https://dmzcodex.com/images/resource-icons/synthetics.webp",
+      "sha256": "2785a241175df0d69484e34a7b8ab460a33b6088b64b452d54e9c581a60cefde",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Electronics",
+      "file": "item-electronics.webp",
+      "sourcePage": "https://dmzcodex.com/items/electronics/",
+      "imageURL": "https://dmzcodex.com/images/resource-icons/electronics.webp",
+      "sha256": "ae45acdf764e82170acac9583e61b01fba6bc0be777b17973d9ddc20b5084e68",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Chemicals",
+      "file": "item-chemicals.webp",
+      "sourcePage": "https://dmzcodex.com/items/chemicals/",
+      "imageURL": "https://dmzcodex.com/images/resource-icons/chemicals.webp",
+      "sha256": "30d6f757546b209744a0834af58858c2546cea85320944121f19d41a825fa9c4",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Metals",
+      "file": "item-metals.webp",
+      "sourcePage": "https://dmzcodex.com/items/metals/",
+      "imageURL": "https://dmzcodex.com/images/resource-icons/metals.webp",
+      "sha256": "77d2a5216bc48cbc6d7c2ca6f2e90007da425a07d67c673a338086187789f2f8",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Biomaterials",
+      "file": "item-biomaterials.png",
+      "sourcePage": "https://dmzcodex.com/items/biomaterials/",
+      "imageURL": "https://dmzcodex.com/images/items/biomaterials--game-icon.png",
+      "sha256": "c97e4d355679f35cf798769111d59727e4ecd500a48a275196903290d45d0ea3",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Control Unit",
+      "file": "item-control-unit.png",
+      "sourcePage": "https://dmzcodex.com/items/control-units/",
+      "imageURL": "https://dmzcodex.com/images/items/control-units--game-icon.png",
+      "sha256": "8683b567b7f6f467a5388e2967fc01bad821a202d09e332ac2f4cea1587ad87e",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Detonators",
+      "file": "detonators.png",
+      "sourcePage": "https://dmzcodex.com/items/detonators/",
+      "imageURL": "https://dmzcodex.com/images/items/detonators--game-icon.png",
+      "sha256": "23e44f616ca0c8c188530668664a30ceafcd221d1b35d018643daed47609b6c8",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Electronic Sensors",
+      "file": "item-electronic-sensors.png",
+      "sourcePage": "https://dmzcodex.com/items/electronic-sensors/",
+      "imageURL": "https://dmzcodex.com/images/items/electronic-sensors--game-icon.png",
+      "sha256": "5ee3e95861d632bce8bc67da37a668851fbb845fb010e3a909b5f6d0230ed8d4",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Reactive Metals",
+      "file": "reactive-metals.png",
+      "sourcePage": "https://dmzcodex.com/items/reactive-metals/",
+      "imageURL": "https://dmzcodex.com/images/items/reactive-metals--game-icon.png",
+      "sha256": "d02acf3ef22202f70db5452a809ad58cd072b7f640eeb15ee4399b6f780f0575",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Rigid Synthetics",
+      "file": "item-rigid-synthetics.png",
+      "sourcePage": "https://dmzcodex.com/items/rigid-synthetics/",
+      "imageURL": "https://dmzcodex.com/images/items/rigid-synthetics--game-icon.png",
+      "sha256": "d0323d8b3a0d45bbec39203338805ed7a379c31d47297e8f684de7dc16376658",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Binding Catalyst",
+      "file": "item-binding-catalyst.png",
+      "sourcePage": "https://dmzcodex.com/items/binding-catalyst/",
+      "imageURL": "https://dmzcodex.com/images/items/binding-catalyst--game-icon.png",
+      "sha256": "0fece2c1dcf6cec940f0a21083f279d1e6cdc5ac7ea3b66e651a680ea95ad2fb",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "CPU",
+      "file": "cpu.png",
+      "sourcePage": "https://dmzcodex.com/items/cpu/",
+      "imageURL": "https://dmzcodex.com/images/items/cpu--game-icon.png",
+      "sha256": "0ecd97a11dc46ce85d892c617af0026b91085c4062bc615b6d20f25a3d070948",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Printed Circuit Board",
+      "file": "item-printed-circuit-board.png",
+      "sourcePage": "https://dmzcodex.com/items/printed-circuit-board/",
+      "imageURL": "https://dmzcodex.com/images/items/printed-circuit-board--game-icon.png",
+      "sha256": "fbbb6c7ccbd08b7fa9f80d9724b0d0c63a0668cfbc4b104dc7755047838d74db",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Stock Rod",
+      "file": "item-stock-rod.webp",
+      "sourcePage": "https://dmzcodex.com/items/stock-rod/",
+      "imageURL": "https://dmzcodex.com/images/items/stock-rod.webp",
+      "sha256": "fb695e8d83d70ba3c099b99910ade335e825f51872d6e12b6bd54ac80fd5a0cd",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Structural Alloy",
+      "file": "item-structural-alloy.png",
+      "sourcePage": "https://dmzcodex.com/items/structural-alloy/",
+      "imageURL": "https://dmzcodex.com/images/items/structural-alloy--game-icon.png",
+      "sha256": "6da7bda49eb4a14388c82744ab03c14b7faf20776c97c2f39b6440138d123b65",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "High-Tenacity Fibers",
+      "file": "item-high-tenacity-fibers.png",
+      "sourcePage": "https://dmzcodex.com/items/high-tenacity-fibers/",
+      "imageURL": "https://dmzcodex.com/images/items/high-tenacity-fibers--game-icon.png",
+      "sha256": "1861c9d256845ad084dfdfd5d4f5ff9f0a11eed37e989c5d69bd380fab899593",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Nylon Cloth",
+      "file": "nylon-cloth.png",
+      "sourcePage": "https://dmzcodex.com/items/nylon-cloth/",
+      "imageURL": "https://dmzcodex.com/images/items/nylon-cloth--game-icon.png",
+      "sha256": "ede3ed16338a3801c5807fe528bea654d075ad59e7ede04ab5b7650b6cdf03aa",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Nitro Compounds",
+      "file": "item-nitro-compounds.png",
+      "sourcePage": "https://dmzcodex.com/items/nitro-compounds/",
+      "imageURL": "https://dmzcodex.com/images/items/nitro-compounds--game-icon.png",
+      "sha256": "48060fbec06f0b7fc55d074b03e504a36379fc06c06eaa2bf3f8ba18c0793b96",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Alloyed Plating",
+      "file": "item-alloyed-plating.png",
+      "sourcePage": "https://dmzcodex.com/items/alloyed-plating/",
+      "imageURL": "https://dmzcodex.com/images/items/alloyed-plating--game-icon.png",
+      "sha256": "0259ea8c032de960d108c9ee2a4114896e26d353793f4e9159a057733824743f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Ballistic Fabric",
+      "file": "item-ballistic-fabric.png",
+      "sourcePage": "https://dmzcodex.com/items/ballistic-fabric/",
+      "imageURL": "https://dmzcodex.com/images/items/ballistic-fabric--game-icon.png",
+      "sha256": "26967f5015e14e44dc8c4e11539eab1846e3b7164746a8c018fb58945cebce3d",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Comms Module",
+      "file": "item-comms-module.png",
+      "sourcePage": "https://dmzcodex.com/items/comms-module/",
+      "imageURL": "https://dmzcodex.com/images/items/comms-module--game-icon.png",
+      "sha256": "1a58f93d630dc7f7d59e31cb7bfcbcdc1c4593764b739edfd1ca7717f9442cbf",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Nylon Laminate",
+      "file": "item-nylon-laminate.png",
+      "sourcePage": "https://dmzcodex.com/items/nylon-laminate/",
+      "imageURL": "https://dmzcodex.com/images/items/nylon-laminate--game-icon.png",
+      "sha256": "5fae88bfa300dbf9ae42a5c8db7b0df0669da342427b4e48d080e70f509e5fe2",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Power Regulator",
+      "file": "power-regulator.png",
+      "sourcePage": "https://dmzcodex.com/items/power-regulator/",
+      "imageURL": "https://dmzcodex.com/images/items/power-regulator--game-icon.png",
+      "sha256": "6f9110957886a30cabb7b523021672829487f73f201db16910d9c4db873f9c9c",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Stabilized Reagents",
+      "file": "item-stabilized-reagents.png",
+      "sourcePage": "https://dmzcodex.com/items/stabilized-reagents/",
+      "imageURL": "https://dmzcodex.com/images/items/stabilized-reagents--game-icon.png",
+      "sha256": "2ac38d8e06aa41e7c909d944a5f2e7cd4e646a20e14ff1ae68d3e53eb788c4e2",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Turned Components",
+      "file": "item-turned-components.png",
+      "sourcePage": "https://dmzcodex.com/items/turned-components/",
+      "imageURL": "https://dmzcodex.com/images/items/turned-components--game-icon.png",
+      "sha256": "2185fdfb163ec40aa7422a30a26515a7abd860b09d10b75b333e48bcdbb164bc",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Volatile Explosives",
+      "file": "item-volatile-explosives.png",
+      "sourcePage": "https://dmzcodex.com/items/volatile-explosives/",
+      "imageURL": "https://dmzcodex.com/images/items/volatile-explosives--game-icon.png",
+      "sha256": "acf6cb697e7df884ed1b08889ae5f02e7d7ee91cdbfebb74ba072609ce69b014",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Military Composites",
+      "file": "item-military-composites.png",
+      "sourcePage": "https://dmzcodex.com/items/military-composites/",
+      "imageURL": "https://dmzcodex.com/images/items/military-composites--game-icon.png",
+      "sha256": "748da2728f3496b49995983c40bf207e3d44c9fa2e2d5556ababcb3db1ba7ded",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Experimental Compounds",
+      "file": "item-experimental-compounds.png",
+      "sourcePage": "https://dmzcodex.com/items/experimental-compounds/",
+      "imageURL": "https://dmzcodex.com/images/items/experimental-compounds--game-icon.png",
+      "sha256": "c59ac02928162beabd7088b1a629f76e0b7c84fca575249bfa1f02fa3ba1de88",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Nano-Structured Alloy",
+      "file": "item-nano-structured-alloy.png",
+      "sourcePage": "https://dmzcodex.com/items/nano-structured-alloy/",
+      "imageURL": "https://dmzcodex.com/images/items/nano-structured-alloy--game-icon.png",
+      "sha256": "20fa4a6bd42e00bddd527b32c2827e5db12d5674711d17280151957bba905b7e",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Prototype RF Module",
+      "file": "item-prototype-rf-module.png",
+      "sourcePage": "https://dmzcodex.com/items/prototype-rf-module/",
+      "imageURL": "https://dmzcodex.com/images/items/prototype-rf-module--game-icon.png",
+      "sha256": "bcbd97488f6d439c03703789dd99a86dc1175cdb740626e4988ca22a266b4cab",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Infantry Invasion Plans",
+      "file": "item-infantry-invasion-plans.png",
+      "sourcePage": "https://dmzcodex.com/items/infantry-invasion-plans/",
+      "imageURL": "https://dmzcodex.com/images/items/infantry-invasion-plans--game-icon.png",
+      "sha256": "4ed7fe4c4636204c814c20a0f20c8c93a7faa3ece53ec9f3b52d99c95811a97e",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Ballistic Flight Logs",
+      "file": "item-ballistic-flight-logs.webp",
+      "sourcePage": "https://dmzcodex.com/items/ballistic-flight-logs/",
+      "imageURL": "https://dmzcodex.com/images/items/ballistic-flight-logs.webp",
+      "sha256": "266a4a21b8fcb2dd15caa74514120a5e9e867bda9d9de605020751eeecc410ae",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Degraded Execution Footage",
+      "file": "item-degraded-execution-footage.png",
+      "sourcePage": "https://dmzcodex.com/items/degraded-execution-footage/",
+      "imageURL": "https://dmzcodex.com/images/items/degraded-execution-footage--local-illustration.png",
+      "sha256": "963bc150b57e36622ea35e3382599e4c555ce0f2d8dba8e6e8d4242a12129c78",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Nuclear Program Files",
+      "file": "item-nuclear-program-files.png",
+      "sourcePage": "https://dmzcodex.com/items/nuclear-program-files/",
+      "imageURL": "https://dmzcodex.com/images/items/nuclear-program-files--game-icon.png",
+      "sha256": "70baa22cfa07b633a638c5bc1b0da793e12989d2e5ebaa9a1ac954633b39f9d8",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Encrypted Archive",
+      "file": "item-encrypted-archive.png",
+      "sourcePage": "https://dmzcodex.com/items/encrypted-archive/",
+      "imageURL": "https://dmzcodex.com/images/items/encrypted-archive--game-icon.png",
+      "sha256": "b34f493a31e2f66b468140c7d60abbeb343b10a738f1df7d115848e4a098ec30",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Gold Skull",
+      "file": "item-gold-skull.png",
+      "sourcePage": "https://dmzcodex.com/items/gold-skull/",
+      "imageURL": "https://dmzcodex.com/images/items/gold-skull--local-illustration.png",
+      "sha256": "37617a5a690123564a3c5b4935a9f33fee23d6f77894ab92a286786642e4abc8",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Gold Bar",
+      "file": "item-gold-bar.png",
+      "sourcePage": "https://dmzcodex.com/items/gold-bar/",
+      "imageURL": "https://dmzcodex.com/images/items/gold-bar--game-icon.png",
+      "sha256": "3041eb575a62ee04506d7bd8ff146bfff30bcfe9cdf080a35807a1c2b44f4822",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "W.M.D. Manifest",
+      "file": "item-w-m-d-manifest.png",
+      "sourcePage": "https://dmzcodex.com/items/wmd-manifest/",
+      "imageURL": "https://dmzcodex.com/images/items/wmd-manifest--game-icon.png",
+      "sha256": "447c3c584c7daa62d943b8816282bc74b9e1c3c86c416b90db17de1992adca8a",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Sanctioned Assassination List",
+      "file": "item-sanctioned-assassination-list.png",
+      "sourcePage": "https://dmzcodex.com/items/sanctioned-assassination-list/",
+      "imageURL": "https://dmzcodex.com/images/items/classified-document--game-icon.png",
+      "sha256": "b94f0edc75bdc87ecfc0d80150bd7a1005b90f9414c7ba0f66e71c7aecb00ffd",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Energy Drink",
+      "file": "recipe-energy-drink.png",
+      "sourcePage": "https://dmzcodex.com/recipes/energy-drink/",
+      "imageURL": "https://dmzcodex.com/images/items/energy-drink--game-icon.png",
+      "sha256": "dddd29c7c2be71517d77aa59cc151cce773327a0e866dab67be222376a8b3a41",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Bandage",
+      "file": "recipe-bandage.png",
+      "sourcePage": "https://dmzcodex.com/recipes/bandage/",
+      "imageURL": "https://dmzcodex.com/images/items/bandage--game-icon.png",
+      "sha256": "dcd46dc953edcf5ff4fca1645b7cd7a8fc78f01968c35e88549dbf777359ca1c",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Pain Killers",
+      "file": "recipe-pain-killers.png",
+      "sourcePage": "https://dmzcodex.com/recipes/pain-killers/",
+      "imageURL": "https://dmzcodex.com/images/items/pain-killers--game-icon.png",
+      "sha256": "fb66c1b28eaefabe5cde1c924884e8a494e4a2c39a965947cda2b8b9a52cd728",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Sedative Inhaler",
+      "file": "recipe-sedative-inhaler.png",
+      "sourcePage": "https://dmzcodex.com/recipes/sedative-inhaler/",
+      "imageURL": "https://dmzcodex.com/images/items/sedative-inhaler--game-icon.png",
+      "sha256": "ca5d603b47234294c4c64a00aa93bd1c1acd0b7ecc44b4fe646aefc5b5e1e669",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Radiation Blockers",
+      "file": "recipe-radiation-blockers.png",
+      "sourcePage": "https://dmzcodex.com/recipes/radiation-blockers/",
+      "imageURL": "https://dmzcodex.com/images/items/radiation-blockers--game-icon.png",
+      "sha256": "656b325ad8cbe9890bfa12c5a0f45b0da20529df509fa1178ab501ead9297ea8",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Smelling Salts",
+      "file": "recipe-smelling-salts.png",
+      "sourcePage": "https://dmzcodex.com/recipes/smelling-salts/",
+      "imageURL": "https://dmzcodex.com/images/items/smelling-salts--game-icon.png",
+      "sha256": "9e2085395942e2590b9f520b28ddc175b4bb75e06e841d2fba503d831ee990a6",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Medkit",
+      "file": "recipe-medkit.png",
+      "sourcePage": "https://dmzcodex.com/recipes/medkit/",
+      "imageURL": "https://dmzcodex.com/images/items/medkit--game-icon.png",
+      "sha256": "330b37285bcfe97eca41fd027dd689632673cfc5bc23f2f0bc680df777499576",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Self-Revive Kit",
+      "file": "recipe-self-revive-kit.png",
+      "sourcePage": "https://dmzcodex.com/recipes/self-revive-kit/",
+      "imageURL": "https://dmzcodex.com/images/items/self-revive-kit--game-icon.png",
+      "sha256": "080020f8d039224f5572024b9cab32a18e645efd4fcc048407e96d62170ddcce",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Door Breacher Charge",
+      "file": "recipe-door-breacher-charge.png",
+      "sourcePage": "https://dmzcodex.com/recipes/door-breacher-charge/",
+      "imageURL": "https://dmzcodex.com/images/items/door-breacher-charge--game-icon.png",
+      "sha256": "95ea0b5c5503a22588aa31f7a20a901a4554c82cbf301ddbae08f2768bef516f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "1-Plate Armor Vest",
+      "file": "recipe-1-plate-armor-vest.png",
+      "sourcePage": "https://dmzcodex.com/recipes/1-plate-armor-vest/",
+      "imageURL": "https://dmzcodex.com/images/items/1-plate-armor-vest--game-icon.png",
+      "sha256": "3b88c7451c6432282741ab08a362c8604cbfe5a299a0795529ec805996ccb3d9",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "2-Plate Armor Vest",
+      "file": "recipe-2-plate-armor-vest.png",
+      "sourcePage": "https://dmzcodex.com/recipes/2-plate-armor-vest/",
+      "imageURL": "https://dmzcodex.com/images/items/2-plate-armor-vest--game-icon.png",
+      "sha256": "b3622b95318b3d86c1bd390ff06ee6903e7bcbfb5797ddd6ec1652d3a6fd6567",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "2-Plate Ballistic Gel Vest",
+      "file": "recipe-2-plate-ballistic-gel-vest.png",
+      "sourcePage": "https://dmzcodex.com/recipes/2-plate-ballistic-gel-vest/",
+      "imageURL": "https://dmzcodex.com/images/items/2-plate-ballistic-gel-vest--game-icon.png",
+      "sha256": "4ebd3b80de8d6dcf948cea3fce73aad7aa71fcfec3e6207db22ac9f7753d87a5",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "2-Plate Helmet Armor Vest",
+      "file": "recipe-2-plate-helmet-armor-vest.png",
+      "sourcePage": "https://dmzcodex.com/recipes/2-plate-helmet-armor-vest/",
+      "imageURL": "https://dmzcodex.com/images/items/2-plate-helmet-armor-vest--game-icon.png",
+      "sha256": "9c232c4c73f9792a596e80bef4f252d06120905b2177dddcb36ac5bb8bf58a99",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "3-Plate Armor Vest",
+      "file": "recipe-3-plate-armor-vest.png",
+      "sourcePage": "https://dmzcodex.com/recipes/3-plate-armor-vest/",
+      "imageURL": "https://dmzcodex.com/images/items/3-plate-armor-vest--game-icon.png",
+      "sha256": "6fa526f66f406d0091da2b0d10aa95054b2088232734ad2eca09956045ff20c7",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "3-Plate Ballistic Gel Vest",
+      "file": "recipe-3-plate-ballistic-gel-vest.png",
+      "sourcePage": "https://dmzcodex.com/recipes/3-plate-ballistic-gel-vest/",
+      "imageURL": "https://dmzcodex.com/images/items/3-plate-ballistic-gel-vest--game-icon.png",
+      "sha256": "a90ce09366beb11b086f0b46b5015df5a959201e353ebc6da1edaed59673b604",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "3-Plate Helmet Armor Vest",
+      "file": "recipe-3-plate-helmet-armor-vest.png",
+      "sourcePage": "https://dmzcodex.com/recipes/3-plate-helmet-armor-vest/",
+      "imageURL": "https://dmzcodex.com/images/items/3-plate-helmet-armor-vest--game-icon.png",
+      "sha256": "1a886a204755e63d098a2db58a42885def3093e671e50fcd97e834ac82eecf76",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Tempered Armor Vest",
+      "file": "recipe-tempered-armor-vest.png",
+      "sourcePage": "https://dmzcodex.com/recipes/tempered-armor-vest/",
+      "imageURL": "https://dmzcodex.com/images/items/tempered-armor-vest--game-icon.png",
+      "sha256": "401306cb1c5fa506cb628cb22f3b3413b29c228f64a194565fd06c1f430dfad1",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Small Backpack",
+      "file": "recipe-small-backpack.png",
+      "sourcePage": "https://dmzcodex.com/recipes/small-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/small-backpack--game-icon.png",
+      "sha256": "3ee9907a7bbdd593d9a7eacfddff6caaefdc1cd93db0d653319d572058207a70",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Medium Backpack",
+      "file": "recipe-medium-backpack.png",
+      "sourcePage": "https://dmzcodex.com/recipes/medium-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/medium-backpack--game-icon.png",
+      "sha256": "8f5f26870179b5d685edfa8b0be9f653638af9cf4df263e4d9aae29db35d2e5a",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Medium Scavenger Backpack",
+      "file": "recipe-medium-scavenger-backpack.png",
+      "sourcePage": "https://dmzcodex.com/recipes/medium-scavenger-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/medium-scavenger-backpack--game-icon.png",
+      "sha256": "b9e2d885deadd818b51a797e860b820a9dd4f8a9c4b87421bed9ed1e84f5370f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Medium Weapon Backpack",
+      "file": "recipe-medium-weapon-backpack.png",
+      "sourcePage": "https://dmzcodex.com/recipes/medium-weapon-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/medium-weapon-backpack--game-icon.png",
+      "sha256": "476b914ce9cbbcf756045bececfb644007b565329247ad935477219ae8caa735",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Small Secure Backpack",
+      "file": "recipe-small-secure-backpack.png",
+      "sourcePage": "https://dmzcodex.com/recipes/small-secure-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/small-secure-backpack--game-icon.png",
+      "sha256": "9b2272356ac40d78e1c7ff1d4d4f4bd08ca926af57f90ddfae0e3f5af9529a22",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Large Backpack",
+      "file": "recipe-large-backpack.png",
+      "sourcePage": "https://dmzcodex.com/recipes/large-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/large-backpack--game-icon.png",
+      "sha256": "befcbe940ee138a8d9d9ea6f75b43ad3fc594fab41fc82d597838dd6e9d5a617",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Large Scavenger Backpack",
+      "file": "recipe-large-scavenger-backpack.png",
+      "sourcePage": "https://dmzcodex.com/recipes/large-scavenger-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/large-scavenger-backpack--game-icon.png",
+      "sha256": "517dbaf96798806b7e53c2c771b1461fa1ba9ddcb16aa103b7be57f493e48df0",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Medium Secure Backpack",
+      "file": "recipe-medium-secure-backpack.png",
+      "sourcePage": "https://dmzcodex.com/recipes/medium-secure-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/medium-secure-backpack--game-icon.png",
+      "sha256": "c14a7040556406f8b0209e952e86c76b28980ffe69cb3cdca1cebe36b3ecb59d",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Large Secure Backpack",
+      "file": "recipe-large-secure-backpack.png",
+      "sourcePage": "https://dmzcodex.com/recipes/large-secure-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/large-secure-backpack--game-icon.png",
+      "sha256": "a2f0950ad2ee1da4816df1ed9f08561662f2bb646a9a9757087fccc29d766dfa",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Secure Scavenger Backpack",
+      "file": "recipe-secure-scavenger-backpack.webp",
+      "sourcePage": "https://dmzcodex.com/recipes/secure-scavenger-backpack/",
+      "imageURL": "https://dmzcodex.com/images/items/secure-scavenger-backpack.webp",
+      "sha256": "eb6ca1d936a7c2be74cf2be078eda5135f996108881fae2912750e29098bd21e",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Concussion Grenade",
+      "file": "recipe-concussion-grenade.png",
+      "sourcePage": "https://dmzcodex.com/recipes/stun-grenade/",
+      "imageURL": "https://dmzcodex.com/images/items/stun-grenade--game-icon.png",
+      "sha256": "0814b7aadabcb9cc4ea43cfe671c592140ac643ddb3c32e99bf4d6098255dad2",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Decoy Grenade",
+      "file": "recipe-decoy-grenade.png",
+      "sourcePage": "https://dmzcodex.com/recipes/decoy-grenade/",
+      "imageURL": "https://dmzcodex.com/images/items/decoy-grenade--game-icon.png",
+      "sha256": "7293812b10b2ff3132f72a645d40c384c00cb448d937cf5a7117a450ff90844c",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Flash",
+      "file": "recipe-flash.png",
+      "sourcePage": "https://dmzcodex.com/recipes/flash/",
+      "imageURL": "https://dmzcodex.com/images/items/flash--game-icon.png",
+      "sha256": "8dec711343bb1d4ee1152e4bb6931ae91240bc8ff62a20e1dd0b4182da9dfa63",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Screamer Mine",
+      "file": "recipe-screamer-mine.png",
+      "sourcePage": "https://dmzcodex.com/recipes/screamer-mine/",
+      "imageURL": "https://dmzcodex.com/images/items/screamer-mine--game-icon.png",
+      "sha256": "84a4400a522315c3f7973da27fa1f5180eee7d529827988bf6e7e576a2b1842b",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Shock Stick",
+      "file": "recipe-shock-stick.png",
+      "sourcePage": "https://dmzcodex.com/recipes/shock-stick/",
+      "imageURL": "https://dmzcodex.com/images/items/shock-stick--game-icon.png",
+      "sha256": "c95d8464b75c76668d154e161b7381fbd8c6b61b047085b06ea002e86f18da81",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Smoke Grenade",
+      "file": "recipe-smoke-grenade.png",
+      "sourcePage": "https://dmzcodex.com/recipes/smoke-grenade/",
+      "imageURL": "https://dmzcodex.com/images/items/smoke-grenade--game-icon.png",
+      "sha256": "a7f41c503d43ad0e935aadb75836a27ea106b663840de4e0f05dcabb78834587",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Snapshot Grenade",
+      "file": "recipe-snapshot-grenade.png",
+      "sourcePage": "https://dmzcodex.com/recipes/snapshot-grenade/",
+      "imageURL": "https://dmzcodex.com/images/items/snapshot-grenade--game-icon.png",
+      "sha256": "be185f6f87a17bf8de94a9bd522541539c4765c17fb80e6281f16c5f4054b62a",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Heartbeat Sensor",
+      "file": "recipe-heartbeat-sensor.png",
+      "sourcePage": "https://dmzcodex.com/recipes/heartbeat-sensor/",
+      "imageURL": "https://dmzcodex.com/images/items/heartbeat-sensor--game-icon.png",
+      "sha256": "5e3dcf8e1b454a2e9b8ab41d22f54f6ebcdb00e9af61b1aa92280a18412fa051",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Stim",
+      "file": "recipe-stim.png",
+      "sourcePage": "https://dmzcodex.com/recipes/stim/",
+      "imageURL": "https://dmzcodex.com/images/items/stim--game-icon.png",
+      "sha256": "af928e0c86bfed9c62f8e17f7455bd51bad03cd695bccb1e001363bd56e170c4",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Spotter Scope",
+      "file": "recipe-spotter-scope.png",
+      "sourcePage": "https://dmzcodex.com/recipes/spotter-scope/",
+      "imageURL": "https://dmzcodex.com/images/items/spotter-scope--game-icon.png",
+      "sha256": "119c11b124f46f8a9d9efb9408c97d744927951336bcf151f7f1d83b0744fade",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "C4",
+      "file": "recipe-c4.png",
+      "sourcePage": "https://dmzcodex.com/recipes/c4/",
+      "imageURL": "https://dmzcodex.com/images/items/c4--game-icon.png",
+      "sha256": "e24d6f12d50ad7c854c5e8123fc951d5b11fb5ae5d57d4a7667b536c8222a25a",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Claymore",
+      "file": "recipe-claymore.png",
+      "sourcePage": "https://dmzcodex.com/recipes/claymore/",
+      "imageURL": "https://dmzcodex.com/images/items/claymore--game-icon.png",
+      "sha256": "202497263bc3b3062b007371610954e63c4fce1d4d3c2e3a90935f0a0b20adbf",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Frag Grenade",
+      "file": "recipe-frag-grenade.png",
+      "sourcePage": "https://dmzcodex.com/recipes/frag-grenade/",
+      "imageURL": "https://dmzcodex.com/images/items/frag-grenade--game-icon.png",
+      "sha256": "c4461960bac601a487b004c4c27f3c8994969ecc7673c4e471d6fd2109ddd3cb",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Molotov Cocktail",
+      "file": "recipe-molotov-cocktail.png",
+      "sourcePage": "https://dmzcodex.com/recipes/molotov-cocktail/",
+      "imageURL": "https://dmzcodex.com/images/items/molotov-cocktail--game-icon.png",
+      "sha256": "21447967f5bced7dd148c4f6116d989749e6b147cc692651858ddaa82f54cc5f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Proximity Mine",
+      "file": "recipe-proximity-mine.png",
+      "sourcePage": "https://dmzcodex.com/recipes/proximity-mine/",
+      "imageURL": "https://dmzcodex.com/images/items/proximity-mine--game-icon.png",
+      "sha256": "b0c70d5776fb903b434b7681ac291895c0ff98d82262c3017e3937aafd33a4b3",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Semtex",
+      "file": "recipe-semtex.png",
+      "sourcePage": "https://dmzcodex.com/recipes/semtex/",
+      "imageURL": "https://dmzcodex.com/images/items/semtex--game-icon.png",
+      "sha256": "d962023b202f5d67dc8ee35ae69d927ae7c9701997168cfdc812d639e73e490e",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Thermite",
+      "file": "recipe-thermite.png",
+      "sourcePage": "https://dmzcodex.com/recipes/thermite/",
+      "imageURL": "https://dmzcodex.com/images/items/thermite--game-icon.png",
+      "sha256": "718f0994c63f118fc93f15b15f7d6501ba453b6c7338a1e872606dbdf5a41425",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Zip Gun",
+      "file": "recipe-zip-gun.png",
+      "sourcePage": "https://dmzcodex.com/recipes/zip-gun/",
+      "imageURL": "https://dmzcodex.com/images/items/zip-gun--game-icon.png",
+      "sha256": "bf8c7258620e455f4ca1970e5e9c0535bd1c0d962514f6205ba2350204254330",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Drill Charge",
+      "file": "recipe-drill-charge.png",
+      "sourcePage": "https://dmzcodex.com/recipes/drill-charge/",
+      "imageURL": "https://dmzcodex.com/images/items/drill-charge--game-icon.png",
+      "sha256": "2f5d557880589239224656d09e4dad182c11e3db72f9b32301a18fa857f6e713",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Throwing Knife",
+      "file": "recipe-throwing-knife.png",
+      "sourcePage": "https://dmzcodex.com/recipes/throwing-knife/",
+      "imageURL": "https://dmzcodex.com/images/items/throwing-knife--game-icon.png",
+      "sha256": "a79ed65a2b9da6205d92516feb2f10b9a0fc5f2ba8d983d6433eb25ec458cfab",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Trip Wire",
+      "file": "recipe-trip-wire.png",
+      "sourcePage": "https://dmzcodex.com/recipes/trip-wire/",
+      "imageURL": "https://dmzcodex.com/images/items/trip-wire--game-icon.png",
+      "sha256": "9512f64e17f200c5907314e926523ab998e3c337d890c49bdd79c32de4a17a8f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Ammo Box",
+      "file": "recipe-ammo-box.png",
+      "sourcePage": "https://dmzcodex.com/recipes/ammo-box/",
+      "imageURL": "https://dmzcodex.com/images/items/ammo-box--game-icon.png",
+      "sha256": "abe0a6f8fe2ea90ffa911c7000f882b211fefc362951c541f6d433a04ec5b978",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Inflatable Decoy",
+      "file": "recipe-inflatable-decoy.png",
+      "sourcePage": "https://dmzcodex.com/recipes/inflatable-decoy/",
+      "imageURL": "https://dmzcodex.com/images/items/inflatable-decoy--game-icon.png",
+      "sha256": "679b5da1f3798044c9802ca78bafa615b1aaba2d5a00f4dbd698394ff8e2137f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Portable Radar",
+      "file": "recipe-portable-radar.png",
+      "sourcePage": "https://dmzcodex.com/recipes/portable-radar/",
+      "imageURL": "https://dmzcodex.com/images/items/portable-radar--game-icon.png",
+      "sha256": "b58dc83da3efcca3aa90e0e493f9be1849bd415cd5d26ac8293ceb52535ec430",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Razor Wire Trap",
+      "file": "recipe-razor-wire-trap.png",
+      "sourcePage": "https://dmzcodex.com/recipes/razor-wire-trap/",
+      "imageURL": "https://dmzcodex.com/images/items/razor-wire-trap--game-icon.png",
+      "sha256": "8130f0fd7adc57e4000720a589bdf8005ce1492ed02769a6a4eada403d36b15e",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Rebreather",
+      "file": "recipe-rebreather.png",
+      "sourcePage": "https://dmzcodex.com/recipes/rebreather/",
+      "imageURL": "https://dmzcodex.com/images/items/rebreather--game-icon.png",
+      "sha256": "8e9db99602224c23c3c494edc64a1ae8c8be7b08e0b0ca1efa507afa0f340c99",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Riot Shield",
+      "file": "recipe-riot-shield.png",
+      "sourcePage": "https://dmzcodex.com/recipes/riot-shield/",
+      "imageURL": "https://dmzcodex.com/images/items/riot-shield--game-icon.png",
+      "sha256": "1833fc9c281d0f767963c1531737d8a1d6efc5ba7b7f4dd7b92feae1845e020f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Seeker Drone",
+      "file": "recipe-seeker-drone.png",
+      "sourcePage": "https://dmzcodex.com/recipes/seeker-drone/",
+      "imageURL": "https://dmzcodex.com/images/items/seeker-drone--game-icon.png",
+      "sha256": "32bfcba827f2251c00b7ddc6e7520f83791d498e8ad6258fda5c44612d362c3d",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Smoke Wall",
+      "file": "recipe-smoke-wall.png",
+      "sourcePage": "https://dmzcodex.com/recipes/smoke-wall/",
+      "imageURL": "https://dmzcodex.com/images/items/smoke-wall--game-icon.png",
+      "sha256": "c088ab25928d672f49f63ea9d0a530fc54dce8e7443857500747eaf2c59a2314",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Armor Box",
+      "file": "recipe-armor-box.png",
+      "sourcePage": "https://dmzcodex.com/recipes/armor-box/",
+      "imageURL": "https://dmzcodex.com/images/items/armor-box--game-icon.png",
+      "sha256": "5f4a2ae904d41e2df35737502f0f89b65c00bf0959b0b0021881de1d8fcf7a2e",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "DDOS",
+      "file": "recipe-ddos.png",
+      "sourcePage": "https://dmzcodex.com/recipes/ddos/",
+      "imageURL": "https://dmzcodex.com/images/items/ddos--game-icon.png",
+      "sha256": "85db84da718e8619400948bec470389f88082aa23d186e1f225e54c0cce18fef",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Defibrillator",
+      "file": "recipe-defibrillator.png",
+      "sourcePage": "https://dmzcodex.com/recipes/defibrillator/",
+      "imageURL": "https://dmzcodex.com/images/items/defibrillator--game-icon.png",
+      "sha256": "9a52da3feb0c582f98e57c75e0e4ef6648f18e210ebb981c037797b5799ab06e",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Recon Drone",
+      "file": "recipe-recon-drone.png",
+      "sourcePage": "https://dmzcodex.com/recipes/recon-drone/",
+      "imageURL": "https://dmzcodex.com/images/items/recon-drone--game-icon.png",
+      "sha256": "92525de21947b3d5d8f3fe1aff189fafacca26b76d7ed6df0ac091464de51358",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "SAM Airburst Turret",
+      "file": "recipe-sam-airburst-turret.png",
+      "sourcePage": "https://dmzcodex.com/recipes/sam-airburst-turret/",
+      "imageURL": "https://dmzcodex.com/images/items/sam-airburst-turret--game-icon.png",
+      "sha256": "a50ff4cba2fb72fa6687539cea040372955593ff170be56c191ec001de35a69f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Trophy System",
+      "file": "recipe-trophy-system.png",
+      "sourcePage": "https://dmzcodex.com/recipes/trophy-system/",
+      "imageURL": "https://dmzcodex.com/images/items/trophy-system--game-icon.png",
+      "sha256": "a93a9682b3e593065b56f844ebc440797f49fab9b21f7464434e5ee374d8ec21",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Revive Pistol",
+      "file": "recipe-revive-pistol.png",
+      "sourcePage": "https://dmzcodex.com/recipes/revive-pistol/",
+      "imageURL": "https://dmzcodex.com/images/items/revive-pistol--game-icon.png",
+      "sha256": "b6875616cf80adbbcfc787a6ea2f6ebca0a3f053feaa03bde7d348a13c1f67e5",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Fulton Drop Marker",
+      "file": "recipe-fulton-drop-marker.png",
+      "sourcePage": "https://dmzcodex.com/recipes/fulton-drop-marker/",
+      "imageURL": "https://dmzcodex.com/images/items/fulton-drop-marker--game-icon.png",
+      "sha256": "4d505dd2652722025e10b9a17ed2752538cf61b17d207a2903c1db586e2dc4ed",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Care Package",
+      "file": "recipe-care-package.png",
+      "sourcePage": "https://dmzcodex.com/recipes/care-package/",
+      "imageURL": "https://dmzcodex.com/images/items/care-package--game-icon.png",
+      "sha256": "0920f7f9df3a292c36ab74e453a5a0ccc91b3822d9c2bd1581dc520d6c781856",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Bomb Glider",
+      "file": "recipe-bomb-glider.png",
+      "sourcePage": "https://dmzcodex.com/recipes/bomb-glider/",
+      "imageURL": "https://dmzcodex.com/images/items/bomb-glider--game-icon.png",
+      "sha256": "506eed6c6ddec8a16bd543119164295d1d7575353d1aca05db5a1cd61e0d0cde",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Bombing Run",
+      "file": "recipe-bombing-run.png",
+      "sourcePage": "https://dmzcodex.com/recipes/bombing-run/",
+      "imageURL": "https://dmzcodex.com/images/items/bombing-run--game-icon.png",
+      "sha256": "0f179f850aefd3bfcab30fff1c6fd31983e679bf8ebbc0ae9c949095661ea2fc",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Combat Drone",
+      "file": "recipe-combat-drone.png",
+      "sourcePage": "https://dmzcodex.com/recipes/combat-drone/",
+      "imageURL": "https://dmzcodex.com/images/items/combat-drone--game-icon.png",
+      "sha256": "4793410ec6e310fabb2dc815ffd95aab5ee336ea8c82bc17f0f3932462f933b8",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "UAV",
+      "file": "recipe-uav.png",
+      "sourcePage": "https://dmzcodex.com/recipes/uav/",
+      "imageURL": "https://dmzcodex.com/images/items/uav--game-icon.png",
+      "sha256": "33f96da9bec24e874100f42fde79275443cc5eb985b231e723e63b69ff6305e9",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Advanced UAV",
+      "file": "recipe-advanced-uav.png",
+      "sourcePage": "https://dmzcodex.com/recipes/advanced-uav/",
+      "imageURL": "https://dmzcodex.com/images/items/advanced-uav--game-icon.png",
+      "sha256": "010bb728245226c51f855b8d4364b0d8f82097763686d1025da39835601c83d4",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Artillery Beacon",
+      "file": "recipe-artillery-beacon.png",
+      "sourcePage": "https://dmzcodex.com/recipes/artillery-beacon/",
+      "imageURL": "https://dmzcodex.com/images/items/artillery-beacon--game-icon.png",
+      "sha256": "326cdf9abc480ade0ccbc57ccfeb93c46110336279b5d720ba3999f62812a2c7",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Impact Warhead",
+      "file": "recipe-impact-warhead.png",
+      "sourcePage": "https://dmzcodex.com/recipes/impact-warhead/",
+      "imageURL": "https://dmzcodex.com/images/items/impact-warhead--game-icon.png",
+      "sha256": "3893bf46cbb14f87e6a52c3068a0a27796cbba6caaf1bddb95fb219a7255886f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Railgun Sentry",
+      "file": "recipe-railgun-sentry.png",
+      "sourcePage": "https://dmzcodex.com/recipes/railgun-sentry/",
+      "imageURL": "https://dmzcodex.com/images/items/railgun-sentry--game-icon.png",
+      "sha256": "f782b9c74ce5c408c3e58e6b8f11be07682efaebd17f25229a1d0284fee6c717",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Crossfire",
+      "file": "recipe-crossfire.png",
+      "sourcePage": "https://dmzcodex.com/recipes/crossfire/",
+      "imageURL": "https://dmzcodex.com/images/items/crossfire--game-icon.png",
+      "sha256": "27538f45d52eb78964d6bc653628228077dff1a39cf7a2bce4670a0c68f8e9c2",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Weak Night Vision Goggles",
+      "file": "recipe-weak-night-vision-goggles.png",
+      "sourcePage": "https://dmzcodex.com/recipes/weak-night-vision-goggles/",
+      "imageURL": "https://dmzcodex.com/images/items/weak-night-vision-goggles--game-icon.png",
+      "sha256": "bc45b2c484d8cf9c990026e0f91ef87bf7b35f73fb34228337f941d1f83d25ab",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Disposable Parachute",
+      "file": "recipe-disposable-parachute.png",
+      "sourcePage": "https://dmzcodex.com/recipes/disposable-parachute/",
+      "imageURL": "https://dmzcodex.com/images/items/disposable-parachute--game-icon.png",
+      "sha256": "1400b2210923db0277b03d7f20528770570f78ccf2d6edfadcd51d112331c40d",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Gas Mask",
+      "file": "recipe-gas-mask.png",
+      "sourcePage": "https://dmzcodex.com/recipes/gas-mask/",
+      "imageURL": "https://dmzcodex.com/images/items/gas-mask--game-icon.png",
+      "sha256": "4ea67b0970028eecf61e9740d49ed1501ace90faf35fe298794e9f87e7139543",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Night Vision Goggles",
+      "file": "recipe-night-vision-goggles.png",
+      "sourcePage": "https://dmzcodex.com/recipes/nvgs/",
+      "imageURL": "https://dmzcodex.com/images/items/nvgs--game-icon.png",
+      "sha256": "bc45b2c484d8cf9c990026e0f91ef87bf7b35f73fb34228337f941d1f83d25ab",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Durable Gas Mask",
+      "file": "recipe-durable-gas-mask.png",
+      "sourcePage": "https://dmzcodex.com/recipes/durable-gas-mask/",
+      "imageURL": "https://dmzcodex.com/images/items/durable-gas-mask--game-icon.png",
+      "sha256": "dc47f43b12b86d6d757675f31152d1e28ee4358032c6f2b3874e9fa50b37cda4",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Elite Night Vision Goggles",
+      "file": "recipe-elite-night-vision-goggles.png",
+      "sourcePage": "https://dmzcodex.com/recipes/elite-night-vision-goggles/",
+      "imageURL": "https://dmzcodex.com/images/items/elite-night-vision-goggles--game-icon.png",
+      "sha256": "bc45b2c484d8cf9c990026e0f91ef87bf7b35f73fb34228337f941d1f83d25ab",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Parachute",
+      "file": "recipe-parachute.png",
+      "sourcePage": "https://dmzcodex.com/recipes/parachute/",
+      "imageURL": "https://dmzcodex.com/images/items/parachute--game-icon.png",
+      "sha256": "6b9303473d729cd58622a82e3538cd0333875eb4aab538014ab31e61c9fee592",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "stash-item",
+      "file": "upgrade-stash-item.png",
+      "sourcePage": "https://dmzcodex.com/upgrades/stash-item-upgrade/",
+      "imageURL": "https://dmzcodex.com/images/fob/stash-loadout--game-icon.png",
+      "sha256": "07351bafa35431ffeb9640ff5af7cd684a5b2b5c21f3ba5112ce77d633052115",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "gunsmith",
+      "file": "upgrade-gunsmith.png",
+      "sourcePage": "https://dmzcodex.com/upgrades/gunsmith-discount/",
+      "imageURL": "https://dmzcodex.com/images/fob/gunsmith--game-icon.png",
+      "sha256": "75f2098fdc609a9406817e4dee3db785d882a41488492621e121306cdd0210ce",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "bank",
+      "file": "upgrade-bank.png",
+      "sourcePage": "https://dmzcodex.com/upgrades/bank-upgrade/",
+      "imageURL": "https://dmzcodex.com/images/fob/vendor--station-icon.png",
+      "sha256": "28eb5cb77a1d03fab4eb78cf00bceed12e060d1482863072672cd5d2470952b7",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "dog-tag",
+      "file": "upgrade-dog-tag.png",
+      "sourcePage": "https://dmzcodex.com/upgrades/dog-tag-case-storage-upgrade/",
+      "imageURL": "https://dmzcodex.com/images/fob/dog-tag-case--game-icon.png",
+      "sha256": "c22e2065ec33afdb062ec2616814e95cc737438ea3d54d0a7246d700443ff774",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "mia",
+      "file": "upgrade-mia.png",
+      "sourcePage": "https://dmzcodex.com/upgrades/mia-recovery-discount/",
+      "imageURL": "https://dmzcodex.com/images/fob/operators-active-duty--game-icon.png",
+      "sha256": "ead57c2620e88dd94b0b09afe8dc56d6d9560a1ff395020308be8d576fca9bc8",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "vendor",
+      "file": "upgrade-vendor.png",
+      "sourcePage": "https://dmzcodex.com/upgrades/vendor-item-slots-upgrade/",
+      "imageURL": "https://dmzcodex.com/images/fob/vendor--game-icon.png",
+      "sha256": "a91c460190e30d194d9ef7424dd44302a78c4ca2bc7a9a9a101ad5ebc0776fd3",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "uncommon-printing",
+      "file": "upgrade-uncommon-printing.png",
+      "sourcePage": "https://dmzcodex.com/upgrades/ingredient-printing/",
+      "imageURL": "https://dmzcodex.com/images/fob/3d-printer--game-icon.png",
+      "sha256": "f3cd2cdf6c653342b23684ac350626c06d5d2839cb95863696330f7684c0a4a8",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Regional Combat Notes",
+      "file": "owner-regional-combat-notes.png",
+      "imageURL": null,
+      "sha256": "47b76e002eeb2eade971ccd74e65e02b3b2a432e00d2f552ffba1a721239b763",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Military Composites",
+      "file": "owner-military-composites.png",
+      "sourcePage": "Owner-provided gameplay screenshot",
+      "imageURL": null,
+      "sha256": "2548c5d4ba10a7fc333dd6656700860e879a8a910d512eafb4f413c3b09b202b",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    },
+    {
+      "name": "Foreign Intelligence Targets",
+      "file": "owner-foreign-intelligence-targets.png",
+      "sourcePage": "Owner-provided gameplay screenshot",
+      "imageURL": null,
+      "sha256": "5144a0c9ae426eee83530b420ab84282b8ef909820d9fec6d102ab5ee0185d5f",
+      "decision": "unchanged-existing-local-asset",
+      "rights": "Existing manifest does not establish affirmative redistribution permission; attribution is preserved."
+    }
+  ],
+  "records": [
+    {
+      "id": "manual-han-86",
+      "name": "Manual: Han 86",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-han-86/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-m4",
+      "name": "Manual: M4",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-m4/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-hyeon-burst",
+      "name": "Manual: Hyeon Burst",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-hyeon-burst/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-patriot-xmr",
+      "name": "Manual: Patriot XMR",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-patriot-xmr/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-kastov-762",
+      "name": "Manual: Kastov 762",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-kastov-762/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-oden",
+      "name": "Manual: Oden",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-oden/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-axion",
+      "name": "Manual: Axion",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-axion/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-cronen-squall",
+      "name": "Manual: Cronen Squall",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-cronen-squall/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-iso-nightshade",
+      "name": "Manual: ISO Nightshade",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-iso-nightshade/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-vel-46",
+      "name": "Manual: VEL 46",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-vel-46/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-wz-55-striga",
+      "name": "Manual: Wz.55 Striga",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-wz-55-striga/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-ppsh-41",
+      "name": "Manual: PPSh-41",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-ppsh-41/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-x-58-nyx",
+      "name": "Manual: X-58 Nyx",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-x-58-nyx/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-rezi-12",
+      "name": "Manual: Rezi 12",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-rezi-12/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-warlord",
+      "name": "Manual: Warlord",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-warlord/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-finn-lmg",
+      "name": "Manual: FiNN LMG",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-finn-lmg/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-type-73",
+      "name": "Manual: Type 73",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-type-73/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-apoc-338",
+      "name": "Manual: APOC-338",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-apoc-338/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-mar-9",
+      "name": "Manual: MAR-9",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-mar-9/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-oris-8-6",
+      "name": "Manual: Oris 8.6",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-oris-8-6/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-mosin-nagant",
+      "name": "Manual: Mosin-Nagant",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-mosin-nagant/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-kg-7-vulcan",
+      "name": "Manual: KG-7 Vulcan",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-kg-7-vulcan/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-astaroth-57",
+      "name": "Manual: Astaroth .57",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-astaroth-57/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-signal-50",
+      "name": "Manual: Signal 50",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-signal-50/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-sang-9mm",
+      "name": "Manual: Sang 9mm",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-sang-9mm/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-krait-p68",
+      "name": "Manual: Krait P68",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-krait-p68/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-50-gs",
+      "name": "Manual: .50 GS",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-50-gs/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-mojave-357",
+      "name": "Manual: Mojave .357",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-mojave/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-pila",
+      "name": "Manual: PILA",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-pila/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-rpg-8",
+      "name": "Manual: RPG-8",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-rpg-8/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-jokr",
+      "name": "Manual: JOKR",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-jokr/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-pm-40-anvil",
+      "name": "Manual: PM-40 Anvil",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://dmzcodex.com/items/manual-pm-40-anvil/",
+        "https://dmzcodex.com/items/",
+        "https://www.callofduty.com/patchnotes/2026/10/call-of-duty-modern-warfare-4-launch-patch-notes",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/weapon-manual--game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-cronen-osprey",
+      "name": "Manual: Cronen Osprey",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "manual-csg-35",
+      "name": "Manual: CSG-35",
+      "kind": "weapon-manual",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-arachnivox",
+      "name": "Arachnivox · Rezi 12",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-027.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Rezi 12 Shotgun: “Arachnivox” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-guardian-best",
+      "name": "Guardian Best · Kastov 762",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-028.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Kastov 762 Assault Rifle: “Guardian Best” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-guardian-best-blackcell-blackcell",
+      "name": "Guardian Best BlackCell · Kastov 762",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-028.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Kastov 762 Assault Rifle: “Guardian Best” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-cobweb",
+      "name": "Cobweb · Type 73",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-029.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Type 73 LMG: “Cobweb” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-chelicerae",
+      "name": "Chelicerae · FSS Carbon Edge 1095",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-030.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "FSS Carbon Edge 1095 Melee Knife: “Chelicerae” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-demon-watch",
+      "name": "Demon Watch · Patriot XMR",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-031.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Patriot XMR Assault Rifle: “Demon Watch” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-special-delivery",
+      "name": "Special Delivery · Astaroth .57",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-032.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Astaroth .57 Sniper Rifle: “Special Delivery” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-prime-echo",
+      "name": "Prime Echo · Axion",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-033.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Axion Assault Rifle: “Prime Echo” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-prime-echo-blackcell-blackcell",
+      "name": "Prime Echo BlackCell · Axion",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-033.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Axion Assault Rifle: “Prime Echo” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-cold-resin",
+      "name": "Cold Resin · Sang 9mm",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-034.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "SANG 9mm Pistol: “Cold Resin” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-pointman",
+      "name": "Pointman · Wz.55 Striga",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-035.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "WZ.55 Striga SMG: “Pointman” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-brass-tax",
+      "name": "Brass Tax · APOC-338",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-036.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "APOC-338 LMG: “Brass Tax” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-vengeance",
+      "name": "Vengeance · Signal 50",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-037.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Signal 50 Sniper Rifle: “Vengeance” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-highkeep",
+      "name": "Highkeep · KG-7 Vulcan",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-038.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "KG-7 Vulcan Sniper Rifle: “Highkeep” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-highkeep-blackcell-blackcell",
+      "name": "Highkeep BlackCell · KG-7 Vulcan",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-038.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "KG-7 Vulcan Sniper Rifle: “Highkeep” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-competitive-spirit",
+      "name": "Competitive Spirit · Han 86",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-039.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Han 86 Assault Rifle: “Competitive Spirit” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-fabled-beast",
+      "name": "Fabled Beast · .50 GS",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-040.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": ".50 GS Pistol: “Fabled Beast” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-ruin-fang",
+      "name": "Ruin Fang · ISO Nightshade",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-041.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "ISO Nightshade SMG: “Ruin Fang” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-ruin-fang-blackcell-blackcell",
+      "name": "Ruin Fang BlackCell · ISO Nightshade",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-041.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "ISO Nightshade SMG: “Ruin Fang” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-devil-s-due",
+      "name": "Devil’s Due · Warlord",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-042.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Warlord Shotgun: “Devil’s Due” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-deathgrip",
+      "name": "Deathgrip · CSG-35",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-043.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "CSG-35 SMG: “Deathgrip” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-deathgrip-blackcell-blackcell",
+      "name": "Deathgrip BlackCell · CSG-35",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-043.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "CSG-35 SMG: “Deathgrip” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-dirty-work",
+      "name": "Dirty Work · MAR-9",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-044.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "MAR-9 Marksman Rifle: “Dirty Work” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-marked-ops",
+      "name": "Marked Ops · Cronen Squall",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-045.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Cronen Squall Assault Rifle: “Marked Ops” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-kill-order",
+      "name": "Kill Order · Cronen Osprey",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-046.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Cronen Osprey Assault Rifle: “Kill Order” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-kill-order-blackcell-blackcell",
+      "name": "Kill Order BlackCell · Cronen Osprey",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-046.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Cronen Osprey Assault Rifle: “Kill Order” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-final-say",
+      "name": "Final Say · Oris 8.6",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-047.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Oris 8.6 Marksman Rifle: “Final Say” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-snakeskin",
+      "name": "Snakeskin · PPSh-41",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-048.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "PPSh-41 SMG: “Snakeskin” Blueprint",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-bellum",
+      "name": "Bellum · Mosin-Nagant",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles",
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-049.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Mosin-Nagant Marksman Rifle: “Bellum” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-bellum-blackcell-blackcell",
+      "name": "Bellum BlackCell · Mosin-Nagant",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/s1-bc-bp-mtx/MW4-SEASON-1-BP-BC-BUNDLES-049.webp",
+          "kind": "official promotional panel; exact isolated game icon not established",
+          "heading": "Mosin-Nagant Marksman Rifle: “Bellum” Blueprints",
+          "attribution": "Activision / Call of Duty official Season 1 article"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-fortune-s-favor",
+      "name": "Fortune’s Favor · FiNN LMG",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-blue-viper",
+      "name": "Blue Viper · Hyeon Burst",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-perimeter-lance",
+      "name": "Perimeter Lance · M4",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-occultus",
+      "name": "Occultus · M4",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-exitium",
+      "name": "Exitium · M4",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-voltspine",
+      "name": "Voltspine · Kastov 762",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/05/call-of-duty-modern-warfare-4-preorder-benefits-game-editions-details?pubDate=20261018",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-la-sombra-venenosa",
+      "name": "La Sombra Venenosa · ISO Nightshade",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/05/call-of-duty-modern-warfare-4-preorder-benefits-game-editions-details?pubDate=20261018",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-shattered-code",
+      "name": "Shattered Code · Rezi 12",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/05/call-of-duty-modern-warfare-4-preorder-benefits-game-editions-details?pubDate=20261018",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-volt-edge",
+      "name": "Volt-Edge · Oris 8.6",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/05/call-of-duty-modern-warfare-4-preorder-benefits-game-editions-details?pubDate=20261018",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-sombra-besada",
+      "name": "Sombra Besada · FSS Carbon Edge 1095",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/05/call-of-duty-modern-warfare-4-preorder-benefits-game-editions-details?pubDate=20261018",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-beta-forged",
+      "name": "Beta Forged · Han 86",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/",
+        "https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-dmz-how-to-play-forward-operating-base-guide?pubDate=20261018"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-inner-circuit",
+      "name": "Inner Circuit · M4",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://dmzcodex.com/guides/dmz-weapon-blueprints-guide/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-vanish",
+      "name": "Vanish · Cronen Osprey",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-low-profile",
+      "name": "Low Profile · KG-7 Vulcan",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-regalis",
+      "name": "Regalis · Patriot XMR",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-aurum",
+      "name": "Aurum · Hyeon Burst",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-auric",
+      "name": "Auric · FiNN LMG",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-wings-of-reckoning",
+      "name": "Wings of Reckoning · CSG-35",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-skyfall",
+      "name": "Skyfall · M4",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-digital-drifter",
+      "name": "Digital Drifter · Cronen Osprey",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-unplugger",
+      "name": "Unplugger · APOC-338",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-priced-out",
+      "name": "Priced Out · ISO Nightshade",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-priceless",
+      "name": "Priceless · MAR-9",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-siegefire",
+      "name": "Siegefire · Cronen Squall",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-counter-stand",
+      "name": "Counter Stand · Signal 50",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-mire-hunter",
+      "name": "Mire Hunter · Type 73",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-coilfang",
+      "name": "Coilfang · ISO Nightshade",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-saja-fire",
+      "name": "Saja Fire · Hyeon Burst",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "blueprint-soulmark",
+      "name": "Soulmark · Type 73",
+      "kind": "cosmetic-blueprint",
+      "sourcePages": [
+        "https://www.callofduty.com/blog/2026/11/call-of-duty-modern-warfare-4-season-1-battle-pass-blackcell-store-bundles"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No exact item-specific artwork reference and applicable redistribution permission were established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-35-plate-armor-vest",
+      "name": "3.5-Plate Armor Vest",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/35-plate-armor-vest/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-argonaut-armor",
+      "name": "Argonaut Armor",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/argonaut-armor/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-encodable-blank-keycard",
+      "name": "Encodable Blank Keycard",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/encodable-blank-keycard/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-deep-vault-301",
+      "name": "Deep Vault 301",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/deep-vault-301/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-executive-room",
+      "name": "Executive Room",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/executive-room/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-small-test-chamber",
+      "name": "Small Test Chamber",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/small-test-chamber/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-superintendents-office",
+      "name": "Superintendent’s Office",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/superintendents-office/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-staff-emergency-exfil-keycard",
+      "name": "Staff Emergency Exfil Keycard",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/staff-emergency-exfil-keycard/"
+      ],
+      "candidateImages": [
+        {
+          "url": "https://dmzcodex.com/images/items/key-epic--shared-game-icon.png",
+          "kind": "source-index icon",
+          "attribution": "Game artwork © Activision/respective rights holders; reference source DMZ Codex"
+        }
+      ],
+      "decision": "retain-placeholder",
+      "reason": "No applicable affirmative redistribution terms were established for these game assets.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-animal-trial-records-r-4",
+      "name": "Animal Trial Records: R-4",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/animal-trial-records-r-4/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-human-trial-records-r-18",
+      "name": "Human Trial Records: R-18",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/human-trial-records-r-18/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-ceramic-pup-of-loyalty",
+      "name": "Ceramic Pup of Loyalty",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/ceramic-pup-of-loyalty/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-gilded-maritime-relic",
+      "name": "Gilded Maritime Relic",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/gilded-maritime-relic/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-gilded-medal-of-absolute-loyalty",
+      "name": "Gilded Medal of Absolute Loyalty",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/gilded-medal-of-absolute-loyalty/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-medal-of-unquestioning-service",
+      "name": "Medal of Unquestioning Service",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/medal-of-unquestioning-service/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-r-4-bio-compound",
+      "name": "R-4 Bio-Compound",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/r-4-bio-compound/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    },
+    {
+      "id": "item-weapons-grade-isotope",
+      "name": "Weapons Grade Isotope",
+      "kind": "item",
+      "sourcePages": [
+        "https://dmzcodex.com/items/weapons-grade-isotope/"
+      ],
+      "candidateImages": [],
+      "decision": "retain-placeholder",
+      "reason": "No image reference is present on the current source index card; no asset or applicable permission was established.",
+      "checked": "2026-11-06"
+    }
+  ],
+  "historicalCheckpoint": true,
+  "supersededBy": "IMAGE-UPDATE-2026-11-06.md"
+}

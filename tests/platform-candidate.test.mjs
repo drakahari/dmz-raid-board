@@ -1,35 +1,132 @@
-import {sampleState,serialize,parseBackup} from '../dist/renderer/core.mjs';
 import {extractFile} from '@electron/asar';
-import {_electron as electron} from '@playwright/test';import assert from 'node:assert/strict';
-import {readFile,writeFile,mkdir,readdir,unlink} from 'node:fs/promises';import {execFileSync,spawnSync} from 'node:child_process';import path from 'node:path';import {createHash} from 'node:crypto';
+import {_electron as electron} from '@playwright/test';
+import assert from 'node:assert/strict';
+import {readFile,writeFile,mkdir,mkdtemp,readdir,unlink} from 'node:fs/promises';
+import {execFileSync,spawnSync} from 'node:child_process';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+
 const iconHash=createHash('sha256').update(await readFile('branding/dmz-icon.png')).digest('hex');
 const expectedVersion=JSON.parse(await readFile('package.json','utf8')).version;
-const qa=path.resolve('.ci');await mkdir(qa,{recursive:true});const output='release/platform-candidates';const files=await readdir(output);let executable,app,info,adHoc=false;
-const checks=[];const pass=note=>{checks.push(note);console.log('PASS: '+note);};
-try{
+const expectedArch=process.env.CANDIDATE_ARCH||process.arch;
+const qa=path.resolve('.ci');
+await mkdir(qa,{recursive:true});
+const output=path.resolve('release/platform-candidates');
+const files=await readdir(output);
+const checks=[];
+const pass=note=>{checks.push(note);console.log('PASS: '+note);};
+let executable,app,info,profile,artifact,adHoc=false;
+
+try {
  if(process.platform==='darwin'){
-  const zip=files.find(f=>f.includes('-'+process.arch+'-')&&f.endsWith('.zip'));assert(zip);
-  const dest=path.join(qa,'native-launch');await mkdir(dest,{recursive:true});execFileSync('ditto',['-x','-k',path.resolve(output,zip),dest]);
-  const appName=(await readdir(dest)).find(f=>f.endsWith('.app'));assert(appName);const bundle=path.join(dest,appName);executable=path.join(bundle,'Contents/MacOS/DMZ Raid Board');
+  const candidates=files.filter(file=>file.includes('-'+expectedArch+'-')&&file.endsWith('.zip'));
+  assert.equal(candidates.length,1,'Expected one macOS ZIP for the requested architecture');
+  artifact=candidates[0];
+  const destination=await mkdtemp(path.join(qa,'native-launch-'));
+  execFileSync('ditto',['-x','-k',path.join(output,artifact),destination]);
+  const bundles=(await readdir(destination)).filter(file=>file.endsWith('.app'));
+  assert.equal(bundles.length,1,'Expected one extracted application bundle');
+  const bundle=path.join(destination,bundles[0]);
+  executable=path.join(bundle,'Contents/MacOS/DMZ Raid Board');
   execFileSync('codesign',['--verify','--deep','--strict',bundle]);
-  const signature=spawnSync('codesign',['--display','--verbose=2',bundle],{encoding:'utf8'});assert.equal(signature.status,0);assert(signature.stderr.includes('Signature=adhoc'));adHoc=true;
- }else{assert.equal(process.platform,'linux');const file=files.find(f=>f.endsWith('.AppImage'));assert(file);executable=path.resolve(output,file);}
- async function launch(){app=await electron.launch({executablePath:executable,chromiumSandbox:true,args:[],env:{...process.env,APPIMAGE_EXTRACT_AND_RUN:'1'},timeout:60000});const page=await app.firstWindow();await page.locator('#settingsBtn').waitFor();if(!await page.evaluate(()=>localStorage.getItem('qa-fixture-ready'))){assert.equal(await page.locator('#items .item').count(),0);await page.evaluate(raw=>{localStorage.setItem('dmz-raid-board-state-v2',raw);localStorage.setItem('qa-fixture-ready','1');},serialize(sampleState()));await page.reload();}await page.locator('[data-card="CPU"]').waitFor();return page;}
- let page=await launch();info=await app.evaluate(({app,BrowserWindow})=>({version:app.getVersion(),packaged:app.isPackaged,userData:app.getPath('userData'),appData:app.getPath('appData'),exe:app.getPath('exe'),platform:process.platform,arch:process.arch,args:process.argv,appPath:app.getAppPath(),sandbox:BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences().sandbox}));
- assert.equal(info.version,expectedVersion);assert.equal(info.packaged,true);assert.equal(info.arch,process.env.CANDIDATE_ARCH);assert.equal(info.sandbox,true);assert(!info.args.includes('--no-sandbox'));
- assert(info.userData.startsWith(info.appData+path.sep));assert(!info.userData.startsWith(path.dirname(info.exe)+path.sep));
- const bundledIconHash=createHash('sha256').update(extractFile(info.appPath,path.join('dist','app-icon.png'))).digest('hex');assert.equal(bundledIconHash,iconHash);
- if(process.platform==='darwin'){const bundle=path.resolve(path.dirname(executable),'../..');const plist=execFileSync('/usr/libexec/PlistBuddy',['-c','Print :CFBundleIconFile',path.join(bundle,'Contents/Info.plist')],{encoding:'utf8'}).trim();assert.equal((await readFile(path.join(bundle,'Contents/Resources',plist))).subarray(0,4).toString(),'icns');}else{assert((await readFile(path.join(path.dirname(info.exe),'.DirIcon'))).length>1000);}
- pass('packaged master icon matches source and native bundle/launcher icon asset exists');
- await writeFile(path.join(info.userData,'candidate-write-probe'),'ok');await unlink(path.join(info.userData,'candidate-write-probe'));pass('native packaged launch, renderer sandbox and writable per-user data outside app bundle/mount');
- const legacy={version:1,selected:{gunsmith:1,stash:1},targets:{CPU:7,'DMZ Cash':2000},picked:{'DMZ Cash':100},completed:['DMZ Cash'],hideCompleted:false};const oldBackup=path.join(qa,'old-v1.json');await writeFile(oldBackup,JSON.stringify(legacy));await page.locator('#settingsBtn').click();await page.locator('#importFile').setInputFiles(oldBackup);await page.locator('#confirmAction').click();await page.locator('#settings').waitFor({state:'hidden'});assert.deepEqual(JSON.parse(await page.evaluate(()=>localStorage.getItem('dmz-raid-board-state-v2'))),parseBackup(JSON.stringify(legacy)));
- await page.locator('#browse summary').first().click();await page.locator('#category').selectOption('All');assert.equal(await page.locator('.catalogEntry').count(),120);assert.equal(await page.locator('.unconfirmed').count(),0);assert.doesNotMatch(await page.locator('body').innerText(),/\bcash\b|\bmoney\b|\$[\d,]+|recovery cost reduction/i);await page.locator('#browse summary').first().click();pass('old backup import preserves legacy fields while all catalog entries show item-only requirements');
- await page.getByLabel('CPU target',{exact:true}).fill('7');await page.getByLabel('CPU target',{exact:true}).press('Tab');await page.locator('#settingsBtn').click();assert.equal(await page.locator('#themePicker option').count(),27);assert.equal(await page.locator('#appVersion').innerText(),'DMZ Raid Board '+expectedVersion);assert.equal(await page.locator('#cash').count(),0);await page.locator('#themePicker').selectOption('omarchy-nord');await page.locator('#closeSettings').click();
- await page.locator('#raidTab').click();await page.getByRole('button',{name:'Collect one CPU',exact:true}).click();
- assert.match(await page.locator('[data-card="CPU"]').innerText(),/1 picked up \/ 7 target/);pass('same Settings/themes, build version, editable targets and picked-up workflow');
- await app.close();page=await launch();assert.equal(await page.locator('html').getAttribute('data-theme'),'omarchy-nord');assert.match(await page.locator('[data-card="CPU"]').innerText(),/1 picked up \/ 7 target/);assert.equal(JSON.parse(await page.evaluate(()=>localStorage.getItem('dmz-raid-board-state-v2'))).extras['DMZ Cash'],2000);pass('actual native process close/relaunch preserves board and appearance');
+  const signature=spawnSync('codesign',['--display','--verbose=2',bundle],{encoding:'utf8'});
+  assert.equal(signature.status,0,signature.error?.message||signature.stderr);
+  assert.match(signature.stderr,/Signature=adhoc/);
+  adHoc=true;
+  pass('macOS bundle signature verifies as ad hoc; Developer ID and notarization are not tested');
+ }else{
+  assert.equal(process.platform,'linux','This runner checks macOS and Linux native candidates');
+  const candidates=files.filter(file=>file.endsWith('.AppImage'));
+  assert.equal(candidates.length,1,'Expected one Linux AppImage candidate');
+  artifact=candidates[0];
+  executable=path.join(output,artifact);
+ }
+
+ // Every launch uses a fresh QA profile. Never open the owner's application data.
+ profile=await mkdtemp(path.join(qa,'native-profile-'));
+ const nativeEnv={...process.env};
+ if(process.platform==='linux')nativeEnv.APPIMAGE_EXTRACT_AND_RUN='1';
+ app=await electron.launch({
+  executablePath:executable,
+  chromiumSandbox:true,
+  args:['--profile-dir',profile],
+  env:nativeEnv,
+  timeout:60000
+ });
+ const page=await app.firstWindow();
+ await page.locator('#libraryTab').waitFor();
+ info=await app.evaluate(({app,BrowserWindow})=>{
+  const preferences=BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences();
+  return {
+   version:app.getVersion(),packaged:app.isPackaged,userData:app.getPath('userData'),
+   exe:app.getPath('exe'),platform:process.platform,arch:process.arch,args:process.argv,
+   appPath:app.getAppPath(),sandbox:preferences.sandbox,
+   contextIsolation:preferences.contextIsolation,nodeIntegration:preferences.nodeIntegration
+  };
+ });
+ assert.equal(info.version,expectedVersion);
+ assert.equal(info.packaged,true);
+ assert.equal(info.arch,expectedArch);
+ assert.equal(info.sandbox,true);
+ assert.equal(info.contextIsolation,true);
+ assert.equal(info.nodeIntegration,false);
+ assert(!info.args.includes('--no-sandbox'));
+ assert.equal(await page.evaluate(()=>typeof window.require),'undefined');
+ assert.equal(path.resolve(info.userData),path.resolve(profile));
+ assert(!info.userData.startsWith(path.dirname(info.exe)+path.sep));
+ assert.equal(await page.locator('#items .item').count(),0);
+ pass('native packaged version and architecture match; renderer sandbox and isolation remain enabled');
+
+ const bundledIconHash=createHash('sha256').update(extractFile(info.appPath,path.join('dist','app-icon.png'))).digest('hex');
+ assert.equal(bundledIconHash,iconHash);
+ if(process.platform==='darwin'){
+  const bundle=path.resolve(path.dirname(executable),'../..');
+  const iconName=execFileSync('/usr/libexec/PlistBuddy',[
+   '-c','Print :CFBundleIconFile',path.join(bundle,'Contents/Info.plist')
+  ],{encoding:'utf8'}).trim();
+  assert.equal((await readFile(path.join(bundle,'Contents/Resources',iconName))).subarray(0,4).toString(),'icns');
+ }else{
+  assert((await readFile(path.join(path.dirname(info.exe),'.DirIcon'))).length>1000);
+ }
+ pass('packaged master icon matches source and native bundle or launcher icon asset exists');
+
+ const writeProbe=path.join(info.userData,'candidate-write-probe');
+ await writeFile(writeProbe,'ok',{flag:'wx'});
+ assert.equal(await readFile(writeProbe,'utf8'),'ok');
+ await unlink(writeProbe);
+ pass('requested isolated profile is used and writable outside the application bundle or extracted mount');
  await page.screenshot({path:path.join(qa,'native-preview.png'),fullPage:true});
- await app.close();app=null;execFileSync(process.execPath,['tests/targets.test.mjs'],{stdio:'inherit',env:{...process.env,DMZ_TEST_EXECUTABLE:executable,APPIMAGE_EXTRACT_AND_RUN:'1'}});pass('full target acceptance: empty start, automatic baselines, extras, deletion, recovery clear, old zero migration and restart');execFileSync(process.execPath,['tests/summary-omitted.test.mjs'],{stdio:'inherit',env:{...process.env,DMZ_TEST_EXECUTABLE:executable,APPIMAGE_EXTRACT_AND_RUN:'1'}});pass('selected-only goals, omitted disclosure, actual Military crop, backup/theme/recovery and keyboard acceptance');
- await (async()=>{for(const file of ['tests/vendor018.test.mjs','tests/owner-confirmed018.test.mjs','tests/foreign018.test.mjs'])execFileSync(process.execPath,[file],{stdio:'inherit',env:{...process.env,DMZ_TEST_EXECUTABLE:executable,APPIMAGE_EXTRACT_AND_RUN:'1'}});})();pass('v0.1.8 Vendor/confidence and newly owner-confirmed DDOS/Radiation full packaged acceptance');
- await writeFile(path.join(qa,'native-test.json'),JSON.stringify({result:'PASS',platform:info.platform,arch:info.arch,version:info.version,commit:process.env.GITHUB_SHA,checks,fullTargetFlow:true,fullSummaryFlow:true,fullRecipe018Flow:true,fullForeignArtFlow:true,iconSha256:iconHash,perUserStorage:true,rendererSandbox:true,appImageMode:process.platform==='linux'?'extract-and-run; FUSE mount path not tested':null,signing:process.platform==='darwin'&&adHoc?'ad-hoc only; no Developer ID or notarization':'not signed',nativeOwnerAcceptance:'PENDING'},null,2));
-}catch(error){await writeFile(path.join(qa,'native-test.json'),JSON.stringify({result:'FAIL',platform:process.platform,arch:process.arch,error:String(error.message).slice(0,500),checks,nativeOwnerAcceptance:'PENDING'},null,2));throw error;}finally{if(app)await app.close();}
+ await app.close();
+ app=null;
+
+ // Default userData policy is checked by unit tests, not by opening an owner profile.
+ execFileSync(process.execPath,['--test','tests/data-path.test.mjs'],{stdio:'inherit',env:nativeEnv});
+ pass('default Windows portable and macOS/Linux per-user path policies pass unit tests');
+
+ // The active acceptance suite creates its own isolated profiles and covers v3
+ // migration, library/planner behavior, persistence, backups, themes and security.
+ execFileSync(process.execPath,['tests/season-ui.test.mjs'],{
+  stdio:'inherit',env:{...nativeEnv,DMZ_TEST_EXECUTABLE:executable}
+ });
+ pass('current Season 1 acceptance passes against the native packaged executable using isolated profiles');
+
+ await writeFile(path.join(qa,'native-test.json'),JSON.stringify({
+  result:'PASS',platform:info.platform,arch:info.arch,version:info.version,
+  commit:process.env.GITHUB_SHA,artifact,checks,seasonAcceptance:true,
+  iconSha256:iconHash,isolatedProfileOverrideTested:true,isolatedProfileWritable:true,
+  ownerDataUsed:false,defaultUserDataLaunchTested:false,defaultStoragePolicyUnitTested:true,
+  rendererSandbox:true,
+  appImageMode:process.platform==='linux'?'extract-and-run; FUSE mounting and desktop acceptance not tested':null,
+  signing:process.platform==='darwin'&&adHoc?'ad-hoc only; no Developer ID or notarization':'not signed',
+  nativeOwnerAcceptance:'PENDING'
+ },null,2));
+}catch(error){
+ await writeFile(path.join(qa,'native-test.json'),JSON.stringify({
+  result:'FAIL',platform:process.platform,arch:process.arch,artifact,
+  error:String(error.message).slice(0,500),checks,ownerDataUsed:false,
+  defaultUserDataLaunchTested:false,nativeOwnerAcceptance:'PENDING'
+ },null,2));
+ throw error;
+}finally{
+ if(app)await app.close();
+}

@@ -1,5 +1,10 @@
 # DMZ Raid Board
 
+## Season 1 Windows test build — 0.1.9-season1.2
+
+The new Blueprint & item library has 229 sourced records: 120 existing printer/upgrade entries, 34 Weapon Manuals, 59 cosmetic blueprints and 16 X01 items. Search/filter, separate unlock progress and wanted items, shared recipe plans and manual loot targets are available. Saves migrate to version 3 while retaining older originals. New X01 recipes and ingredient quantities remain unverified. Credited shared icons and official promotional panels now cover 94 new records; 15 X01 records retain placeholders. This is a Windows test build; see the prerelease page for download and limitations. See [usage, migration and limits](docs/SEASON-1-UPDATE.md) and [research evidence](docs/SEASON-1-EVIDENCE.md).
+
+
 An offline standalone desktop raid planner and manual checklist built with TypeScript, HTML/CSS and Electron. Choose goals, aggregate shared ingredients, edit raid targets, and track picked-up counts using a simple picture-first layout. Planning and raid views show items to loot; monetary amounts are omitted. Settings displays the actual packaged app version.
 
 This is an unofficial community prototype, not affiliated with Activision. The repository contains original application source and a preview of the app. The artwork-inclusive prerelease bundles third-party game images; the individual image collection and private runtime data are not committed to the source tree. Game artwork and screenshots containing it are excluded from the MIT code license. Attribution does not establish permission or endorsement; see [third-party artwork notices](THIRD-PARTY-ARTWORK.md).

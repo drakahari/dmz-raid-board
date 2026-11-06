@@ -74,3 +74,8 @@ candidate-output/
 !/tests/owner-confirmed018.test.mjs
 
 !/tests/foreign018.test.mjs
+
+# Season 1 library implementation and active acceptance tests.
+!/scripts/package-local.mjs
+!/tests/catalog.test.mjs
+!/tests/season-ui.test.mjs

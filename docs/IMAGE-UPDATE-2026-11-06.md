@@ -1,0 +1,13 @@
+# Credited Windows test images
+
+Candidate `0.1.9-season1.2` adds 44 unmodified source image files, after the owner's explicit request for a credited Windows artwork test release. The previous source/terms review is preserved as a historical checkpoint; no new rights-holder permission was established by this update.
+
+The images cover 94 new catalog records: all 34 Weapon Manuals, all 59 cosmetic blueprints and Staff Emergency Exfil Keycard. The Manual and key images are shared source icons. The other 42 files are complete official promotional panels; some show multiple variants, bundle contents or rewards. They are labeled accordingly, and the library opens an enlarged local preview with source, credit and rights details. The images are not represented as unique in-game inventory icons where that was not established.
+
+Fifteen X01 records retain labeled placeholders: 3.5-Plate Armor Vest, Argonaut Armor, Encodable Blank Keycard, Deep Vault 301, Executive Room, Small Test Chamber, Superintendent's Office, Animal Trial Records: R-4, Human Trial Records: R-18, Ceramic Pup of Loyalty, Gilded Maritime Relic, Gilded Medal of Absolute Loyalty, Medal of Unquestioning Service, R-4 Bio-Compound and Weapons Grade Isotope. No verified source picture was established for them. Their crafting requirements remain unresolved independently of images.
+
+Sources are [DMZ Codex's item index](https://dmzcodex.com/items/) and official Call of Duty articles linked per image in [IMAGE-SOURCES-2026-11-06.json](IMAGE-SOURCES-2026-11-06.json). That JSON records every new filename, URL, source page, credited source/rights holder, SHA256, entry mapping, check date, label and known rights limitation. The full bundled ARTWORK-SOURCES.json also includes the previous 130 images; total inventory is 174 files. Original image bytes are preserved, with no generation, cropping or recompression of the new files. No art, scripts or metadata are fetched at runtime.
+
+Game art remains copyright Activision/respective rights holders, with DMZ Codex credited as a reference/image source and official panels credited to Activision / Call of Duty. No affirmative offline-app or ZIP redistribution license was established. Attribution, owner request, prior release availability and source-site crawling guidance do not themselves grant a rights-holder license or endorsement. No downstream artwork reuse rights are granted. All game artwork remains outside the MIT code license; see THIRD-PARTY-ARTWORK.md.
+
+The Windows test release retains source uncertainty labels, older-save migration, existing user data behavior and checklist semantics. The release is a prerelease for testing; macOS/Linux binaries are not part of this release.

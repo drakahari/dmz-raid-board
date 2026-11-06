@@ -28,7 +28,7 @@ for(const name of installed){
  const record=manifest?.manifest.find(row=>row.file===name);
  const sha256=createHash('sha256').update(bytes).digest('hex');
  if(artworkRelease&&(!record||record.sha256.toLowerCase()!==sha256))throw Error('Artwork provenance/hash mismatch: '+name);
- if(record)sources.push({name:record.name,file:name,kind:record.kind,sourcePage:record.sourcePage?.startsWith('https://')?record.sourcePage:'Owner-provided gameplay screenshot',imageURL:record.imageURL?.startsWith('https://')?record.imageURL:null,checked:record.checked,sha256,rights:'Third-party game artwork belongs to Activision/respective rights holders. All rights reserved; no affirmative artwork license established or downstream reuse rights granted by this app.'});
+ if(record)sources.push({name:record.name,file:name,kind:record.kind,credit:record.credit||'Game artwork: Activision/respective rights holders; reference source recorded below',label:record.label||record.name,relatedEntryIds:record.relatedEntryIds||[],sourcePage:record.sourcePage?.startsWith('https://')?record.sourcePage:'Owner-provided gameplay screenshot',imageURL:record.imageURL?.startsWith('https://')?record.imageURL:null,checked:record.checked,sha256,rights:'Third-party game artwork belongs to Activision/respective rights holders. All rights reserved; no affirmative artwork license established or downstream reuse rights granted by this app.'});
  await copyFile(path.join('assets',name),path.join(artwork,name));
 }
 if(artworkRelease&&installed.length!==manifest.manifest.length)throw Error('Artwork inventory differs from provenance manifest');

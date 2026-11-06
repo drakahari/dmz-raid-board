@@ -1,0 +1,49 @@
+{
+  "checked": "2026-11-06",
+  "scope": "Manual comparison of all 95 current DMZCodex index names and ingredient quantities against the existing 95 non-upgrade recipe records; all 120 catalog IDs retained. This is source comparison, not current game-card verification.",
+  "normalizations": [
+    "Control Units → existing Control Unit",
+    "Stun Grenade → existing Concussion Grenade",
+    "NVGs → existing Night Vision Goggles"
+  ],
+  "nameCoverage": {
+    "existingRecipes": 95,
+    "comparedIndexRecipes": 95,
+    "additionalIndexRecipes": 0
+  },
+  "costConflicts": [
+    {
+      "id": "print-detonators",
+      "existing": {
+        "Electronics": 20,
+        "Chemicals": 20
+      },
+      "codCentral": {
+        "Electronics": 20,
+        "Chemicals": 20
+      },
+      "dmzCodex": {
+        "Electronics": 20,
+        "Metals": 20
+      },
+      "sources": [
+        {
+          "url": "https://dmzcodex.com/recipes/detonators/",
+          "checked": "2026-11-06",
+          "sourceUpdated": "2026-10-25"
+        },
+        {
+          "url": "https://codcentral.net/blog/mw4-dmz-3d-printer-recipes/",
+          "checked": "2026-11-06",
+          "sourceUpdated": "2026-11-03"
+        }
+      ],
+      "resolution": "Unresolved. Preserve existing quantities and historical cost check date; expose the discrepancy. No owner-confirmed current printer card."
+    }
+  ],
+  "notes": [
+    "All other compared quantities matched after name normalization.",
+    "Same index count does not prove the game has no new recipes. X01 printer items and new ingredients remain unverified.",
+    "Unlock overlay checked dates apply only to unlock guidance. They must not replace cost checked dates or owner-verification metadata."
+  ]
+}
