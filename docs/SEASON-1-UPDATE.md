@@ -1,6 +1,6 @@
-# Season 1 Windows test build
+# Season 1 Windows release
 
-Version `0.1.9-season1.3`, researched 6 November 2026 for Modern Warfare 4 DMZ Season 1. This is a Windows test build prepared for a clearly labeled prerelease.
+Version `0.1.9`, researched 6 November 2026 for Modern Warfare 4 DMZ Season 1. This is the approved Windows-only release.
 
 ## Using the library
 

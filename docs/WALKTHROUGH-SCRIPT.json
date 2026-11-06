@@ -1,0 +1,92 @@
+{
+  "title": "DMZ Raid Board — quick start",
+  "version": "0.1.9",
+  "voice": "af_heart",
+  "speed": 1.0,
+  "scenes": [
+    {
+      "id": "welcome",
+      "title": "Your next raid, in one place",
+      "narration": "D M Z Raid Board keeps your raid targets in one place. Here's the quick tour.",
+      "captions": [
+        "DMZ Raid Board keeps your raid targets in one place.",
+        "Here’s the quick tour."
+      ]
+    },
+    {
+      "id": "plan",
+      "title": "1 · Choose your goals",
+      "narration": "Start in Plan your raid. Choose a printer upgrade you're working toward. The board combines shared ingredients, and you can add extra loot targets here.",
+      "captions": [
+        "Start in Plan your raid.",
+        "Choose a printer upgrade you’re working toward.",
+        "The board combines shared ingredients,",
+        "and you can add extra loot targets here."
+      ]
+    },
+    {
+      "id": "raid",
+      "title": "2 · Track what you pick up",
+      "narration": "Open Raid checklist. Tap plus as you pick things up; minus corrects a count. Check a finished target, or hide completed targets. Picked up does not mean extracted.",
+      "captions": [
+        "Open Raid checklist.",
+        "Tap plus as you pick things up; minus corrects a count.",
+        "Check a finished target, or hide completed targets.",
+        "Picked up does not mean extracted."
+      ]
+    },
+    {
+      "id": "want",
+      "title": "3 · Want the item itself",
+      "narration": "In Blueprint and item library, search for the three plate ballistic gel vest. Choose the button labeled Want it. The vest itself appears on your raid list, without adding its recipe ingredients.",
+      "captions": [
+        "In Blueprint & item library, search for the",
+        "3-Plate Ballistic Gel Vest.",
+        "Choose the button labeled Want it.",
+        "The vest itself appears on your raid list,",
+        "without adding its recipe ingredients."
+      ]
+    },
+    {
+      "id": "have",
+      "title": "4 · Have it, Want it, or Neither",
+      "narration": "When you have it, choose Have it. Neither clears your choice. These manual records stay separate from your printer plans.",
+      "captions": [
+        "When you have it, choose Have it.",
+        "Neither clears your choice.",
+        "These manual records stay separate from your printer plans."
+      ]
+    },
+    {
+      "id": "bulk",
+      "title": "5 · Select or clear filtered matches",
+      "narration": "For several blueprints, filter the library, then select all matches as wanted. This includes every filtered page and keeps Have it choices. Unselect wanted matches clears that same scope after confirmation. Undo the last bulk change during this session.",
+      "captions": [
+        "Filter the library, then select all matches as wanted.",
+        "This includes every filtered page and keeps Have it choices.",
+        "Unselect wanted matches clears that same scope after confirmation.",
+        "Undo the last bulk change during this session."
+      ]
+    },
+    {
+      "id": "reset",
+      "title": "6 · Start the next raid",
+      "narration": "New raid resets pickup counts and checks, while keeping your plans and Have and Want choices.",
+      "captions": [
+        "New raid resets pickup counts and checks,",
+        "while keeping your plans and Have/Want choices."
+      ]
+    },
+    {
+      "id": "backup",
+      "title": "7 · Keep a backup",
+      "narration": "Everything saves locally. Before updating or moving folders, open Settings and export a backup. Import it in the new app. You're ready for your next raid.",
+      "captions": [
+        "Everything saves locally.",
+        "Before updating or moving folders, open Settings and export a backup.",
+        "Import it in the new app.",
+        "You’re ready for your next raid."
+      ]
+    }
+  ]
+}

@@ -6,7 +6,7 @@ import {installedImageFiles} from './asset-status.mjs';
 import {compareNames,sortedNames} from './ordering.mjs';
 import {type BoardState,type ItemStatus,emptyState,parseBackup,serialize,count,recipeTotals,raidTargets,chooseRecipe,isComplete,plannedProduction,newRaid,maxCount,setRaidTarget,addExtra,removeExtra,resetAdjustments,setItemStatus,getItemStatus,wantedRaidItems,setWantedBulk} from './core.mjs';
 const $ = <T extends HTMLElement = HTMLElement>(id:string) => document.getElementById(id) as T;
-$('buildLabel').textContent=buildFlavor==='public'?'PUBLIC PRERELEASE / NO GAME ART':buildFlavor==='artwork'?'UNOFFICIAL PRERELEASE / GAME ART':'PRIVATE WINDOWS PROTOTYPE / 01';
+$('buildLabel').textContent=buildFlavor==='public'?'PUBLIC RELEASE / NO GAME ART':buildFlavor==='artwork'?'UNOFFICIAL RELEASE / GAME ART':'PRIVATE WINDOWS PROTOTYPE / 01';
 const escape=(value:string)=>value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 const settings=$<HTMLDialogElement>('settings');
 const themePicker=$<HTMLSelectElement>('themePicker');

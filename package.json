@@ -1,6 +1,6 @@
 {
   "name": "dmz-raid-board",
-  "version": "0.1.9-season1.3",
+  "version": "0.1.9",
   "description": "Offline DMZ item planner and raid checklist",
   "private": true,
   "license": "MIT",
@@ -29,7 +29,7 @@
     "appId": "private.dmz.raidboard",
     "productName": "DMZ Raid Board",
     "directories": {
-      "output": "release/0.1.9-season1.3-local"
+      "output": "release/0.1.9-local"
     },
     "files": [
       "dist/**/*",
