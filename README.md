@@ -1,8 +1,8 @@
 # DMZ Raid Board
 
-## Windows test - 0.1.10-field-upgrades.1
+## Windows test - 0.1.11-simple-flow.1
 
-Adds Consumable Box, Medical Box, Hazmat Box, Utility Box and Survivor Box under Field Upgrades, with icon-only views from the owner screenshot. Survivor Box has cross-checked X01 requirements; the other four retain explicit unknown crafting quantities and remain trackable through library Have/Want choices. Raid now separates physical loot targets from blueprint/recipe/library requests, with independent actions even when names match. Existing saves, quantities, themes and prior releases are preserved. See [data, images, limitations and usage](docs/FIELD-UPGRADES-UPDATE.md). This revision is Windows-only.
+A simpler three-step flow: **Plan your raid**, **Blueprint Item Recipes**, then **Raid Checklist**. Optional filters, bulk actions and quantity details are available when needed, with clearer directions and unchanged v4 saves. See the [quick start and update guide](docs/SIMPLE-FLOW-UPDATE.md). This is an unsigned Windows-only test prerelease; previous stable/test releases are preserved.
 
 An offline standalone desktop raid planner and manual checklist built with TypeScript, HTML/CSS and Electron. Choose goals, aggregate shared ingredients, edit raid targets, and track picked-up counts using a simple picture-first layout. Planning and raid views show items to loot; monetary amounts are omitted. Settings displays the actual packaged app version.
 
@@ -12,7 +12,7 @@ This is an unofficial community prototype, not affiliated with Activision. The r
 
 The artwork-inclusive prerelease contains third-party game imagery attributed to Activision/respective rights holders and sourced via DMZ Codex, plus owner-provided gameplay screenshots. No affirmative reuse or redistribution license was established, and the app grants no downstream artwork rights. An artwork-free build remains available from source with `npm run package:public`. Extract the entire Windows x64 artwork-inclusive ZIP into a writable folder and run DMZ Raid Board.exe. Keep its accompanying files. The build is unsigned; no installation is required. Data is stored in the data folder beside the executable. Export/import a backup to move a board between folders.
 
-The desktop builds target Windows x64 portable ZIP, macOS Apple Silicon app ZIP/DMG, and Linux x64 AppImage. The app runs as a desktop application; an external browser is not required. No Intel Mac package is produced for this version.
+Earlier releases include Windows x64 portable ZIP, macOS Apple Silicon app ZIP/DMG and Linux x64 AppImage. This test release supplies Windows x64 only; no macOS or Linux package is produced for this revision. The app runs as a desktop application without an external browser.
 
 macOS builds are ad-hoc signed, without Developer ID signing or notarization. Native automated launch checks do not establish Gatekeeper acceptance on every Mac. Linux automated launch uses AppImage extract-and-run under Xvfb; FUSE mounting and desktop/distribution acceptance are separate checks. No system security changes or bypass instructions are included.
 

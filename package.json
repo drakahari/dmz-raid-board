@@ -1,6 +1,6 @@
 {
   "name": "dmz-raid-board",
-  "version": "0.1.10-field-upgrades.1",
+  "version": "0.1.11-simple-flow.1",
   "description": "Offline DMZ item planner and raid checklist",
   "private": true,
   "license": "MIT",
@@ -10,7 +10,7 @@
     "build": "tsc -p tsconfig.json && node scripts/build.mjs",
     "start": "npm run build && electron .",
     "test": "npm run build && node --test tests/core.test.mjs tests/catalog.test.mjs tests/simple-wanted.test.mjs tests/field-upgrades.test.mjs tests/themes.test.mjs tests/data-path.test.mjs tests/version.test.mjs tests/target-core.test.mjs tests/catalog-update018.test.mjs",
-    "test:ui": "npm run build && node tests/electron.test.mjs",
+    "test:ui": "npm run build && node tests/simple-flow-ui.test.mjs && node tests/electron.test.mjs && node tests/field-upgrades-ui.test.mjs",
     "package": "node scripts/package-local.mjs",
     "build:public": "tsc -p tsconfig.json && node scripts/build.mjs --public",
     "package:public": "node scripts/package-local.mjs --public",
@@ -29,7 +29,7 @@
     "appId": "private.dmz.raidboard",
     "productName": "DMZ Raid Board",
     "directories": {
-      "output": "release/0.1.10-field-upgrades.1-local"
+      "output": "release/0.1.11-simple-flow.1-local"
     },
     "files": [
       "dist/**/*",
@@ -42,7 +42,8 @@
       "docs/IMAGE-SOURCES-2026-11-06.json",
       "docs/IMAGE-UPDATE-2026-11-06.md",
       "docs/SIMPLE-WANTED-UPDATE.md",
-      "docs/FIELD-UPGRADES-UPDATE.md"
+      "docs/FIELD-UPGRADES-UPDATE.md",
+      "docs/SIMPLE-FLOW-UPDATE.md"
     ],
     "asar": true,
     "win": {

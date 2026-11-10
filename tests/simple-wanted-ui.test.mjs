@@ -21,7 +21,8 @@ async function launch(){
 const state=()=>page.evaluate(k=>JSON.parse(localStorage.getItem(k)),key);
 const card=id=>page.locator('[data-library-entry="'+id+'"]');
 const statusButton=(id,status)=>card(id).locator('[data-status-id="'+id+'"][data-item-status="'+status+'"]');
-async function filters(){for(const id of ['libraryCategory','libraryKind','librarySeason','libraryItemStatus'])await page.locator('#'+id).selectOption('all');await page.locator('#librarySearch').fill('');}
+async function openDetails(id){if(!await page.locator('#'+id).evaluate(element=>element.open))await page.locator('#'+id+' > summary').click();}
+async function filters(){await openDetails('libraryMoreFilters');for(const id of ['libraryCategory','libraryKind','librarySeason','libraryItemStatus'])await page.locator('#'+id).selectOption('all');await page.locator('#librarySearch').fill('');}
 async function find(name){await page.locator('#libraryTab').click();await filters();await page.locator('#librarySearch').fill(name);}
 async function setStatus(id,status){const entry=catalogEntries.find(entry=>entry.id===id);await find(entry.name);await statusButton(id,status).click();}
 async function capture(name){await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));const png=await app.evaluate(async({BrowserWindow})=>(await BrowserWindow.getAllWindows()[0].webContents.capturePage()).toPNG().toString('base64'));await writeFile(path.join(qa,name),Buffer.from(png,'base64'));}
@@ -47,7 +48,7 @@ try{
 
  const cosmetics=catalogEntries.filter(entry=>entry.kind==='cosmetic-blueprint'),haveId=cosmetics[0].id,changedId=cosmetics[1].id;
  await setStatus(haveId,'have');await page.locator('#librarySearch').fill('');await page.locator('#libraryKind').selectOption('cosmetic-blueprint');
- assert.match(await page.locator('#libraryBulkScope').innerText(),/page/i);assert.match(await page.locator('#libraryStatus').innerText(),new RegExp(String(cosmetics.length)));
+ await openDetails('libraryBulkOptions');assert.match(await page.locator('#libraryBulkScope').innerText(),/page/i);assert.match(await page.locator('#libraryStatus').innerText(),new RegExp(String(cosmetics.length)));
  await page.locator('#libraryWantAll').focus();await page.keyboard.press('Enter');saved=await state();assert(saved.owned.includes(haveId));assert(!saved.wanted.includes(haveId));assert(cosmetics.filter(entry=>entry.id!==haveId).every(entry=>saved.wanted.includes(entry.id)));assert(saved.wanted.includes(vest));
  await setStatus(changedId,'have');await page.locator('#libraryUndoBulk').click();saved=await state();assert(saved.owned.includes(haveId)&&saved.owned.includes(changedId));assert.deepEqual(saved.wanted,[vest]);
  await page.locator('#librarySearch').fill('');await page.locator('#libraryKind').selectOption('cosmetic-blueprint');await page.locator('#libraryWantAll').click();

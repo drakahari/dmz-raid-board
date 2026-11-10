@@ -87,3 +87,5 @@ candidate-output/
 # Field Upgrades and separated Raid regression coverage.
 !/tests/field-upgrades.test.mjs
 !/tests/field-upgrades-ui.test.mjs
+
+!/tests/simple-flow-ui.test.mjs
